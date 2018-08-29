@@ -14,16 +14,17 @@ public:
 	void Move() override;
 	void handleEvent(InputType dir) override;
 
-
-
 private:
 	SDL_Texture* image;
 	SDLContext* context;
 
 	//The velocity of the Pacman
 	int mVelX, mVelY;
-	//Collision box of the PAcman
+	//Collision box of the Pacman
 	SDL_Rect mBox;
+
+	//Current animation frame
+	int frame;
 
 };
 

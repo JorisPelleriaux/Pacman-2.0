@@ -14,7 +14,7 @@ SDLPacman::SDLPacman(SDLContext* context, AbstractFactory* factory, int lives,
 	} else {
 		//Set sprite clips
 
-		context->CreateSprites();
+		context->CreatePacSprites();
 
 	}
 	mVelX = 0;
@@ -23,6 +23,9 @@ SDLPacman::SDLPacman(SDLContext* context, AbstractFactory* factory, int lives,
 	mBox.y = y;
 	mBox.w = PAC_WIDTH;
 	mBox.h = PAC_HEIGHT;
+
+	//Current animation frame
+	frame = 0;
 }
 
 SDLPacman::~SDLPacman() {
@@ -34,9 +37,17 @@ void SDLPacman::Visualise(double angle) {
 	//cout << PAC_VEL << endl;
 
 	//Render current frame
+	SDL_Rect* currentClip = &context->gSpriteClips[frame / 8];
 
-	context->Draw(mBox.x, mBox.y, image, NULL, angle);
-	//context->UpdateScreen();
+	context->Draw(mBox.x, mBox.y, image, currentClip, angle);
+
+	//Go to next frame
+	++frame;
+
+	//Cycle animation
+	if (frame / 8 >= context->ANIMATION_FRAMES) {
+		frame = 0;
+	}
 
 }
 
@@ -76,7 +87,7 @@ void SDLPacman::Move() {
 	//mVelX = 0;
 	//mVelY = 0;
 
-	cout << "pac move" << endl;
+	//cout << "pac move" << endl;
 	//Move the dot left or right
 	mBox.x += mVelX;
 
@@ -87,7 +98,7 @@ void SDLPacman::Move() {
 	//mBox.x += mVelX;
 
 	//If the dot went too far to the left or right or touched a wall
-	if ((mBox.x < 0) || (mBox.x + PAC_WIDTH > 525)){// || context->touchesWall( mBox) ) {	//TODO dynamic breedte
+	if ((mBox.x < 0) || (mBox.x + PAC_WIDTH > 525)) {// || context->touchesWall( mBox) ) {	//TODO dynamic breedte
 		//move back
 		cout << "links rechts" << endl;
 		mBox.x -= mVelX;
@@ -97,7 +108,7 @@ void SDLPacman::Move() {
 	mBox.y += mVelY;
 
 	//If the dot went too far up or down or touched a wall
-	if ((mBox.y < 0) || (mBox.y + PAC_HEIGHT > 644)){// || context->touchesWall( mBox)) { //TODO dynamic hoogte
+	if ((mBox.y < 0) || (mBox.y + PAC_HEIGHT > 644)) {// || context->touchesWall( mBox)) { //TODO dynamic hoogte
 		//move back
 		mBox.y -= mVelY;
 	}

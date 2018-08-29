@@ -23,10 +23,6 @@ public:
 	//Current displayed texture
 	SDL_Texture* gTexture;
 
-	//Walking animation
-	const int ANIMATION_FRAMES = 4;
-	SDL_Rect gSpriteClips[4];
-
 	//SDLContext gSpriteSheetTexture;
 
 	int CreateWindow();

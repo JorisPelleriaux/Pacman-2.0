@@ -33,7 +33,9 @@ public:
 	//Renders texture at given point
 	void Draw(int x, int y, SDL_Texture* texture, SDL_Rect* clip, double angle);
 
-	void CreateSprites();
+	void CreatePacSprites();
+
+	void CreateGhostSprites(int number);
 
 	void ClearScreen();
 
@@ -48,7 +50,13 @@ public:
 	int getHeight();
 	SDL_Rect gTileClips[16];
 
+	//Walking animation Pacman
+	const int ANIMATION_FRAMES = 4;
+	SDL_Rect gSpriteClips[4];
 
+	//Walking animation Ghost
+	const int ANIMATION_FRAMES_Ghost = 2;
+	SDL_Rect gSpriteClips_Ghost[2];
 
 protected:
 
@@ -64,6 +72,7 @@ private:
 
 	//Current animation frame
 	int frame;
+
 };
 
 #endif /* SDLCONTEXT_H_ */

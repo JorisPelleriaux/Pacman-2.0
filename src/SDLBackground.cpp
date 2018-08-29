@@ -15,7 +15,7 @@ SDLBackground::SDLBackground(SDLContext* context) :
 	this->context = context;
 
 	//Load tile texture
-	image = context->loadFromFile("Media/Tile1.png");
+	image = context->loadFromFile("Media/Tile2.png");
 	if (image == NULL) {
 		printf("Failed to load texture image!\n");
 	}
@@ -153,52 +153,52 @@ bool SDLBackground::SetTiles() {
 			context->gTileClips[TILE_TOPLEFT].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_TOP].x = 1;
-			context->gTileClips[TILE_TOP].y = 26;
+			context->gTileClips[TILE_TOP].y = 37;
 			context->gTileClips[TILE_TOP].w = TILE_WIDTH;
 			context->gTileClips[TILE_TOP].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_BOTTOMRIGHT].x = 38;
-			context->gTileClips[TILE_BOTTOMRIGHT].y = 26;
+			context->gTileClips[TILE_BOTTOMRIGHT].y = 37;
 			context->gTileClips[TILE_BOTTOMRIGHT].w = TILE_WIDTH;
 			context->gTileClips[TILE_BOTTOMRIGHT].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_CENTERUP].x = 75;
-			context->gTileClips[TILE_CENTERUP].y = 26;
+			context->gTileClips[TILE_CENTERUP].y = 37;
 			context->gTileClips[TILE_CENTERUP].w = TILE_WIDTH;
 			context->gTileClips[TILE_CENTERUP].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_BOTTOMLEFT].x = 112;
-			context->gTileClips[TILE_BOTTOMLEFT].y = 26;
+			context->gTileClips[TILE_BOTTOMLEFT].y = 37;
 			context->gTileClips[TILE_BOTTOMLEFT].w = TILE_WIDTH;
 			context->gTileClips[TILE_BOTTOMLEFT].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_VERTICAL].x = 149;
-			context->gTileClips[TILE_VERTICAL].y = 26;
+			context->gTileClips[TILE_VERTICAL].y = 37;
 			context->gTileClips[TILE_VERTICAL].w = TILE_WIDTH;
 			context->gTileClips[TILE_VERTICAL].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_BOTTOM].x = 186;
-			context->gTileClips[TILE_BOTTOM].y = 26;
+			context->gTileClips[TILE_BOTTOM].y = 37;
 			context->gTileClips[TILE_BOTTOM].w = TILE_WIDTH;
 			context->gTileClips[TILE_BOTTOM].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_CENTERLEFT].x = 1;
-			context->gTileClips[TILE_CENTERLEFT].y = 51;
+			context->gTileClips[TILE_CENTERLEFT].y = 73;
 			context->gTileClips[TILE_CENTERLEFT].w = TILE_WIDTH;
 			context->gTileClips[TILE_CENTERLEFT].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_CENTER].x = 38;
-			context->gTileClips[TILE_CENTER].y = 51;
+			context->gTileClips[TILE_CENTER].y = 73;
 			context->gTileClips[TILE_CENTER].w = TILE_WIDTH;
 			context->gTileClips[TILE_CENTER].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_CENTERRIGHT].x = 75;
-			context->gTileClips[TILE_CENTERRIGHT].y = 51;
+			context->gTileClips[TILE_CENTERRIGHT].y = 73;
 			context->gTileClips[TILE_CENTERRIGHT].w = TILE_WIDTH;
 			context->gTileClips[TILE_CENTERRIGHT].h = TILE_HEIGHT;
 
 			context->gTileClips[TILE_PATH].x = 186;
-			context->gTileClips[TILE_PATH].y = 51;
+			context->gTileClips[TILE_PATH].y = 73;
 			context->gTileClips[TILE_PATH].w = TILE_WIDTH;
 			context->gTileClips[TILE_PATH].h = TILE_HEIGHT;
 		}

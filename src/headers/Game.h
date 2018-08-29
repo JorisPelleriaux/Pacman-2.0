@@ -5,10 +5,11 @@
 #include "Background.h"
 #include "Input.h"
 #include "AbsPacman.h"
+#include "Ghost.h"
 using namespace std;
 
 class AbstractFactory;
-
+class Ghost;
 //Possible states of the game
 enum GameState {
 	Menu, Running, GameOver, QuitGame, NoState
@@ -23,6 +24,9 @@ public:
 protected:
 	BaseInput* input;
 	AbsPacman* Pac;
+	Ghost* Ghosts[4];
+
+
 
 private:
 	AbstractFactory* factory;

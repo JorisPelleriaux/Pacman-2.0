@@ -6,6 +6,7 @@ using namespace std;
 #include "Window.h"
 #include "Background.h"
 #include "input.h"
+#include "Ghost.h"
 
 class AbstractFactory {
 public:
@@ -15,6 +16,7 @@ public:
 	virtual Window *CreateWindow(int screen_width, int screen_height)=0;
 	virtual Background *CreateBackground()=0;
 	virtual Input *GetInputhandler()=0;
+	virtual Ghost *CreateGhost(int x, int y, int movespeed, int number)=0;
 
 };
 
