@@ -11,12 +11,19 @@ public:
 			int y, int movespeed);
 	~SDLPacman();
 	void Visualise(double angle) override;
+	void Move() override;
+	void handleEvent(InputType dir) override;
+
+
 
 private:
 	SDL_Texture* image;
 	SDLContext* context;
 
-
+	//The velocity of the Pacman
+	int mVelX, mVelY;
+	//Collision box of the PAcman
+	SDL_Rect mBox;
 
 };
 

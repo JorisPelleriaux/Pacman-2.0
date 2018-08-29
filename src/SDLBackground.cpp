@@ -27,7 +27,9 @@ SDLBackground::SDLBackground(SDLContext* context) :
 SDLBackground::~SDLBackground() {
 	context->free();
 }
-
+Tile** SDLBackground::getTiles(){
+	return tileSet;
+}
 void SDLBackground::Visualise(double angle) {
 	//cout << "clear screen";
 	context->ClearScreen();
@@ -44,6 +46,23 @@ void SDLBackground::Visualise(double angle) {
 void SDLBackground::Update() {
 
 }
+
+
+void SDLBackground::Close(){
+	//Deallocate tiles
+		for( int i = 0; i < TOTAL_TILES; ++i )
+		{
+			 if( tileSet[ i ] == NULL )
+			 {
+				delete tileSet[ i ];
+				tileSet[ i ] = NULL;
+			 }
+		}
+}
+void SDLBackground::Move(){
+
+}
+
 
 bool SDLBackground::SetTiles() {
 	//Success flag
@@ -92,7 +111,7 @@ bool SDLBackground::SetTiles() {
 			x += TILE_WIDTH;
 
 			//If we've gone too far
-			if (x >= 350) {	//TODO dynamic width
+			if (x >= 525) {	//TODO dynamic width
 				//Move back
 				x = 0;
 

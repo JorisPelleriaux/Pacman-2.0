@@ -11,14 +11,16 @@ public:
 	~SDLBackground();
 	void Update() override;
 	void Visualise(double angle) override;
-
+	void Move() override;
 	bool SetTiles();
+	void Close();
+	Tile** getTiles();
 
 protected:
 	//Tile constants
 	const int TILE_WIDTH = 35;
 	const int TILE_HEIGHT = 23;
-	static const int TOTAL_TILES = 100;
+	static const int TOTAL_TILES = 420;
 	static const int TOTAL_TILE_SPRITES = 16;
 
 	//The different tile sprites
@@ -39,16 +41,15 @@ protected:
 	const int TILE_CENTERRIGHT = 14;
 	const int TILE_PATH = 15;
 
-
+	//The level tiles
+		Tile* tileSet[TOTAL_TILES];
+protected:
 
 private:
 
 	SDL_Texture* image;
 	SDLContext* context;
 
-
-	//The level tiles
-	Tile* tileSet[TOTAL_TILES];
 };
 
 #endif /* SDLBACKGROUND_H_ */

@@ -22,8 +22,7 @@ AbsPacman::AbsPacman(AbstractFactory* factory, int lives, int x, int y,
 	this->x = x;
 	this->y = y;
 	this->movespeed = movespeed;
-	this->mVelX = 0;
-	this->mVelY = 0;
+
 }
 
 AbsPacman::~AbsPacman() {
@@ -34,35 +33,14 @@ void AbsPacman::Update() {
 
 }
 
-void AbsPacman::Move(InputType dir) {
+void AbsPacman::Move() {
 
-	mVelX = 0;
-	mVelY = 0;
-	switch (dir) {
-	case Left:
-		mVelX -= PAC_VEL;
-		break;
-	case Right:
-		mVelX += PAC_VEL;
-		break;
-	case Up:
-		mVelY -= PAC_VEL;
-		break;
-	case Down:
-		mVelY += PAC_VEL;
-		break;
-	default:
-		return;
-	}
 
-	//Move the dot left or right
-	x += mVelX;
-
-	//Move the dot up or down
-	y += mVelY;
 
 }
+void handleEvent(InputType dir){
 
+}
 int AbsPacman::GetLives() {
 	return lives;
 }

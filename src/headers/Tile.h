@@ -9,6 +9,7 @@
 #include "SDLContext.h"
 #ifndef HEADERS_TILE_H_
 #define HEADERS_TILE_H_
+
 class Tile {
 public:
 

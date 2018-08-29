@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "SDLContext.h"
 #include "Game.h"
-
+#include "SDLBackground.h"
 SDLContext::SDLContext(SDLWindow* window) {
 	this->window = window;
 
@@ -83,6 +83,66 @@ void SDLContext::setAlpha(Uint8 alpha) {
 	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
 
+/*bool SDLContext::touchesWall(SDL_Rect box) {
+	//Go through the tiles
+	for (int i = 0; i < 16; ++i) { //TODO totaltiles dynamic
+		//If the tile is a wall type tile
+		if ((SDLBackground::tileSet[i]->getType() < 15) //TODO tile path dynamic
+				&& (SDLBackground::tileSet[i]->getType() >= 0)) {
+			//If the collision box touches the wall tile
+			if (checkCollision(box, SDLBackground::tileSet[i]->getBox())) {
+				return true;
+			}
+		}
+	}
+
+	//If no wall tiles were touched
+	return false;
+}
+*/
+bool SDLContext::checkCollision( SDL_Rect a, SDL_Rect b ){
+	//The sides of the rectangles
+	    int leftA, leftB;
+	    int rightA, rightB;
+	    int topA, topB;
+	    int bottomA, bottomB;
+
+	    //Calculate the sides of rect A
+	    leftA = a.x;
+	    rightA = a.x + a.w;
+	    topA = a.y;
+	    bottomA = a.y + a.h;
+
+	    //Calculate the sides of rect B
+	    leftB = b.x;
+	    rightB = b.x + b.w;
+	    topB = b.y;
+	    bottomB = b.y + b.h;
+
+	    //If any of the sides from A are outside of B
+	    if( bottomA <= topB )
+	    {
+	        return false;
+	    }
+
+	    if( topA >= bottomB )
+	    {
+	        return false;
+	    }
+
+	    if( rightA <= leftB )
+	    {
+	        return false;
+	    }
+
+	    if( leftA >= rightB )
+	    {
+	        return false;
+	    }
+
+	    //If none of the sides from A are outside B
+	    return true;
+}
 
 void SDLContext::CreateSprites() {
 	window->gSpriteClips[0].x = 0;
@@ -115,7 +175,7 @@ void SDLContext::ClearScreen() {
 void SDLContext::Draw(int x, int y, SDL_Texture* texture, SDL_Rect* clip,
 		double angle) {
 
-	if (clip == NULL){
+	if (clip == NULL) {
 		//Render current frame
 		SDL_Rect* currentClip = &window->gSpriteClips[frame / 8];
 		clip = currentClip;
@@ -131,7 +191,8 @@ void SDLContext::Draw(int x, int y, SDL_Texture* texture, SDL_Rect* clip,
 
 	//Render to screen
 	//SDL_RenderCopy(window->gRenderer, texture, clip, &renderQuad);
-	SDL_RenderCopyEx(window->gRenderer, texture, clip, &renderQuad, angle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(window->gRenderer, texture, clip, &renderQuad, angle, NULL,
+			SDL_FLIP_NONE);
 
 	//Update screen
 	//SDL_RenderPresent(window->gRenderer);
@@ -146,7 +207,7 @@ void SDLContext::Draw(int x, int y, SDL_Texture* texture, SDL_Rect* clip,
 
 }
 
-void SDLContext::UpdateScreen(){
+void SDLContext::UpdateScreen() {
 	SDL_RenderPresent(window->gRenderer);
 }
 

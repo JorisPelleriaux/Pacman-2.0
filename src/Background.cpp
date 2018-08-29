@@ -9,3 +9,6 @@ Background::Background() :
 Background::~Background() {
 
 }
+void Background::Move(){
+
+}

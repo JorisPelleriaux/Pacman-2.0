@@ -8,6 +8,7 @@
 #ifndef HEADERS_ENTITY_H_
 #define HEADERS_ENTITY_H_
 #include "Input.h"
+#include "Tile.h"
 using namespace std;
 
 class Entity {

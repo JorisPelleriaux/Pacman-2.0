@@ -18,23 +18,7 @@ Entity::Entity(int x, int y, int width, int height, int movespeed) {
 Entity::~Entity() {
 
 }
+void Entity::Move(){
 
-//Moves entity depending on input
-void Entity::Move() {
-	/*switch (dir) {
-	case Left:
-		cout << "links"  << endl;
-		break;
-	case Right:
-		cout << "rechts"  << endl;
-		break;
-	case Up:
-		cout << "boven"  << endl;
-		break;
-	case Down:
-		cout << "onder"  << endl;
-		break;
-	default:
-		return;
-	}*/
 }
+

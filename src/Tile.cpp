@@ -31,3 +31,11 @@ void Tile::render(SDLContext* context, SDL_Texture* image) {
 	context->Draw(mBox.x, mBox.y, image, &context->gTileClips[mType] ,0.0);
 }
 
+int Tile::getType(){
+	return mType;
+}
+
+SDL_Rect Tile::getBox(){
+	return mBox;
+}
+
