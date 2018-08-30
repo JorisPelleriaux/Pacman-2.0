@@ -3,11 +3,11 @@
 
 #include <iostream>
 #include "SDLWindow.h"
-//#include "Tile.h"
+#include "Context.h"
 using namespace std;
 class Tile;
 class SDLWindow;
-class SDLContext {
+class SDLContext : public Context {
 public:
 	//Initializes variables
 	SDLContext(SDLWindow* window);
@@ -41,7 +41,7 @@ public:
 
 	void UpdateScreen();
 
-	bool touchesWall(SDL_Rect box);
+	int touchesWall(SDL_Rect box, Tile* tiles[]);
 
 	bool checkCollision(SDL_Rect a, SDL_Rect b);
 
@@ -57,6 +57,9 @@ public:
 	//Walking animation Ghost
 	const int ANIMATION_FRAMES_Ghost = 2;
 	SDL_Rect gSpriteClips_Ghost[2];
+
+	//The level tiles
+	Tile* tileSet[285];
 
 protected:
 

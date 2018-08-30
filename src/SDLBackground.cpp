@@ -27,8 +27,8 @@ SDLBackground::SDLBackground(SDLContext* context) :
 SDLBackground::~SDLBackground() {
 	context->free();
 }
-Tile** SDLBackground::getTiles(){
-	return tileSet;
+Tile** SDLBackground::getTiles() {
+	return context->tileSet;
 }
 void SDLBackground::Visualise(double angle) {
 	//cout << "clear screen";
@@ -36,7 +36,7 @@ void SDLBackground::Visualise(double angle) {
 
 	//Render level
 	for (int i = 0; i < TOTAL_TILES; ++i) {
-		tileSet[i]->render(context, image);
+		context->tileSet[i]->render(context, image);
 	}
 	//Update screen
 	//context->UpdateScreen();
@@ -47,22 +47,18 @@ void SDLBackground::Update() {
 
 }
 
-
-void SDLBackground::Close(){
+void SDLBackground::Close() {
 	//Deallocate tiles
-		for( int i = 0; i < TOTAL_TILES; ++i )
-		{
-			 if( tileSet[ i ] == NULL )
-			 {
-				delete tileSet[ i ];
-				tileSet[ i ] = NULL;
-			 }
+	for (int i = 0; i < TOTAL_TILES; ++i) {
+		if (context->tileSet[i] == NULL) {
+			delete context->tileSet[i];
+			context->tileSet[i] = NULL;
 		}
+	}
 }
-void SDLBackground::Move(){
+void SDLBackground::Move() {
 
 }
-
 
 bool SDLBackground::SetTiles() {
 	//Success flag
@@ -97,7 +93,7 @@ bool SDLBackground::SetTiles() {
 
 			//If the number is a valid tile number
 			if ((tileType >= 0) && (tileType < 20)) {
-				tileSet[i] = new Tile(x, y, tileType);
+				context->tileSet[i] = new Tile(x, y, tileType);
 			}
 			//If we don't recognize the tile type
 			else {
@@ -201,6 +197,16 @@ bool SDLBackground::SetTiles() {
 			context->gTileClips[TILE_PATH].y = 73;
 			context->gTileClips[TILE_PATH].w = TILE_WIDTH;
 			context->gTileClips[TILE_PATH].h = TILE_HEIGHT;
+
+			context->gTileClips[TILE_FOOD1].x = 112;
+			context->gTileClips[TILE_FOOD1].y = 73;
+			context->gTileClips[TILE_FOOD1].w = TILE_WIDTH;
+			context->gTileClips[TILE_FOOD1].h = TILE_HEIGHT;
+
+			context->gTileClips[TILE_FOOD2].x = 149;
+			context->gTileClips[TILE_FOOD2].y = 73;
+			context->gTileClips[TILE_FOOD2].w = TILE_WIDTH;
+			context->gTileClips[TILE_FOOD2].h = TILE_HEIGHT;
 		}
 	}
 

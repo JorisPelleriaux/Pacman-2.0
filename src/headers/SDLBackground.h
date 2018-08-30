@@ -21,7 +21,7 @@ protected:
 	const int TILE_WIDTH = 35;
 	const int TILE_HEIGHT = 35;
 	static const int TOTAL_TILES = 285;
-	static const int TOTAL_TILE_SPRITES = 16;
+	static const int TOTAL_TILE_SPRITES = 18;
 
 	//The different tile sprites
 	const int TILE_HORIZONTAL = 0;
@@ -40,9 +40,10 @@ protected:
 	const int TILE_CENTER = 13;
 	const int TILE_CENTERRIGHT = 14;
 	const int TILE_PATH = 15;
+	const int TILE_FOOD1 = 16;
+	const int TILE_FOOD2 = 17;
 
-	//The level tiles
-		Tile* tileSet[TOTAL_TILES];
+
 protected:
 
 private:

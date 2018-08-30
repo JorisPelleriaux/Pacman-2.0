@@ -21,7 +21,7 @@ public:
 	static const int PAC_VEL = 5;
 
 	//The dimensions of the Pacman
-	static const int PAC_WIDTH = 35;
+	static const int PAC_WIDTH = 34;
 	static const int PAC_HEIGHT = 35;
 protected:
 	int x;

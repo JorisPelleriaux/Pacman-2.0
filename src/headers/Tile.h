@@ -14,7 +14,7 @@ class Tile {
 public:
 
 	//Initializes position and type
-	Tile( int x, int y, int tileType );
+	Tile(int x, int y, int tileType);
 
 	//Shows the tile
 	void render(SDLContext* context, SDL_Texture* image);
@@ -22,20 +22,22 @@ public:
 	//Get the tile type
 	int getType();
 
+	//Set the tile type
+	void setType(int type);
+
 	//Get the collision box
 	SDL_Rect getBox();
 
 	//Tile constants
-	const int TILE_WIDTH = 80;
-	const int TILE_HEIGHT = 80;
+	const int TILE_WIDTH = 35;
+	const int TILE_HEIGHT = 35;
 	const int TOTAL_TILES = 192;
 	const int TOTAL_TILE_SPRITES = 16;
 
-
 	//Scene textures
 	/*SDLContext gDotTexture;
-	SDLContext gTileTexture;
-	SDL_Rect gTileClips[ 12 ];*/
+	 SDLContext gTileTexture;
+	 SDL_Rect gTileClips[ 12 ];*/
 
 private:
 	//The attributes of the tile
@@ -43,7 +45,6 @@ private:
 
 	//The tile type
 	int mType;
-
 
 };
 #endif /* HEADERS_TILE_H_ */

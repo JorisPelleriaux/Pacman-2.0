@@ -10,10 +10,11 @@
 
 using namespace std;
 
-SDLGhost::SDLGhost(SDLContext* context, AbstractFactory* factory, int x, int y,
+SDLGhost::SDLGhost(SDLContext* context, SDLContext* Tcontext, AbstractFactory* factory, int x, int y,
 		int movespeed, int number) :
 		Ghost(factory, x, y, movespeed) {
 	this->context = context;
+	this->Tcontext = Tcontext;
 	image = context->loadFromFile("Media/spritesheet1.png");
 
 	if (image == NULL) {
@@ -56,30 +57,18 @@ void SDLGhost::Visualise(double angle) {
 
 void SDLGhost::Move() {
 	mBox.x += mVelX;
-	cout<<mBox.x<<endl;
+	//cout<<mBox.x<<endl;
 //TODO ghost bewegen
-
-	if (mBox.x < 175){
-
-		mVelX = 2;
-
-	}
-	if ((mBox.x + Ghost_WIDTH > 350)){
-
-		mVelX = -2;
-		mVelY = 2;
-	}
 
 
 
 	//If the dot went too far to the left or right or touched a wall
-	/*if ((mBox.x < 0) || (mBox.x + Ghost_WIDTH > 525)) {// || context->touchesWall( mBox) ) {	//TODO dynamic breedte
+	if ((mBox.x < 0) || (mBox.x + Ghost_WIDTH > 525) || context->touchesWall( mBox, Tcontext->tileSet) ) {	//TODO dynamic breedte
 		//move back
-		cout << "links rechts" << endl;
-		mBox.x -= mVelX;
-		mVelY = 2;
+		 mVelX = mVelX * (-1);
+
 	}
-*/
+
 	//Move the dot up or down
 	//mBox.y += mVelY;
 

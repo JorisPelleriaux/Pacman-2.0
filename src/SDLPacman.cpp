@@ -3,10 +3,11 @@
 
 using namespace std;
 
-SDLPacman::SDLPacman(SDLContext* context, AbstractFactory* factory, int lives,
+SDLPacman::SDLPacman(SDLContext* context, SDLContext* Tcontext, AbstractFactory* factory, int lives,
 		int x, int y, int movespeed) :
 		AbsPacman(factory, lives, x, y, movespeed) {
 	this->context = context;
+	this->Tcontext = Tcontext;
 	image = context->loadFromFile("Media/Pacman_sprite.png");
 
 	if (image == NULL) {
@@ -91,14 +92,13 @@ void SDLPacman::Move() {
 	//Move the dot left or right
 	mBox.x += mVelX;
 
+	//check food collision
 	//Move the dot up or down
 	//mBox.y += mVelY;
 
-	//Move the dot left or right
-	//mBox.x += mVelX;
 
 	//If the dot went too far to the left or right or touched a wall
-	if ((mBox.x < 0) || (mBox.x + PAC_WIDTH > 525)) {// || context->touchesWall( mBox) ) {	//TODO dynamic breedte
+	if ((mBox.x < 0) || (mBox.x + PAC_WIDTH > 525) || context->touchesWall( mBox, Tcontext->tileSet) ) {	//TODO dynamic breedte
 		//move back
 		cout << "links rechts" << endl;
 		mBox.x -= mVelX;
@@ -108,8 +108,9 @@ void SDLPacman::Move() {
 	mBox.y += mVelY;
 
 	//If the dot went too far up or down or touched a wall
-	if ((mBox.y < 0) || (mBox.y + PAC_HEIGHT > 644)) {// || context->touchesWall( mBox)) { //TODO dynamic hoogte
+	if ((mBox.y < 0) || (mBox.y + PAC_HEIGHT > 644) || context->touchesWall( mBox, Tcontext->tileSet)) { //TODO dynamic hoogte
 		//move back
 		mBox.y -= mVelY;
 	}
+
 }

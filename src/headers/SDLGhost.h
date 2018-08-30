@@ -14,24 +14,24 @@ using namespace std;
 
 class SDLGhost: public Ghost {
 public:
-	SDLGhost(SDLContext* context, AbstractFactory* factory, int x, int y,
-			int movespeed, int number);
+	SDLGhost(SDLContext* context, SDLContext* Tcontext, AbstractFactory* factory, int x, int y, int movespeed, int number);
 	~SDLGhost();
 	void Visualise(double angle) override;
 	void Move() override;
 
 private:
 	SDL_Texture* image;
-	SDLContext* context;
+	SDLContext* context;	//Ghost context
+	SDLContext* Tcontext;	//Tile context
 
 	//The velocity of the Ghost
 	int mVelX, mVelY;
+
 	//Collision box of the Ghost
 	SDL_Rect mBox;
 
 	//Current animation frame
 	int frame;
-
 };
 
 #endif /* HEADERS_SDLGHOST_H_ */

@@ -83,23 +83,30 @@ void SDLContext::setAlpha(Uint8 alpha) {
 	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
 
-/*bool SDLContext::touchesWall(SDL_Rect box) {
- //Go through the tiles
- for (int i = 0; i < 16; ++i) { //TODO totaltiles dynamic
- //If the tile is a wall type tile
- if ((SDLBackground::tileSet[i]->getType() < 15) //TODO tile path dynamic
- && (SDLBackground::tileSet[i]->getType() >= 0)) {
- //If the collision box touches the wall tile
- if (checkCollision(box, SDLBackground::tileSet[i]->getBox())) {
- return true;
- }
- }
- }
+int SDLContext::touchesWall(SDL_Rect box, Tile* tiles[]) {
+	//Go through the tiles
 
- //If no wall tiles were touched
- return false;
- }
- */
+	for (int i = 0; i < 285; ++i) { //TODO totaltiles dynamic
+		if (tiles[i]->getType() > 15){
+			if (checkCollision(box, tiles[i]->getBox())){
+				tiles[i]->setType(15);
+			}
+		}
+		//If the tile is a wall type tile
+		if ((tiles[i]->getType() < 15)//TODO tile path dynamic
+				&& (tiles[i]->getType() >= 0)) {
+			//If the collision box touches the wall tile
+			if (checkCollision(box, tiles[i]->getBox())) {
+				cout<<"botsing"<<endl;
+				return true;
+			}
+		}
+	}
+
+	//If no wall tiles were touched
+	return false;
+}
+
 bool SDLContext::checkCollision(SDL_Rect a, SDL_Rect b) {
 	//The sides of the rectangles
 	int leftA, leftB;

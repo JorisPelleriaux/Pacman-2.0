@@ -19,7 +19,7 @@ SDLFactory::~SDLFactory() {
 }
 
 AbsPacman* SDLFactory::CreatePacman(int lives, int x, int y, int movespeed) {
-	return new SDLPacman(Paccontext, this, lives, x, y, movespeed);
+	return new SDLPacman(Paccontext, Tilecontext, this, lives, x, y, movespeed);
 }
 
 
@@ -29,6 +29,7 @@ Window* SDLFactory::CreateWindow(int screen_width, int screen_height) {
 	this->Paccontext = new SDLContext(window);
 	this->Tilecontext = new SDLContext(window);
 	this->Ghostcontext = new SDLContext(window);
+	TContext = new SDLContext(window);
 	return window;
 }
 
@@ -44,5 +45,5 @@ Input* SDLFactory::GetInputhandler() {
 	return inputHandler;
 }
 Ghost* SDLFactory::CreateGhost(int x, int y, int movespeed, int number) {
-	return new SDLGhost(Ghostcontext, this, x, y, movespeed, number);
+	return new SDLGhost(Ghostcontext, Tilecontext, this, x, y, movespeed, number);
 }

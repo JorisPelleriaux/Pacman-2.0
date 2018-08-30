@@ -33,7 +33,7 @@ Game::Game(AbstractFactory* factory) {
 	input = NULL;
 
 	//Create Ghost
-	Ghosts[1] = factory->CreateGhost(300,250,5, 1);
+	Ghosts[1] = factory->CreateGhost(300,250,2, 1);
 
 
 	//Ghosts[2] = factory->CreateGhost(60,60,5, 2);

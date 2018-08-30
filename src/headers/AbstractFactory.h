@@ -7,6 +7,7 @@ using namespace std;
 #include "Background.h"
 #include "input.h"
 #include "Ghost.h"
+#include "Context.h"
 
 class AbstractFactory {
 public:
@@ -18,6 +19,8 @@ public:
 	virtual Input *GetInputhandler()=0;
 	virtual Ghost *CreateGhost(int x, int y, int movespeed, int number)=0;
 
+protected:
+	Context* TContext;
 };
 
 #endif /* HEADERS_ABSTRACTFACTORY_H_ */

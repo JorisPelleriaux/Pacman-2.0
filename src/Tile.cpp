@@ -35,6 +35,10 @@ int Tile::getType(){
 	return mType;
 }
 
+void Tile::setType(int type){
+	mType = type;
+}
+
 SDL_Rect Tile::getBox(){
 	return mBox;
 }

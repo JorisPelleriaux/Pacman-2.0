@@ -24,7 +24,7 @@ public:
 	//Maximum axis velocity of the Ghost
 	static const int Ghost_VEL = 5;
 
-	//The dimensions of the Pacman
+	//The dimensions of the Ghost
 	static const int Ghost_WIDTH = 23;
 	static const int Ghost_HEIGHT = 23;
 protected:
