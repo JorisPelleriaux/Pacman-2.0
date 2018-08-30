@@ -1,32 +1,23 @@
-/*
- * Entity.h
- *
- *  Created on: 5 mrt. 2018
- *      Author: joris
- */
-
 #ifndef HEADERS_ENTITY_H_
 #define HEADERS_ENTITY_H_
 #include "Input.h"
 #include "Tile.h"
+#include<windef.h>
 using namespace std;
 
 class Entity {
 public:
-	//entity heeft default eigenschappen zoals positie, grootte, snelheid
+	//Defenition of entity
 	Entity(int x, int y, int width, int height, int movespeed);
 	virtual ~Entity();
+	virtual void Visualise(double angle)=0;	//Visualise entity
+	virtual void Move(RECT box)=0;	//Move entity
 
-	virtual void Update()=0;
-
-	//entity weergeven
-	virtual void Visualise(double angle)=0;
-
-	//entity bewegen
-	virtual void Move();
+	bool CheckCollisions(RECT a, RECT b);	//Check for collision
 
 private:
 	int movespeed;
+	RECT rect;
 };
 
 #endif /* HEADERS_ENTITY_H_ */

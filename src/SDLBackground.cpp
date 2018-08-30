@@ -27,15 +27,12 @@ SDLBackground::SDLBackground(SDLContext* context) :
 SDLBackground::~SDLBackground() {
 	context->free();
 }
-Tile** SDLBackground::getTiles() {
-	return context->tileSet;
-}
 void SDLBackground::Visualise(double angle) {
 	//cout << "clear screen";
 	context->ClearScreen();
 
 	//Render level
-	for (int i = 0; i < TOTAL_TILES; ++i) {
+	for (int i = 0; i < context->TOTAL_TILES; ++i) {
 		context->tileSet[i]->render(context, image);
 	}
 	//Update screen
@@ -43,27 +40,22 @@ void SDLBackground::Visualise(double angle) {
 	//TODO//context->Draw(0, 0, image, 0);
 }
 
-void SDLBackground::Update() {
-
-}
-
 void SDLBackground::Close() {
 	//Deallocate tiles
-	for (int i = 0; i < TOTAL_TILES; ++i) {
+	for (int i = 0; i < context->TOTAL_TILES; ++i) {
 		if (context->tileSet[i] == NULL) {
 			delete context->tileSet[i];
 			context->tileSet[i] = NULL;
 		}
 	}
 }
-void SDLBackground::Move() {
+void SDLBackground::Move(RECT box) {
 
 }
 
 bool SDLBackground::SetTiles() {
 	//Success flag
 	bool tilesLoaded = true;
-
 	//The tile offsets
 	int x = 0, y = 0;
 
@@ -76,7 +68,7 @@ bool SDLBackground::SetTiles() {
 		tilesLoaded = false;
 	} else {
 		//Initialize the tiles
-		for (int i = 0; i < TOTAL_TILES; ++i) {
+		for (int i = 0; i < context->TOTAL_TILES; ++i) {
 			//Determines what kind of tile will be made
 			int tileType = -1;
 
@@ -107,7 +99,7 @@ bool SDLBackground::SetTiles() {
 			x += TILE_WIDTH;
 
 			//If we've gone too far
-			if (x >= 525) {	//TODO dynamic width
+			if (x >= context->sWidth) {
 				//Move back
 				x = 0;
 

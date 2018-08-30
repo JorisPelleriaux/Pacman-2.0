@@ -2,13 +2,15 @@
 #include "SDLContext.h"
 #include "Game.h"
 #include "SDLBackground.h"
-SDLContext::SDLContext(SDLWindow* window) {
+SDLContext::SDLContext(SDLWindow* window) : Context(){
 	this->window = window;
 
 	//Initialize
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
+	sWidth = window->screen_width;
+	sHeight = window->screen_height;
 
 	//Current animation frame
 	frame = 0;
@@ -83,13 +85,14 @@ void SDLContext::setAlpha(Uint8 alpha) {
 	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
 
-int SDLContext::touchesWall(SDL_Rect box, Tile* tiles[]) {
+bool SDLContext::touchesWall(SDL_Rect box, Tile* tiles[], bool pacman) {
 	//Go through the tiles
 
-	for (int i = 0; i < 285; ++i) { //TODO totaltiles dynamic
-		if (tiles[i]->getType() > 15){
-			if (checkCollision(box, tiles[i]->getBox())){
+	for (int i = 0; i < TOTAL_TILES; ++i) {
+		if (tiles[i]->getType() > 15){//TODO tile path dynamic
+			if (checkCollision(box, tiles[i]->getBox()) && pacman){
 				tiles[i]->setType(15);
+
 			}
 		}
 		//If the tile is a wall type tile
@@ -97,7 +100,6 @@ int SDLContext::touchesWall(SDL_Rect box, Tile* tiles[]) {
 				&& (tiles[i]->getType() >= 0)) {
 			//If the collision box touches the wall tile
 			if (checkCollision(box, tiles[i]->getBox())) {
-				cout<<"botsing"<<endl;
 				return true;
 			}
 		}

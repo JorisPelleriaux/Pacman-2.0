@@ -7,7 +7,7 @@
 using namespace std;
 class Tile;
 class SDLWindow;
-class SDLContext : public Context {
+class SDLContext: public Context {
 public:
 	//Initializes variables
 	SDLContext(SDLWindow* window);
@@ -41,14 +41,19 @@ public:
 
 	void UpdateScreen();
 
-	int touchesWall(SDL_Rect box, Tile* tiles[]);
+	bool touchesWall(SDL_Rect box, Tile* tiles[], bool pacman);
 
 	bool checkCollision(SDL_Rect a, SDL_Rect b);
 
 	//Gets image dimensions
 	int getWidth();
 	int getHeight();
-	SDL_Rect gTileClips[16];
+
+	//Tile constants
+	static const int TOTAL_TILES = 285;
+	static const int TOTAL_TILE_SPRITES = 18;
+
+	SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
 
 	//Walking animation Pacman
 	const int ANIMATION_FRAMES = 4;
@@ -59,11 +64,16 @@ public:
 	SDL_Rect gSpriteClips_Ghost[2];
 
 	//The level tiles
-	Tile* tileSet[285];
+	Tile* tileSet[TOTAL_TILES];
+
+	//Screen dimensions
+	int sWidth;
+	int sHeight;
 
 protected:
 
 private:
+	//The window
 	SDLWindow* window;
 
 	//The actual hardware texture
@@ -75,7 +85,6 @@ private:
 
 	//Current animation frame
 	int frame;
-
 };
 
 #endif /* SDLCONTEXT_H_ */

@@ -6,15 +6,15 @@ using namespace std;
 class Window {
 public:
 	Window();
-	Window(int Screen_height, int Screen_width);
+	Window(int Screen_width, int Screen_height);
 	virtual ~Window();
 
 	virtual int CreateWindow()=0;
 	virtual void Render()=0;
 
-	//DOET NIETS
-	int screen_height = 480;
-	int screen_width = 640;
+
+	int screen_height = 0;
+	int screen_width = 0;
 
 };
 

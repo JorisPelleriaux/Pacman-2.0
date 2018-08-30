@@ -7,25 +7,28 @@ using namespace std;
 
 class SDLPacman: public AbsPacman {
 public:
-	SDLPacman(SDLContext* context, SDLContext* Tcontext, AbstractFactory* factory, int lives, int x,
+	SDLPacman(SDLContext* context, SDLContext* Tcontext, SDLContext* Gcontext, AbstractFactory* factory, int lives, int x,
 			int y, int movespeed);
 	~SDLPacman();
 	void Visualise(double angle) override;
-	void Move() override;
+	void Move(RECT box) override;
 	void handleEvent(InputType dir) override;
 
 private:
 	SDL_Texture* image;
 	SDLContext* context;
 	SDLContext* Tcontext;
+	SDLContext* Gcontext;
 
 	//The velocity of the Pacman
 	int mVelX, mVelY;
+
 	//Collision box of the Pacman
 	SDL_Rect mBox;
 
 	//Current animation frame
 	int frame;
+	RECT pbox;
 
 };
 

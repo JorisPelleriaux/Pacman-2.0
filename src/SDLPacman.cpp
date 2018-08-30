@@ -3,11 +3,13 @@
 
 using namespace std;
 
-SDLPacman::SDLPacman(SDLContext* context, SDLContext* Tcontext, AbstractFactory* factory, int lives,
-		int x, int y, int movespeed) :
+SDLPacman::SDLPacman(SDLContext* context, SDLContext* Tcontext,
+		SDLContext* Gcontext, AbstractFactory* factory, int lives, int x, int y,
+		int movespeed) :
 		AbsPacman(factory, lives, x, y, movespeed) {
 	this->context = context;
 	this->Tcontext = Tcontext;
+	this->Gcontext = Gcontext;
 	image = context->loadFromFile("Media/Pacman_sprite.png");
 
 	if (image == NULL) {
@@ -20,10 +22,12 @@ SDLPacman::SDLPacman(SDLContext* context, SDLContext* Tcontext, AbstractFactory*
 	}
 	mVelX = 0;
 	mVelY = 0;
-	mBox.x = x;
-	mBox.y = y;
+	mBox.x = pbox.left = x;
+	mBox.y = pbox.top = y;
 	mBox.w = PAC_WIDTH;
 	mBox.h = PAC_HEIGHT;
+	pbox.right = x + PAC_WIDTH;
+	pbox.bottom = y + PAC_HEIGHT;
 
 	//Current animation frame
 	frame = 0;
@@ -35,7 +39,6 @@ SDLPacman::~SDLPacman() {
 }
 
 void SDLPacman::Visualise(double angle) {
-	//cout << PAC_VEL << endl;
 
 	//Render current frame
 	SDL_Rect* currentClip = &context->gSpriteClips[frame / 8];
@@ -84,33 +87,38 @@ void SDLPacman::handleEvent(InputType dir) {
 	}
 }
 
-void SDLPacman::Move() {
-	//mVelX = 0;
-	//mVelY = 0;
+void SDLPacman::Move(RECT box) {
+	this->box.left += mVelX;
+	this->box.top += mVelY;
+	this->box.right = this->box.left + this->PAC_WIDTH;
+	this->box.bottom = this->box.top + this->PAC_HEIGHT;
 
-	//cout << "pac move" << endl;
-	//Move the dot left or right
-	mBox.x += mVelX;
+	mBox.x += mVelX;	//Move the Pacman left or right
 
-	//check food collision
-	//Move the dot up or down
-	//mBox.y += mVelY;
-
-
-	//If the dot went too far to the left or right or touched a wall
-	if ((mBox.x < 0) || (mBox.x + PAC_WIDTH > 525) || context->touchesWall( mBox, Tcontext->tileSet) ) {	//TODO dynamic breedte
-		//move back
-		cout << "links rechts" << endl;
-		mBox.x -= mVelX;
+	if (this->context->checkcollision(box, pbox)) {
+		cout << "ghost geraakt" << endl;
 	}
 
-	//Move the dot up or down
-	mBox.y += mVelY;
-
-	//If the dot went too far up or down or touched a wall
-	if ((mBox.y < 0) || (mBox.y + PAC_HEIGHT > 644) || context->touchesWall( mBox, Tcontext->tileSet)) { //TODO dynamic hoogte
-		//move back
-		mBox.y -= mVelY;
+	//pass right exit
+	if (mBox.x + PAC_WIDTH > context->sWidth) {
+		mBox.x = 0;
+	}
+	//pass left exit
+	if (mBox.x < 0) {
+		mBox.x = context->sWidth - PAC_WIDTH;
 	}
 
+	//If the Pac touched a wall
+	if (context->touchesWall(mBox, Tcontext->tileSet, true)) {
+		//move back
+		mBox.x -= mVelX;	//Stop
+	}
+
+	mBox.y += mVelY;	//Move the Pacman up or down
+
+	//If the Pac went too far up or down or touched a wall
+	if ((mBox.y < 0) || (mBox.y + PAC_HEIGHT > context->sHeight)
+			|| context->touchesWall(mBox, Tcontext->tileSet, true)) {
+		mBox.y -= mVelY;	//Stop
+	}
 }

@@ -26,8 +26,6 @@ protected:
 	AbsPacman* Pac;
 	Ghost* Ghosts[4];
 
-
-
 private:
 	AbstractFactory* factory;
 
@@ -35,6 +33,5 @@ private:
 	GameState state;
 	Background* background;
 	Input* inputhandler;
-	int lives;
 };
 #endif /* HEADERS_GAME_H_ */

@@ -15,7 +15,7 @@ Game::Game(AbstractFactory* factory) {
 	this->factory = factory;
 
 	//Create a window
-	window = factory->CreateWindow(665, 525); //668, 603 //Height, Width
+	window = factory->CreateWindow(525,665); //668, 603
 	window->CreateWindow();
 
 	//Render the background
@@ -24,7 +24,6 @@ Game::Game(AbstractFactory* factory) {
 	//Create Pacman
 	Pac = factory->CreatePacman(3, 251, 595, 10);
 
-	lives = 3;
 
 	//Default state
 	state = Menu;
@@ -48,7 +47,8 @@ void Game::Start() {
 	 }*/
 	double angle = 0;
 	while (!quit) {
-		//cout<<"get input"<<endl;
+
+		//cout<<this->Ghosts[1]->Box.bottom<<endl;
 		input = inputhandler->GetInput();
 		if (find(input->inputVector.begin(), input->inputVector.end(),
 				InputType::Quit) != input->inputVector.end()) {
@@ -59,8 +59,8 @@ void Game::Start() {
 		for (InputType dir : input->inputVector) {
 			Pac->handleEvent(dir);
 		}
-		Pac->Move();
-		Ghosts[1]->Move();
+		Pac->Move(this->Ghosts[1]->Box);
+		Ghosts[1]->Move(this->Pac->box);
 		//Ghosts[2]->Move();
 		if (find(input->inputVector.begin(), input->inputVector.end(),
 				InputType::DLeft) != input->inputVector.end()) {
@@ -69,7 +69,6 @@ void Game::Start() {
 		if (find(input->inputVector.begin(), input->inputVector.end(),
 				InputType::DRight) != input->inputVector.end()) {
 			angle = 0;
-			cout << "input gekregen" << endl;
 		}
 		if (find(input->inputVector.begin(), input->inputVector.end(),
 				InputType::DUp) != input->inputVector.end()) {

@@ -55,25 +55,57 @@ void SDLGhost::Visualise(double angle) {
 	}
 }
 
-void SDLGhost::Move() {
+void SDLGhost::Move(RECT box) {
 	mBox.x += mVelX;
-	//cout<<mBox.x<<endl;
+
+	//Give position to AbsGhost
+	this->Box.left +=mVelX;
+	this->Box.top +=mVelY;
+	this->Box.right = this->Box.left + this->Ghost_WIDTH;
+	this->Box.bottom = this->Box.top + this->Ghost_HEIGHT;
+
 //TODO ghost bewegen
 
 
 
 	//If the dot went too far to the left or right or touched a wall
-	if ((mBox.x < 0) || (mBox.x + Ghost_WIDTH > 525) || context->touchesWall( mBox, Tcontext->tileSet) ) {	//TODO dynamic breedte
-		//move back
+	if (context->touchesWall( mBox, Tcontext->tileSet, false) ) {
+		mVelX = mVelX * (-1);
+	}
+		/*//move back
+		int j =rand()%4;
+
+		switch(j){
+		case 0:
+			//move right
+			mBox.x += mVelX;
+			break;
+		case 1:
+			//move left
+			mBox.x -= mVelX;
+			break;
+		case 2:
+			//move down
+			mBox.y += mVelY;
+			break;
+		case 3:
+			//move up
+			mBox.y -= mVelY;
+			break;
+		default:
+			//move down
+			mBox.y += mVelY;
+			break;
+		}
 		 mVelX = mVelX * (-1);
 
-	}
+	}*/
 
 	//Move the dot up or down
 	//mBox.y += mVelY;
 
 	//If the dot went too far up or down or touched a wall
-	/*if ((mBox.y < 0) || (mBox.y + Ghost_HEIGHT > 644)) {// || context->touchesWall( mBox)) { //TODO dynamic hoogte
+	/*if ((mBox.y < 0) || (mBox.y + Ghost_HEIGHT > context->sHeight)) {// || context->touchesWall( mBox)) {
 		//move back
 		mBox.y -= mVelY;
 	}*/

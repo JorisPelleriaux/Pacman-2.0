@@ -9,7 +9,6 @@ class Background: public Entity {
 public:
 	Background();
 	virtual ~Background();
-	void Move();
 };
 
 #endif /* BACKGROUND_H_ */

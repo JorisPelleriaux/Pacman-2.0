@@ -9,19 +9,16 @@ class SDLBackground: public Background {
 public:
 	SDLBackground(SDLContext* context);
 	~SDLBackground();
-	void Update() override;
 	void Visualise(double angle) override;
-	void Move() override;
+	void Move(RECT box) override;
 	bool SetTiles();
 	void Close();
-	Tile** getTiles();
 
 protected:
 	//Tile constants
 	const int TILE_WIDTH = 35;
 	const int TILE_HEIGHT = 35;
-	static const int TOTAL_TILES = 285;
-	static const int TOTAL_TILE_SPRITES = 18;
+
 
 	//The different tile sprites
 	const int TILE_HORIZONTAL = 0;

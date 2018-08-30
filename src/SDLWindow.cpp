@@ -3,11 +3,13 @@
 #include <iostream>
 using namespace std;
 
-SDLWindow::SDLWindow(int screen_height, int screen_width) :
-		Window(screen_height, screen_width) {
+SDLWindow::SDLWindow(int screen_width, int screen_height) :
+		Window(screen_width, screen_height) {
 	gWindow = NULL;
 	gRenderer = NULL;
 	gTexture = NULL;
+	this->screen_height = screen_height;
+	this->screen_width = screen_width;
 
 }
 

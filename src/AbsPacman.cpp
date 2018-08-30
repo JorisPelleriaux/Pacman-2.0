@@ -1,13 +1,5 @@
-/*
- * AbsPacman.cpp
- *
- *  Created on: 5 mrt. 2018
- *      Author: joris
- */
-
 #include "AbsPacman.h"
 #include "AbstractFactory.h"
-
 #include <iostream>
 
 using namespace std;
@@ -19,27 +11,22 @@ AbsPacman::AbsPacman(AbstractFactory* factory, int lives, int x, int y,
 	this->factory = factory;
 	inputHandler = factory->GetInputhandler();
 	this->lives = lives;
-	this->x = x;
-	this->y = y;
+	this->box.left = x;
+	this->box.top = y;
 	this->movespeed = movespeed;
+
 
 }
 
 AbsPacman::~AbsPacman() {
-
 }
 
-void AbsPacman::Update() {
+/*void AbsPacman::Move(RECT box) {
 
-}
-
-void AbsPacman::Move() {
-
-
-
-}
+//Define how pacman should move
+}*/
 void handleEvent(InputType dir){
-
+//Handle the input
 }
 int AbsPacman::GetLives() {
 	return lives;

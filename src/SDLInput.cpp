@@ -27,19 +27,15 @@ BaseInput* SDLInput::GetInput() {
 			//Get input
 			switch (e.key.keysym.sym) {
 			case SDLK_UP:
-				cout << "up" << endl;
 				input->inputVector.push_back(InputType::DUp);
 				break;
 			case SDLK_DOWN:
-				cout << "down" << endl;
 				input->inputVector.push_back(InputType::DDown);
 				break;
 			case SDLK_LEFT:
-				cout << "left" << endl;
 				input->inputVector.push_back(InputType::DLeft);
 				break;
 			case SDLK_RIGHT:
-				cout << "right" << endl;
 				input->inputVector.push_back(InputType::DRight);
 				break;
 			case SDLK_ESCAPE:
@@ -53,19 +49,15 @@ BaseInput* SDLInput::GetInput() {
 					//Get input
 					switch (e.key.keysym.sym) {
 					case SDLK_UP:
-						cout << "up" << endl;
 						input->inputVector.push_back(InputType::UUp);
 						break;
 					case SDLK_DOWN:
-						cout << "down" << endl;
 						input->inputVector.push_back(InputType::UDown);
 						break;
 					case SDLK_LEFT:
-						cout << "left" << endl;
 						input->inputVector.push_back(InputType::ULeft);
 						break;
 					case SDLK_RIGHT:
-						cout << "right" << endl;
 						input->inputVector.push_back(InputType::URight);
 						break;
 					}

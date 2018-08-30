@@ -13,8 +13,7 @@ class AbsPacman: public Entity {
 public:
 	AbsPacman(AbstractFactory* factory, int lives, int x, int y, int movespeed);
 	virtual ~AbsPacman();
-	void Update();
-	void Move();
+
 	virtual void handleEvent(InputType dir)=0;
 	int GetLives();
 	//Maximum axis velocity of the Pacman
@@ -23,14 +22,15 @@ public:
 	//The dimensions of the Pacman
 	static const int PAC_WIDTH = 34;
 	static const int PAC_HEIGHT = 35;
+
+	RECT box;	//Position
 protected:
-	int x;
-	int y;
 	int movespeed;
 private:
 	AbstractFactory* factory;
 	Input* inputHandler;
 	int lives;
+	int score=0;
 
 };
 
