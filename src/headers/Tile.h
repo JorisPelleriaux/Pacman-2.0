@@ -17,9 +17,6 @@ public:
 	//Initializes position and type
 	Tile(int x, int y, int tileType);
 
-	//Shows the tile
-	void render(SDLContext* context, SDL_Texture* image);
-
 	//Get the tile type
 	int getType();
 
@@ -40,7 +37,7 @@ private:
 	SDL_Rect mBox;
 
 	//The tile type
-	int mType;
+	int mType = 0;
 
 };
 #endif /* HEADERS_TILE_H_ */

@@ -41,9 +41,9 @@ public:
 
 	void UpdateScreen();
 
-	bool touchesWall(SDL_Rect box, Tile* tiles[], bool pacman);
+	bool touchesWall(SDL_Rect box, AbsTile* tiles[], bool pacman);
 
-	bool checkCollision(SDL_Rect a, SDL_Rect b);
+	bool checkCollision(SDL_Rect a, RECT b);
 
 	//Gets image dimensions
 	int getWidth();
@@ -53,22 +53,23 @@ public:
 	static const int TOTAL_TILES = 285;
 	static const int TOTAL_TILE_SPRITES = 18;
 
+	//Type tiles
 	SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
 
 	//Walking animation Pacman
 	const int ANIMATION_FRAMES = 4;
-	SDL_Rect gSpriteClips[4];
+	SDL_Rect gSpriteClips[5];
 
 	//Walking animation Ghost
 	const int ANIMATION_FRAMES_Ghost = 2;
-	SDL_Rect gSpriteClips_Ghost[4][2];
+	SDL_Rect gSpriteClips_Ghost[4][2];	//MAX 4 ghosts with 2 sprites
 
 	//Screen dimensions
 	int sWidth;
 	int sHeight;
 
-	//The level tiles
-	Tile* tileSet[TOTAL_TILES];
+	int CurrGhost;
+
 protected:
 
 private:

@@ -21,63 +21,71 @@ Game::Game(AbstractFactory* factory) {
 	//Render the background
 	background = factory->CreateBackground();
 
+	//Create Ghosts
+	for (int i = 0; i < 4; i++) {
+		Ghosts[i] = factory->CreateGhost(300 - (i * 40), 250 + (2 * 20), 1, i);
+	}
+
 	//Create Pacman
 	Pac = factory->CreatePacman(3, 251, 595, 10);
 
-	//Default state (later use)
-	state = Menu;
+	//Default state
+	state = Running;
 
 	//Inputhandler
 	inputhandler = factory->GetInputhandler();
 	input = NULL;
 
-	//Create Ghosts
-	for (int i = 1; i <= 4; i++) {
-		Ghosts[i] = factory->CreateGhost(300, 250 + i, 1, i);
-	}
-
 }
 void Game::Start() {
 	//Main loop flag
-	bool quit = false;
 	int angle = 0;
-	while (!quit) {
-
-		//cout<<this->Ghosts[1]->Box.bottom<<endl;
-
+	while (state != QuitGame) {
 		//Get input and check for quit
 		input = inputhandler->GetInput();
 		if (find(input->inputVector.begin(), input->inputVector.end(),
 				InputType::Quit) != input->inputVector.end()) {
-			quit = true;
+			state = QuitGame;
 		}
 
-		//pass the input (left,right,up,down) to the pac
-		for (InputType dir : input->inputVector) {
-			Pac->handleEvent(dir);
+		switch (state) {
+		case Menu:
+			break;
+		case Running: {
+			//pass the input (left,right,up,down) to the pac
+			for (InputType dir : input->inputVector) {
+				Pac->handleEvent(dir);
+			}
+			Pac->Move(this->Ghosts[2]->Box);	//Move the pacman
+
+			//Move the ghosts
+			for (int i = 0; i < 4; i++) {
+				Ghosts[i]->Move(this->Pac->Pbox);
+			}
+			//Render Background
+			background->Visualise(0);
+			//Render Ghosts
+			for (int i = 0; i < 4; i++) {
+				Ghosts[i]->Visualise(0);
+			}
+			if (Pac->CheckCollision()) {
+				//Pac->TakeLive();
+				//Pac->Visualise(2);
+				cout<<"RAAK"<<endl;
+			}
+			//Render pacman
+			Pac->Visualise(0);
+			//Update screen
+			window->Render();
+
+		}
+			break;
+		case GameOver:
+			break;
+		case NoState:
+			break;
 		}
 
-		//Move the pacman
-		Pac->Move(this->Ghosts[1]->Box);
-
-		//Move the ghosts
-		/*for (int i = 1; i <= 4; i++) {
-			Ghosts[i]->Move(this->Pac->box);
-		}*/
-		Ghosts[1]->Move(this->Pac->box);
-		//Render Background
-		background->Visualise(angle);
-
-		//Render pacman
-		Pac->Visualise(angle);
-
-		//Render Ghosts
-		/*for (int i = 1; i <= 4; i++) {
-			Ghosts[i]->Visualise(i);
-		}*/
-		Ghosts[1]->Visualise(1);
-		//Update screen
-		window->Render();
 	}
 
 }

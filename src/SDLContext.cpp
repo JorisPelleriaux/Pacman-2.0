@@ -19,6 +19,9 @@ SDLContext::SDLContext(SDLWindow* window) :
 	//Current animation frame
 	frame = 0;
 
+	//Current Ghost
+	CurrGhost = 0;
+
 }
 
 SDLContext::~SDLContext() {
@@ -89,7 +92,7 @@ void SDLContext::setAlpha(Uint8 alpha) {
 	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
 
-bool SDLContext::touchesWall(SDL_Rect box, Tile* tiles[], bool pacman) {
+bool SDLContext::touchesWall(SDL_Rect box, AbsTile* tiles[], bool pacman) {
 	//Go through the tiles
 
 	for (int i = 0; i < TOTAL_TILES; ++i) {
@@ -113,12 +116,12 @@ bool SDLContext::touchesWall(SDL_Rect box, Tile* tiles[], bool pacman) {
 	return false;
 }
 
-bool SDLContext::checkCollision(SDL_Rect a, SDL_Rect b) {
+bool SDLContext::checkCollision(SDL_Rect a, RECT b) {
 	//The sides of the rectangles
-	int leftA, leftB;
-	int rightA, rightB;
-	int topA, topB;
-	int bottomA, bottomB;
+	int leftA;
+	int rightA;
+	int topA;
+	int bottomA;
 
 	//Calculate the sides of rect A
 	leftA = a.x;
@@ -126,26 +129,20 @@ bool SDLContext::checkCollision(SDL_Rect a, SDL_Rect b) {
 	topA = a.y;
 	bottomA = a.y + a.h;
 
-	//Calculate the sides of rect B
-	leftB = b.x;
-	rightB = b.x + b.w;
-	topB = b.y;
-	bottomB = b.y + b.h;
-
 	//If any of the sides from A are outside of B
-	if (bottomA <= topB) {
+	if (bottomA <= b.top) {
 		return false;
 	}
 
-	if (topA >= bottomB) {
+	if (topA >= b.bottom) {
 		return false;
 	}
 
-	if (rightA <= leftB) {
+	if (rightA <= b.left) {
 		return false;
 	}
 
-	if (leftA >= rightB) {
+	if (leftA >= b.right) {
 		return false;
 	}
 
@@ -173,27 +170,32 @@ void SDLContext::CreatePacSprites() {
 	gSpriteClips[3].y = 0;
 	gSpriteClips[3].w = 35;
 	gSpriteClips[3].h = 35;
+
+	gSpriteClips[4].x = 117;
+	gSpriteClips[4].y = 0;
+	gSpriteClips[4].w = 35;
+	gSpriteClips[4].h = 35;
 }
 
 void SDLContext::CreateGhostSprites(int number) {
 	int x1, x2, y1, y2;
 	switch (number) {
-	case 1:
+	case 0:
 		x1 = 156;
 		x2 = 182;
 		y1 = y2 = 0;
 		break;
-	case 2:
+	case 1:
 		x1 = 156;
 		x2 = 182;
 		y1 = y2 = 34;
 		break;
-	case 3:
+	case 2:
 		x1 = 156;
 		x2 = 182;
 		y1 = y2 = 77;
 		break;
-	case 4:
+	case 3:
 		x1 = 156;
 		x2 = 182;
 		y1 = y2 = 112;
@@ -239,7 +241,6 @@ void SDLContext::Draw(int x, int y, SDL_Texture* texture, SDL_Rect* clip,
 	//SDL_RenderPresent(window->gRenderer);
 
 }
-
 
 void SDLContext::UpdateScreen() {
 	SDL_RenderPresent(window->gRenderer);

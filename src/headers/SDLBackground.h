@@ -9,7 +9,7 @@ class SDLBackground: public Background {
 public:
 	SDLBackground(SDLContext* context);
 	~SDLBackground();
-	void Visualise(int angle) override;
+	void Visualise(int State) override;
 	void Move(RECT box) override;
 	bool SetTiles();
 	void Close();

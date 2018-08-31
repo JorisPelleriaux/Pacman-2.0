@@ -17,13 +17,11 @@ public:
 	static const int Ghost_WIDTH = 23;
 	static const int Ghost_HEIGHT = 23;
 	RECT Box;	//Position
-	void testmethod();
 protected:
 
 private:
 	AbstractFactory* factory;
 	Context* context;
-
 	//Maximum axis velocity of the Ghost
 	int Ghost_VEL = 2;
 };

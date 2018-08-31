@@ -12,6 +12,10 @@ public:
 	bool checkcollision(RECT a, RECT b);
 	bool touchesWall(RECT box);
 
+	//The level tiles
+	AbsTile* tileSet[285];
+	RECT Ghosts[4];
+
 };
 
 #endif /* HEADERS_CONTEXT_H_ */

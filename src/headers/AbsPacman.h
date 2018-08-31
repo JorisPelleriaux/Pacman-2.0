@@ -11,17 +11,20 @@ class AbstractFactory;
 
 class AbsPacman: public Entity {
 public:
-	AbsPacman(AbstractFactory* factory, int lives, int x, int y, int movespeed);
+	AbsPacman(AbstractFactory* factory, Context* context, int lives, int x, int y, int movespeed);
 	virtual ~AbsPacman();
 
 	void handleEvent(InputType dir);
-	int GetLives();
+	int GetLives();	//Return lives
+	void TakeLive();	//Take a live from the pac
+	bool CheckCollision();	//Check collision with ghosts
+	//void Move(RECT box) override;
 
 	//The dimensions of the Pacman
-	static const int PAC_WIDTH = 34;
-	static const int PAC_HEIGHT = 35;
+	static const int PAC_WIDTH = 33;
+	static const int PAC_HEIGHT = 34;
 
-	RECT box;	//Position
+	RECT Pbox;	//Position
 protected:
 	int movespeed;	//May be removed
 	int XVEL = 0;	//X velocity of the Pacman
@@ -30,6 +33,7 @@ protected:
 private:
 	AbstractFactory* factory;
 	Input* inputHandler;
+	Context* context;
 	int lives;
 	int score = 0;
 

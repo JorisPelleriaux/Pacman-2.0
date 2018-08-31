@@ -29,21 +29,21 @@ SDLBackground::SDLBackground(SDLContext* context) :
 SDLBackground::~SDLBackground() {
 	context->free();
 }
-void SDLBackground::Visualise(int angle) {
+void SDLBackground::Visualise(int State) {
 	context->ClearScreen();
 
 	//Render Tiles
 	for (int i = 0; i < context->TOTAL_TILES; ++i) {
-		context->Draw(context->tileSet[i]->getBox().x, context->tileSet[i]->getBox().y, image, &context->gTileClips[context->tileSet[i]->getType()],0.0 );
+		context->Draw(context->tileSet[i]->getBox().left, context->tileSet[i]->getBox().top, image, &context->gTileClips[context->tileSet[i]->getType()],0.0 );
 	}
 }
 
 void SDLBackground::Close() {
 	//Deallocate tiles
 	for (int i = 0; i < context->TOTAL_TILES; ++i) {
-		if (context->tileSet[i] == NULL) {
-			delete context->tileSet[i];
-			context->tileSet[i] = NULL;
+		if (this->context->tileSet[i] == NULL) {
+			delete this->context->tileSet[i];
+			this->context->tileSet[i] = NULL;
 		}
 	}
 }
@@ -82,7 +82,7 @@ bool SDLBackground::SetTiles() {
 
 			//If the number is a valid tile number
 			if ((tileType >= 0) && (tileType < 20)) {
-				context->tileSet[i] = new Tile(x, y, tileType);
+				context->tileSet[i] = new AbsTile(x, y, tileType);
 			}
 			//If we don't recognize the tile type
 			else {

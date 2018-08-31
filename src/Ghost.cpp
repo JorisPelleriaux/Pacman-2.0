@@ -22,7 +22,19 @@ Ghost::~Ghost() {
 void Ghost::Move(RECT box) {
 //Define how the ghost should move
 
-	Box.left += Ghost_VEL;
+	/*Box.left += Ghost_VEL;
+
+
+	if (context->touchesWall(Box)) {
+		Box.left -= Ghost_VEL;
+	}
+
+	Box.top += Ghost_VEL;
+	if (context->touchesWall(Box)) {
+			Box.top -= Ghost_VEL;
+		}*/
+}
+	/*
 //	cout<<context->AbstileSet[1]->getBox().left<<endl;
 	/*if (context->touchesWall(Box)){
 		cout<<"Wall"<<endl;
@@ -52,7 +64,5 @@ void Ghost::Move(RECT box) {
 		Box.top -= Ghost_VEL;
 	}
 */
-}
-void Ghost::testmethod(){
+//}
 
-}

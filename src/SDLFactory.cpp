@@ -5,35 +5,29 @@
 using namespace std;
 
 SDLFactory::SDLFactory() {
-	Paccontext = NULL;
-	Tilecontext = NULL;
+	Gamecontext = NULL;
 	inputHandler = NULL;
-	Ghostcontext = NULL;
 }
 
 SDLFactory::~SDLFactory() {
-	delete Paccontext;
-	delete Tilecontext;
+	delete Gamecontext;
 	delete inputHandler;
-	delete Ghostcontext;
 }
 
 AbsPacman* SDLFactory::CreatePacman(int lives, int x, int y, int movespeed) {
-	return new SDLPacman(Paccontext, Tilecontext, Ghostcontext, this, lives, x, y, movespeed);
+	return new SDLPacman(Gamecontext, this, lives, x, y, movespeed);
 }
 
 
 
 Window* SDLFactory::CreateWindow(int screen_width, int screen_height) {
 	SDLWindow* window = new SDLWindow(screen_width, screen_height);
-	this->Paccontext = new SDLContext(window);
-	this->Tilecontext = new SDLContext(window);
-	this->Ghostcontext = new SDLContext(window);
+	this->Gamecontext = new SDLContext(window);
 	return window;
 }
 
 Background* SDLFactory::CreateBackground() {
-	return new SDLBackground(Tilecontext);
+	return new SDLBackground(Gamecontext);
 }
 
 Input* SDLFactory::GetInputhandler() {
@@ -43,5 +37,5 @@ Input* SDLFactory::GetInputhandler() {
 	return inputHandler;
 }
 Ghost* SDLFactory::CreateGhost(int x, int y, int movespeed, int number) {
-	return new SDLGhost(Ghostcontext, Tilecontext, this, x, y, movespeed, number);
+	return new SDLGhost(Gamecontext, this, x, y, movespeed, number);
 }

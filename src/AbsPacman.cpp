@@ -5,15 +5,18 @@
 using namespace std;
 
 //Constructor sets required parameters
-AbsPacman::AbsPacman(AbstractFactory* factory, int lives, int x, int y,
-		int movespeed) :
+AbsPacman::AbsPacman(AbstractFactory* factory, Context* context, int lives,
+		int x, int y, int movespeed) :
 		Entity(x, y, 20, 20, movespeed) {
 	this->factory = factory;
 	inputHandler = factory->GetInputhandler();
 	this->lives = lives;
-	this->box.left = x;
-	this->box.top = y;
+	this->Pbox.left = x;
+	this->Pbox.top = y;
+	this->Pbox.right = x + 30;
+	this->Pbox.bottom = y + 30;
 	this->movespeed = movespeed;
+	this->context = context;
 
 }
 
@@ -21,8 +24,22 @@ AbsPacman::~AbsPacman() {
 }
 
 /*void AbsPacman::Move(RECT box) {
-
  //Define how pacman should move
+
+ Pbox.left += XVEL;	//Move the Pacman left or right
+
+ //If the Pac touched a wall
+ if (context->touchesWall(Pbox)) {
+ //move back
+ //cout<<"wall"<<endl;
+ Pbox.left -= XVEL;	//Stop
+ }
+
+ Pbox.top += YVEL;	//Move the Pacman up or down
+ if (context->touchesWall(Pbox)) {
+ Pbox.top -= YVEL;
+ }
+
  }*/
 
 //Handle the input
@@ -61,6 +78,20 @@ void AbsPacman::handleEvent(InputType dir) {
 		return;
 	}
 }
+
+bool AbsPacman::CheckCollision() {
+	for (int i = 0; i < 4; i++) {
+		if (context->checkcollision(context->Ghosts[i], Pbox)) {
+			return true;
+			break;
+		}
+	}
+	return false;
+}
+
 int AbsPacman::GetLives() {
 	return lives;
+}
+void AbsPacman::TakeLive() {
+	lives -= 1;
 }

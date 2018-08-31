@@ -20,11 +20,7 @@ public:
 
 private:
 	Input* inputHandler;
-	SDLContext* Paccontext;
-	SDLContext* Tilecontext;
-	SDLContext* Ghostcontext;
-
-
+	SDLContext* Gamecontext;
 };
 
 #endif /* HEADERS_SDLFACTORY_H_ */
