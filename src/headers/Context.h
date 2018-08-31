@@ -2,14 +2,16 @@
 #define HEADERS_CONTEXT_H_
 using namespace std;
 #include <string>
-#include<windef.h>
+#include <windef.h>
+#include "AbsTile.h"
 
 class Context {
-	public:
-		Context();
-		virtual ~Context();
-		bool checkcollision(RECT a, RECT b);
-		//The level tiles
+public:
+	Context();
+	virtual ~Context();
+	bool checkcollision(RECT a, RECT b);
+	bool touchesWall(RECT box);
+
 };
 
 #endif /* HEADERS_CONTEXT_H_ */

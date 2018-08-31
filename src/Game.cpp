@@ -15,7 +15,7 @@ Game::Game(AbstractFactory* factory) {
 	this->factory = factory;
 
 	//Create a window
-	window = factory->CreateWindow(525,665); //668, 603
+	window = factory->CreateWindow(525, 665);
 	window->CreateWindow();
 
 	//Render the background
@@ -24,31 +24,28 @@ Game::Game(AbstractFactory* factory) {
 	//Create Pacman
 	Pac = factory->CreatePacman(3, 251, 595, 10);
 
-
-	//Default state
+	//Default state (later use)
 	state = Menu;
 
+	//Inputhandler
 	inputhandler = factory->GetInputhandler();
 	input = NULL;
 
-	//Create Ghost
-	Ghosts[1] = factory->CreateGhost(300,250,2, 1);
+	//Create Ghosts
+	for (int i = 1; i <= 4; i++) {
+		Ghosts[i] = factory->CreateGhost(300, 250 + i, 1, i);
+	}
 
-
-	//Ghosts[2] = factory->CreateGhost(60,60,5, 2);
-	//Ghosts[2]->Visualise(0.0);
 }
 void Game::Start() {
 	//Main loop flag
 	bool quit = false;
-
-	/*for (InputType dir : input->inputVector) {
-	 Pac->Move(dir);
-	 }*/
-	double angle = 0;
+	int angle = 0;
 	while (!quit) {
 
 		//cout<<this->Ghosts[1]->Box.bottom<<endl;
+
+		//Get input and check for quit
 		input = inputhandler->GetInput();
 		if (find(input->inputVector.begin(), input->inputVector.end(),
 				InputType::Quit) != input->inputVector.end()) {
@@ -59,42 +56,28 @@ void Game::Start() {
 		for (InputType dir : input->inputVector) {
 			Pac->handleEvent(dir);
 		}
+
+		//Move the pacman
 		Pac->Move(this->Ghosts[1]->Box);
+
+		//Move the ghosts
+		/*for (int i = 1; i <= 4; i++) {
+			Ghosts[i]->Move(this->Pac->box);
+		}*/
 		Ghosts[1]->Move(this->Pac->box);
-		//Ghosts[2]->Move();
-		if (find(input->inputVector.begin(), input->inputVector.end(),
-				InputType::DLeft) != input->inputVector.end()) {
-			angle = 180;
-		}
-		if (find(input->inputVector.begin(), input->inputVector.end(),
-				InputType::DRight) != input->inputVector.end()) {
-			angle = 0;
-		}
-		if (find(input->inputVector.begin(), input->inputVector.end(),
-				InputType::DUp) != input->inputVector.end()) {
-			angle = 270;
-		}
-		if (find(input->inputVector.begin(), input->inputVector.end(),
-				InputType::DDown) != input->inputVector.end()) {
-			angle = 90;
-		} else {
+		//Render Background
+		background->Visualise(angle);
 
-			//1: Clear screen
-			//2: Render background
-			background->Visualise(angle);
-			//3: render dot
-			Pac->Visualise(angle);
-			Ghosts[1]->Visualise(0.0);
-			//4: update screen
+		//Render pacman
+		Pac->Visualise(angle);
 
-			//background->Visualise(0);
-			window->Render();
-
-			//background->Close();
-
-			//input= NULL;
-		}
-
+		//Render Ghosts
+		/*for (int i = 1; i <= 4; i++) {
+			Ghosts[i]->Visualise(i);
+		}*/
+		Ghosts[1]->Visualise(1);
+		//Update screen
+		window->Render();
 	}
 
 }

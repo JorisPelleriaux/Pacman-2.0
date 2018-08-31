@@ -11,7 +11,6 @@ using namespace std;
 
 SDLBackground::SDLBackground(SDLContext* context) :
 		Background() {
-	//cout << "create background";
 	this->context = context;
 
 	//Load tile texture
@@ -19,25 +18,24 @@ SDLBackground::SDLBackground(SDLContext* context) :
 	if (image == NULL) {
 		printf("Failed to load texture image!\n");
 	}
+	//Set Tiles
 	if (!SetTiles()) {
 		printf("Failed to load tile set!\n");
 	}
+
+
 }
 
 SDLBackground::~SDLBackground() {
 	context->free();
 }
-void SDLBackground::Visualise(double angle) {
-	//cout << "clear screen";
+void SDLBackground::Visualise(int angle) {
 	context->ClearScreen();
 
-	//Render level
+	//Render Tiles
 	for (int i = 0; i < context->TOTAL_TILES; ++i) {
-		context->tileSet[i]->render(context, image);
+		context->Draw(context->tileSet[i]->getBox().x, context->tileSet[i]->getBox().y, image, &context->gTileClips[context->tileSet[i]->getType()],0.0 );
 	}
-	//Update screen
-	//context->UpdateScreen();
-	//TODO//context->Draw(0, 0, image, 0);
 }
 
 void SDLBackground::Close() {
@@ -58,7 +56,6 @@ bool SDLBackground::SetTiles() {
 	bool tilesLoaded = true;
 	//The tile offsets
 	int x = 0, y = 0;
-
 	//Open the map
 	std::ifstream map("Media/lazy.map");
 
@@ -207,4 +204,7 @@ bool SDLBackground::SetTiles() {
 
 	//If the map was loaded fine
 	return tilesLoaded;
+}
+SDLContext* SDLBackground::GetContext(){
+	return context;
 }

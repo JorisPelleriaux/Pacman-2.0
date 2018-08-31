@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <sdl2/SDL.h>
+#include <sdl2/SDL_image.h>
+#include <fstream>
 #include "SDLContext.h"
 #include "Game.h"
 #include "SDLBackground.h"
-SDLContext::SDLContext(SDLWindow* window) : Context(){
+SDLContext::SDLContext(SDLWindow* window) :
+		Context() {
 	this->window = window;
 
 	//Initialize
@@ -89,15 +93,15 @@ bool SDLContext::touchesWall(SDL_Rect box, Tile* tiles[], bool pacman) {
 	//Go through the tiles
 
 	for (int i = 0; i < TOTAL_TILES; ++i) {
-		if (tiles[i]->getType() > 15){//TODO tile path dynamic
-			if (checkCollision(box, tiles[i]->getBox()) && pacman){
+		if (tiles[i]->getType() > 15) { //TODO tile path dynamic
+			if (checkCollision(box, tiles[i]->getBox()) && pacman) {
 				tiles[i]->setType(15);
-
+				window->SetScore(5);
 			}
 		}
 		//If the tile is a wall type tile
-		if ((tiles[i]->getType() < 15)//TODO tile path dynamic
-				&& (tiles[i]->getType() >= 0)) {
+		if ((tiles[i]->getType() < 15) //TODO tile path dynamic
+		&& (tiles[i]->getType() >= 0)) {
 			//If the collision box touches the wall tile
 			if (checkCollision(box, tiles[i]->getBox())) {
 				return true;
@@ -185,22 +189,28 @@ void SDLContext::CreateGhostSprites(int number) {
 		y1 = y2 = 34;
 		break;
 	case 3:
+		x1 = 156;
+		x2 = 182;
+		y1 = y2 = 77;
 		break;
 	case 4:
+		x1 = 156;
+		x2 = 182;
+		y1 = y2 = 112;
 		break;
 	default:
 		break;
 	}
 
-	gSpriteClips_Ghost[0].x = x1;
-	gSpriteClips_Ghost[0].y = y1;
-	gSpriteClips_Ghost[0].w = 23;
-	gSpriteClips_Ghost[0].h = 25;
+	gSpriteClips_Ghost[number][0].x = x1;
+	gSpriteClips_Ghost[number][0].y = y1;
+	gSpriteClips_Ghost[number][0].w = 23;
+	gSpriteClips_Ghost[number][0].h = 25;
 
-	gSpriteClips_Ghost[1].x = x2;
-	gSpriteClips_Ghost[1].y = y2;
-	gSpriteClips_Ghost[1].w = 23;
-	gSpriteClips_Ghost[1].h = 25;
+	gSpriteClips_Ghost[number][1].x = x2;
+	gSpriteClips_Ghost[number][1].y = y2;
+	gSpriteClips_Ghost[number][1].w = 23;
+	gSpriteClips_Ghost[number][1].h = 25;
 }
 void SDLContext::ClearScreen() {
 	//Clear screen
@@ -229,6 +239,7 @@ void SDLContext::Draw(int x, int y, SDL_Texture* texture, SDL_Rect* clip,
 	//SDL_RenderPresent(window->gRenderer);
 
 }
+
 
 void SDLContext::UpdateScreen() {
 	SDL_RenderPresent(window->gRenderer);

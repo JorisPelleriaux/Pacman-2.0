@@ -7,10 +7,11 @@
 #include <sdl2/SDL.h>
 #include <sdl2/SDL_image.h>
 #include "SDLContext.h"
+#include "AbsTile.h"
 #ifndef HEADERS_TILE_H_
 #define HEADERS_TILE_H_
 
-class Tile {
+class Tile : public AbsTile {
 public:
 
 	//Initializes position and type
@@ -28,11 +29,6 @@ public:
 	//Get the collision box
 	SDL_Rect getBox();
 
-	//Tile constants
-	const int TILE_WIDTH = 35;
-	const int TILE_HEIGHT = 35;
-	const int TOTAL_TILES = 192;
-	const int TOTAL_TILE_SPRITES = 16;
 
 	//Scene textures
 	/*SDLContext gDotTexture;

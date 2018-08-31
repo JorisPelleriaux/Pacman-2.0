@@ -37,7 +37,6 @@ Background* SDLFactory::CreateBackground() {
 }
 
 Input* SDLFactory::GetInputhandler() {
-
 	if (inputHandler == NULL) {
 		inputHandler = new SDLInput();
 	}

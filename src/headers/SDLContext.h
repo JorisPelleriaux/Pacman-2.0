@@ -61,15 +61,14 @@ public:
 
 	//Walking animation Ghost
 	const int ANIMATION_FRAMES_Ghost = 2;
-	SDL_Rect gSpriteClips_Ghost[2];
-
-	//The level tiles
-	Tile* tileSet[TOTAL_TILES];
+	SDL_Rect gSpriteClips_Ghost[4][2];
 
 	//Screen dimensions
 	int sWidth;
 	int sHeight;
 
+	//The level tiles
+	Tile* tileSet[TOTAL_TILES];
 protected:
 
 private:

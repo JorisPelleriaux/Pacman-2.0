@@ -17,8 +17,8 @@ public:
 	SDLGhost(SDLContext* context, SDLContext* Tcontext,
 			AbstractFactory* factory, int x, int y, int movespeed, int number);
 	~SDLGhost();
-	void Visualise(double angle) override;
-	void Move(RECT box) override;
+	void Visualise(int angle) override;
+	//void Move(RECT box) override;
 	//Collision box of the Ghost
 	SDL_Rect mBox;
 private:

@@ -10,18 +10,14 @@ public:
 	SDLPacman(SDLContext* context, SDLContext* Tcontext, SDLContext* Gcontext, AbstractFactory* factory, int lives, int x,
 			int y, int movespeed);
 	~SDLPacman();
-	void Visualise(double angle) override;
+	void Visualise(int angle) override;
 	void Move(RECT box) override;
-	void handleEvent(InputType dir) override;
 
 private:
 	SDL_Texture* image;
 	SDLContext* context;
 	SDLContext* Tcontext;
 	SDLContext* Gcontext;
-
-	//The velocity of the Pacman
-	int mVelX, mVelY;
 
 	//Collision box of the Pacman
 	SDL_Rect mBox;

@@ -12,7 +12,7 @@ using namespace std;
 
 SDLGhost::SDLGhost(SDLContext* context, SDLContext* Tcontext, AbstractFactory* factory, int x, int y,
 		int movespeed, int number) :
-		Ghost(factory, x, y, movespeed) {
+		Ghost(factory, context, x, y, movespeed) {
 	this->context = context;
 	this->Tcontext = Tcontext;
 	image = context->loadFromFile("Media/spritesheet1.png");
@@ -21,9 +21,7 @@ SDLGhost::SDLGhost(SDLContext* context, SDLContext* Tcontext, AbstractFactory* f
 		printf("Failed to load texture image!\n");
 	} else {
 		//Set sprite clips
-
 		context->CreateGhostSprites(number);
-
 	}
 	mVelX = movespeed;
 	mVelY = 0;
@@ -40,11 +38,11 @@ SDLGhost::~SDLGhost() {
 	context->free();
 }
 
-void SDLGhost::Visualise(double angle) {
+void SDLGhost::Visualise(int angle) {
 	//Render current frame
-	SDL_Rect* currentClip = &context->gSpriteClips_Ghost[frame / 4];
+	SDL_Rect* currentClip = &context->gSpriteClips_Ghost[angle][frame / 4];
 
-	context->Draw(mBox.x, mBox.y, image, currentClip, angle);
+	context->Draw(this->Box.left, this->Box.top, image, currentClip, 0);
 
 	//Go to next frame
 	++frame;
@@ -55,8 +53,9 @@ void SDLGhost::Visualise(double angle) {
 	}
 }
 
-void SDLGhost::Move(RECT box) {
-	mBox.x += mVelX;
+/*void SDLGhost::Move(RECT box) {
+	cout<<"test"<<endl;
+}
 
 	//Give position to AbsGhost
 	this->Box.left +=mVelX;
@@ -72,7 +71,7 @@ void SDLGhost::Move(RECT box) {
 	if (context->touchesWall( mBox, Tcontext->tileSet, false) ) {
 		mVelX = mVelX * (-1);
 	}
-		/*//move back
+		/*//*/move back
 		int j =rand()%4;
 
 		switch(j){
@@ -110,4 +109,4 @@ void SDLGhost::Move(RECT box) {
 		mBox.y -= mVelY;
 	}*/
 
-}
+//}
