@@ -16,7 +16,7 @@ public:
 	AbsTile* tileSet[285];
 	RECT Ghosts[4];
 
-	int CurrGhost;
+	int CurrGhost = 0;
 
 	int score = 0;	//score of Pacman
 

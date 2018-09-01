@@ -17,8 +17,6 @@ SDLGhost::SDLGhost(SDLContext* context, AbstractFactory* factory, int x, int y,
 	}
 
 	//Initialize
-	mVelX = 2;
-	mVelY = 0;
 	frame = 0;
 }
 

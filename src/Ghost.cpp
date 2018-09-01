@@ -15,9 +15,6 @@ Ghost::Ghost(AbstractFactory* factory, Context* context, int x, int y,
 	this->Box.bottom = Box.top + Ghost_HEIGHT;
 	this->Ghost_VEL = movespeed;
 	this->context = context;
-	this->XVEL = 2;
-	this->YVEL = 0;
-
 }
 Ghost::~Ghost() {
 }
@@ -36,12 +33,6 @@ void Ghost::Move() {
 //Define how the ghost should move
 	tempPosX[context->CurrGhost] = Box.left;
 	tempPosY[context->CurrGhost] = Box.top;
-
-	if (counter[context->CurrGhost] >= 15) {	//change direction every 15 times
-		counter[context->CurrGhost] = 0;
-		Num[context->CurrGhost] = rand() % 4;
-	}
-	counter[context->CurrGhost]++;
 
 	switch (Num[context->CurrGhost]) {
 	case 0:
@@ -75,6 +66,7 @@ void Ghost::Move() {
 			Box.top += Ghost_VEL;
 			break;
 		}
+		Num[context->CurrGhost] = rand() % 4;
 	} else {
 		PrevNum[context->CurrGhost] = Num[context->CurrGhost];
 	}
@@ -86,4 +78,39 @@ void Ghost::Move() {
 	if (context->CurrGhost == 4) {
 		context->CurrGhost = 0;
 	}
+}
+
+void Ghost::StartMove(int Ghost) {
+	//Update the right and bottom value of the collision box
+	Box.right = Box.left + Ghost_WIDTH;
+	Box.bottom = Box.top + Ghost_HEIGHT;
+
+	//Pass the current position of the ghost to the pacman
+	context->Ghosts[context->CurrGhost].left = Box.left;
+	context->Ghosts[context->CurrGhost].top = Box.top;
+	context->Ghosts[context->CurrGhost].right = Box.left + Ghost_WIDTH;
+	context->Ghosts[context->CurrGhost].bottom = Box.top + Ghost_HEIGHT;
+
+	if (Box.left < (525 / 2) - (Ghost_WIDTH / 2)) {	//Ghost left from center -> move right
+		Box.left += Ghost_VEL;
+	}
+	if (Box.left > (525 / 2) - (Ghost_WIDTH / 2)) {	//Ghost right from center -> move left
+		Box.left -= Ghost_VEL;
+	}
+	if (context->touchesWall(Box)) {	//Ghosts left <=> right
+		Num[1] = Num[3] = 0;
+		Num[2] = Num[4] = 1;
+		Start = true;
+	}
+	if (Box.left == ((525 / 2) - (Ghost_WIDTH / 2)) - 1) {	//Ghost in center position -> move up
+		Box.top -= Ghost_VEL;
+	}
+	//Ready for next ghost
+	context->CurrGhost++;
+
+	//All ghosts done -> first ghost
+	if (context->CurrGhost == 4) {
+		context->CurrGhost = 0;
+	}
+
 }

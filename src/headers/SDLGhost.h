@@ -1,10 +1,3 @@
-/*
- * SDLGhost.h
- *
- *  Created on: 29 aug. 2018
- *      Author: joris
- */
-
 #ifndef HEADERS_SDLGHOST_H_
 #define HEADERS_SDLGHOST_H_
 #include "Ghost.h"
@@ -18,15 +11,9 @@ public:
 	~SDLGhost();
 	void Visualise(int State) override;	//State 0: normal ; State 1: smart ; State 2: can be eaten
 
-
-
 private:
 	SDL_Texture* image;
 	SDLContext* context;	//Game context
-
-	//The velocity of the Ghost
-	int mVelX, mVelY;
-
 
 	//Current animation frame
 	int frame;

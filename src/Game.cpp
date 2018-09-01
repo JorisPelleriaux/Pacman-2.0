@@ -23,11 +23,11 @@ Game::Game(AbstractFactory* factory) {
 
 	//Create Ghosts
 	for (int i = 0; i < 4; i++) {
-		Ghosts[i] = factory->CreateGhost(300 - (i * 40), 250 + (2 * 20), 1, i);
+		Ghosts[i] = factory->CreateGhost(300 - (i * 40), 248 + (2 * 20), 2, i);
 	}
 
 	//Create Pacman
-	Pac = factory->CreatePacman(3, 251, 595, 10);
+	Pac = factory->CreatePacman(3, 251, 595, 2);
 
 	//Default state
 	state = Menu;
@@ -83,8 +83,16 @@ void Game::Start() {
 
 			//Move and Render the ghosts
 			for (int i = 0; i < 4; i++) {
-				Ghosts[i]->Move();
-				Ghosts[i]->Visualise(0);
+				int Ghost = i;
+				if (!Ghosts[Ghost]->Start){
+					Ghosts[Ghost]->StartMove(Ghost);
+				}
+				else{
+					cout<<"klaar start"<<endl;
+					Ghosts[Ghost]->Move();
+				}
+
+				Ghosts[Ghost]->Visualise(0);
 			}
 
 			if (Pac->CheckCollision()) {	//Check collision with ghosts
