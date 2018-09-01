@@ -3,8 +3,9 @@
 #include "AbsPacman.h"
 #include "SDLContext.h"
 
-using namespace std;
+using namespace PACMAN;
 
+namespace PACMAN_SDL {
 class SDLPacman: public AbsPacman {
 public:
 	SDLPacman(SDLContext* context, AbstractFactory* factory, int lives, int x,
@@ -31,5 +32,5 @@ private:
 	int x, y;
 
 };
-
+}
 #endif /* HEADERS_SDLPACMAN_H_ */

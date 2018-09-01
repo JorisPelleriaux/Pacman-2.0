@@ -8,6 +8,7 @@
 #include "Ghost.h"
 using namespace std;
 
+namespace PACMAN {
 class AbstractFactory;
 class Ghost;
 //Possible states of the game
@@ -34,4 +35,5 @@ private:
 	Background* background;
 	Input* inputhandler;
 };
+}
 #endif /* HEADERS_GAME_H_ */

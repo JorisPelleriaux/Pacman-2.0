@@ -5,6 +5,7 @@ using namespace std;
 #include <windef.h>
 #include "AbsTile.h"
 
+namespace PACMAN {
 class Context {
 public:
 	Context();
@@ -22,7 +23,6 @@ public:
 
 private:
 
-
 };
-
+}
 #endif /* HEADERS_CONTEXT_H_ */

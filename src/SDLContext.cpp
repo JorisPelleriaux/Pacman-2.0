@@ -6,6 +6,8 @@
 #include "SDLContext.h"
 #include "Game.h"
 #include "SDLBackground.h"
+
+namespace PACMAN_SDL {
 SDLContext::SDLContext(SDLWindow* window) :
 		Context() {
 	//The window
@@ -340,4 +342,5 @@ int SDLContext::getWidth() {
 }
 int SDLContext::getHeight() {
 	return mHeight;
+}
 }

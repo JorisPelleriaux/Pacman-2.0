@@ -9,14 +9,16 @@ using namespace std;
 #include "Ghost.h"
 #include "Context.h"
 
+namespace PACMAN {
 class AbstractFactory {
 public:
-	virtual ~AbstractFactory() {}
+	virtual ~AbstractFactory() {
+	}
 	virtual AbsPacman *CreatePacman(int lives, int x, int y, int movespeed)=0;
 	virtual Window *CreateWindow(int screen_width, int screen_height)=0;
 	virtual Background *CreateBackground()=0;
 	virtual Input *GetInputhandler()=0;
 	virtual Ghost *CreateGhost(int x, int y, int movespeed, int number)=0;
 };
-
+}
 #endif /* HEADERS_ABSTRACTFACTORY_H_ */

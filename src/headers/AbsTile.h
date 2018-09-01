@@ -4,6 +4,7 @@
 #include <windef.h>
 using namespace std;
 
+namespace PACMAN {
 class AbsTile {
 public:
 
@@ -31,7 +32,8 @@ private:
 	RECT mBox;
 
 	//The tile type
-	int mType =0;
+	int mType = 0;
 
 };
+}
 #endif /* HEADERS_ABSTILE_H_ */

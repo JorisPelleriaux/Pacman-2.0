@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Context.h"
 using namespace std;
+
+namespace PACMAN {
 Context::Context() {
 	//Current Ghost
 	CurrGhost = 0;
@@ -65,4 +67,5 @@ bool Context::checkcollision(RECT a, RECT b) {
 
 	//If none of the sides from A are outside B
 	return true;
+}
 }

@@ -3,8 +3,9 @@
 #include "Background.h"
 #include "SDLContext.h"
 class Tile;
-using namespace std;
+using namespace PACMAN;
 
+namespace PACMAN_SDL {
 class SDLBackground: public Background {
 public:
 	SDLBackground(SDLContext* context);
@@ -20,7 +21,6 @@ protected:
 	//Tile constants
 	const int TILE_WIDTH = 35;
 	const int TILE_HEIGHT = 35;
-
 
 	//The different tile sprites
 	const int TILE_HORIZONTAL = 0;
@@ -42,7 +42,6 @@ protected:
 	const int TILE_FOOD1 = 16;
 	const int TILE_FOOD2 = 17;
 
-
 protected:
 
 private:
@@ -51,5 +50,5 @@ private:
 	SDLContext* context;
 
 };
-
+}
 #endif /* SDLBACKGROUND_H_ */

@@ -1,14 +1,8 @@
-/*
- * AbsTile.cpp
- *
- *  Created on: 30 aug. 2018
- *      Author: joris
- */
 #include <iostream>
 #include "AbsTile.h"
 
 using namespace std;
-
+namespace PACMAN {
 AbsTile::AbsTile(int x, int y, int tileType) {
 	mType = tileType;
 	mBox.left = x;
@@ -26,4 +20,5 @@ void AbsTile::setType(int type) {
 
 RECT AbsTile::getBox() {
 	return mBox;
+}
 }

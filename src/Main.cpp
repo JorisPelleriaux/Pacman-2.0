@@ -11,7 +11,8 @@
 #include "SDLFactory.h"
 #include "AbstractFactory.h"
 
-using namespace std;
+using namespace PACMAN;
+using namespace PACMAN_SDL;
 
 
 int main( int argc, char* argv[] )

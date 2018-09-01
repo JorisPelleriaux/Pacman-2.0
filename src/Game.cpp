@@ -9,6 +9,7 @@
 
 using namespace std;
 
+namespace PACMAN {
 //Constructor sets required parameters, state and default name
 Game::Game(AbstractFactory* factory) {
 	//make the factory (SDL factory)
@@ -23,7 +24,7 @@ Game::Game(AbstractFactory* factory) {
 
 	//Create Ghosts
 	for (int i = 0; i < 4; i++) {
-		Ghosts[i] = factory->CreateGhost(300 - (i * 40), 248 + (2 * 20), 2, i);
+		Ghosts[i] = factory->CreateGhost(300 - (i * 40), 258, 2, i);
 	}
 
 	//Create Pacman
@@ -83,18 +84,15 @@ void Game::Start() {
 
 			//Move and Render the ghosts
 			for (int i = 0; i < 4; i++) {
-				int Ghost = i;
-				if (!Ghosts[Ghost]->Start){
-					Ghosts[Ghost]->StartMove(Ghost);
-				}
-				else{
-					cout<<"klaar start"<<endl;
-					Ghosts[Ghost]->Move();
+				if (!Ghosts[i]->Start) {
+					Ghosts[i]->StartMove(i);
+				} else {
+					Ghosts[i]->Move();
 				}
 
-				Ghosts[Ghost]->Visualise(0);
+				Ghosts[i]->Visualise(0);
 			}
-
+			cout << Ghosts[1]->Box.top << endl;
 			if (Pac->CheckCollision()) {	//Check collision with ghosts
 				cout << "Ghost geraakt" << endl;
 				if (Pac->GetLives() > 0) {
@@ -106,7 +104,7 @@ void Game::Start() {
 			}
 			//Render pacman
 			Pac->Visualise(0);
-			Pac->ShowText();
+			Pac->ShowText();	//Show Score, Lives
 			//Update screen
 			window->Render();
 
@@ -118,11 +116,6 @@ void Game::Start() {
 
 			//Render Background
 			background->Visualise(0);
-			//Render Ghosts
-			for (int i = 0; i < 4; i++) {
-				Ghosts[i]->Move();
-				Ghosts[i]->Visualise(0);
-			}
 			//Render pacman
 			Pac->Visualise(2);
 			//Update screen
@@ -130,6 +123,10 @@ void Game::Start() {
 
 			if (Pac->IsDead) {
 				Pac->IsDead = false;
+				for (int i = 0; i < 4; i++) {
+					Ghosts[i]->Start = false;
+					Ghosts[i]->Default(i);
+				}
 				state = Running;
 			}
 
@@ -168,4 +165,5 @@ Game::~Game() {
 	delete Ghosts[2];
 	delete window;
 
+}
 }

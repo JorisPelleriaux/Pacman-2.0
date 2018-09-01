@@ -3,6 +3,7 @@
 #define WINDOW_H_
 using namespace std;
 
+namespace PACMAN {
 class Window {
 public:
 	Window();
@@ -19,5 +20,5 @@ public:
 private:
 
 };
-
+}
 #endif /* WINDOW_H_ */

@@ -1,13 +1,15 @@
 #ifndef HEADERS_SDLFACTORY_H_
 #define HEADERS_SDLFACTORY_H_
-#include "AbstractFactory.h"
 #include "SDLPacman.h"
 #include "SDLWindow.h"
 #include "SDLBackground.h"
 #include "SDLInput.h"
 #include "SDLGhost.h"
-using namespace std;
+#include "AbstractFactory.h"
 
+using namespace PACMAN;
+
+namespace PACMAN_SDL {
 class SDLFactory: public AbstractFactory {
 public:
 	SDLFactory();
@@ -22,5 +24,5 @@ private:
 	Input* inputHandler;
 	SDLContext* Gamecontext;
 };
-
+}
 #endif /* HEADERS_SDLFACTORY_H_ */

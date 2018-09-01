@@ -3,6 +3,7 @@
 
 using namespace std;
 
+namespace PACMAN_SDL {
 SDLPacman::SDLPacman(SDLContext* context, AbstractFactory* factory, int lives,
 		int x, int y, int movespeed) :
 		AbsPacman(factory, context, lives, x, y, movespeed) {
@@ -84,7 +85,7 @@ void SDLPacman::ShowText() {
 	context->Draw(20, 5, context->mTexture);
 
 	Text = "Lives: " + std::to_string(this->GetLives());
-	if (!context->loadFromRenderedText(Text, textColor,28)) {
+	if (!context->loadFromRenderedText(Text, textColor, 28)) {
 		printf("Failed to render text texture!\n");
 	}
 	context->Draw(context->sWidth - 145, 5, context->mTexture);
@@ -94,10 +95,11 @@ void SDLPacman::GameOver() {
 	//Render text
 	std::string Text = "Game Over";
 	SDL_Color textColor = { 255, 255, 255 };
-	if (!context->loadFromRenderedText(Text, textColor,50)) {
+	if (!context->loadFromRenderedText(Text, textColor, 50)) {
 		printf("Failed to render text texture!\n");
 	}
-	context->Draw((context->sWidth-150)/2, (context->sHeight -50) /2, context->mTexture);
+	context->Draw((context->sWidth - 150) / 2, (context->sHeight - 50) / 2,
+			context->mTexture);
 }
 
 void SDLPacman::Move() {
@@ -129,4 +131,5 @@ void SDLPacman::Move() {
 			|| context->touchesWall(mBox, context->tileSet, true)) {
 		mBox.y -= YVEL;	//Stop
 	}
+}
 }

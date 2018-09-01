@@ -1,9 +1,3 @@
-/*
- * Tile.h
- *
- *  Created on: 28 aug. 2018
- *      Author: joris
- */
 #include <sdl2/SDL.h>
 #include <sdl2/SDL_image.h>
 #include "SDLContext.h"
@@ -11,7 +5,10 @@
 #ifndef HEADERS_TILE_H_
 #define HEADERS_TILE_H_
 
-class Tile : public AbsTile {
+using namespace PACMAN;
+
+namespace PACMAN_SDL {
+class Tile: public AbsTile {
 public:
 
 	//Initializes position and type
@@ -26,7 +23,6 @@ public:
 	//Get the collision box
 	SDL_Rect getBox();
 
-
 	//Scene textures
 	/*SDLContext gDotTexture;
 	 SDLContext gTileTexture;
@@ -40,4 +36,5 @@ private:
 	int mType = 0;
 
 };
+}
 #endif /* HEADERS_TILE_H_ */

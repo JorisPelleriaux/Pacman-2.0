@@ -1,5 +1,6 @@
 #ifndef SDLWINDOW_H_
 #define SDLWINDOW_H_
+
 #include <sdl2/SDL.h>
 #include <sdl2/SDL_image.h>
 #include <sdl2/SDL_ttf.h>
@@ -8,7 +9,9 @@
 #include <stdio.h>
 #include <string>
 
-using namespace std;
+using namespace PACMAN;
+
+namespace PACMAN_SDL {
 class SDLContext;
 class SDLWindow: public Window {
 public:
@@ -36,5 +39,5 @@ public:
 	void Render() override;
 	void ClearScreen() override;
 };
-
+}
 #endif /* SDLWINDOW_H_ */

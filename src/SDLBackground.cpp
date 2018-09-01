@@ -9,6 +9,7 @@
 #include "Tile.h"
 using namespace std;
 
+namespace PACMAN_SDL {
 SDLBackground::SDLBackground(SDLContext* context) :
 		Background() {
 	this->context = context;
@@ -222,4 +223,5 @@ void SDLBackground::StartScreen() {
 
 SDLContext* SDLBackground::GetContext() {
 	return context;
+}
 }

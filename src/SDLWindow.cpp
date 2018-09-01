@@ -3,6 +3,7 @@
 #include <iostream>
 using namespace std;
 
+namespace PACMAN_SDL {
 SDLWindow::SDLWindow(int screen_width, int screen_height) :
 		Window(screen_width, screen_height) {
 	gWindow = NULL;
@@ -88,4 +89,5 @@ void SDLWindow::ClearScreen() {
 	//Clear screen
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(gRenderer);
+}
 }

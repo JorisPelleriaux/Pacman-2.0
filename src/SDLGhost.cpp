@@ -3,6 +3,7 @@
 
 using namespace std;
 
+namespace PACMAN_SDL {
 SDLGhost::SDLGhost(SDLContext* context, AbstractFactory* factory, int x, int y,
 		int movespeed, int number) :
 		Ghost(factory, context, x, y, movespeed) {
@@ -27,7 +28,8 @@ SDLGhost::~SDLGhost() {
 
 void SDLGhost::Visualise(int State) {
 	//Render current frame
-	SDL_Rect* currentClip = &context->gSpriteClips_Ghost[context->CurrGhost][frame / 4];
+	SDL_Rect* currentClip =
+			&context->gSpriteClips_Ghost[context->CurrGhost][frame / 4];
 	context->Draw(Box.left, Box.top, image, currentClip, 0.0);
 
 	//Go to next frame
@@ -37,4 +39,5 @@ void SDLGhost::Visualise(int State) {
 	if (frame / 4 >= context->ANIMATION_FRAMES_Ghost) {
 		frame = 0;
 	}
+}
 }

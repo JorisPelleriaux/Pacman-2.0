@@ -2,6 +2,7 @@
 #define HEADERS_BASEINPUT_H_
 #include <vector>
 
+namespace PACMAN {
 //Enum of Input types
 enum InputType {
 	None, DLeft, DRight, DUp, DDown, Quit, ULeft, URight, UUp, UDown, Enter
@@ -13,5 +14,5 @@ public:
 	~BaseInput();
 	std::vector<InputType> inputVector;
 };
-
+}
 #endif /* HEADERS_BASEINPUT_H_ */

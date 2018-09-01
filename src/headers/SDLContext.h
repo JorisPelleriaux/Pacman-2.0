@@ -4,7 +4,9 @@
 #include <iostream>
 #include "SDLWindow.h"
 #include "Context.h"
-using namespace std;
+using namespace PACMAN;
+
+namespace PACMAN_SDL {
 class Tile;
 class SDLWindow;
 class SDLContext: public Context {
@@ -19,7 +21,8 @@ public:
 	SDL_Texture* loadFromFile(std::string path);
 
 	//Creates image from font string
-	bool loadFromRenderedText(std::string textureText, SDL_Color textColor, int size);
+	bool loadFromRenderedText(std::string textureText, SDL_Color textColor,
+			int size);
 
 	//Deallocates texture
 	void free();
@@ -90,5 +93,5 @@ private:
 	//Current animation frame
 	int frame;
 };
-
+}
 #endif /* SDLCONTEXT_H_ */

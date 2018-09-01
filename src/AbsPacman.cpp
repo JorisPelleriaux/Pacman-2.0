@@ -4,6 +4,7 @@
 
 using namespace std;
 
+namespace PACMAN {
 //Constructor sets required parameters
 AbsPacman::AbsPacman(AbstractFactory* factory, Context* context, int lives,
 		int x, int y, int movespeed) :
@@ -13,8 +14,8 @@ AbsPacman::AbsPacman(AbstractFactory* factory, Context* context, int lives,
 	this->lives = lives;
 	this->Pbox.left = x;
 	this->Pbox.top = y;
-	this->Pbox.right = x + 30;
-	this->Pbox.bottom = y + 30;
+	this->Pbox.right = x + PAC_WIDTH;
+	this->Pbox.bottom = y + PAC_HEIGHT;
 	this->movespeed = movespeed;
 	this->context = context;
 
@@ -41,7 +42,7 @@ AbsPacman::~AbsPacman() {
  }
 
  }
-*/
+ */
 //Handle the input
 void AbsPacman::handleEvent(InputType dir) {
 	//Adjust the velocity
@@ -97,4 +98,5 @@ int AbsPacman::GetScore() {
 }
 void AbsPacman::TakeLive() {
 	lives -= 1;
+}
 }

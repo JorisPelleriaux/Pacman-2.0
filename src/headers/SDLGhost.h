@@ -3,11 +3,13 @@
 #include "Ghost.h"
 #include "SDLContext.h"
 
-using namespace std;
+using namespace PACMAN;
 
+namespace PACMAN_SDL {
 class SDLGhost: public Ghost {
 public:
-	SDLGhost(SDLContext* context, AbstractFactory* factory, int x, int y, int movespeed, int number);
+	SDLGhost(SDLContext* context, AbstractFactory* factory, int x, int y,
+			int movespeed, int number);
 	~SDLGhost();
 	void Visualise(int State) override;	//State 0: normal ; State 1: smart ; State 2: can be eaten
 
@@ -18,5 +20,5 @@ private:
 	//Current animation frame
 	int frame;
 };
-
+}
 #endif /* HEADERS_SDLGHOST_H_ */

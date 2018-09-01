@@ -1,9 +1,10 @@
 #include <iostream>
-#include "AbsPacman.h"
-#include "Ghost.h"
+//#include "AbsPacman.h"
+//#include "Ghost.h"
 #include "SDLFactory.h"
 using namespace std;
 
+namespace PACMAN_SDL {
 SDLFactory::SDLFactory() {
 	Gamecontext = NULL;
 	inputHandler = NULL;
@@ -17,8 +18,6 @@ SDLFactory::~SDLFactory() {
 AbsPacman* SDLFactory::CreatePacman(int lives, int x, int y, int movespeed) {
 	return new SDLPacman(Gamecontext, this, lives, x, y, movespeed);
 }
-
-
 
 Window* SDLFactory::CreateWindow(int screen_width, int screen_height) {
 	SDLWindow* window = new SDLWindow(screen_width, screen_height);
@@ -38,4 +37,5 @@ Input* SDLFactory::GetInputhandler() {
 }
 Ghost* SDLFactory::CreateGhost(int x, int y, int movespeed, int number) {
 	return new SDLGhost(Gamecontext, this, x, y, movespeed, number);
+}
 }

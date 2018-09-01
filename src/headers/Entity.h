@@ -5,6 +5,7 @@
 #include<windef.h>
 using namespace std;
 
+namespace PACMAN {
 class Entity {
 public:
 	//Defenition of entity
@@ -19,5 +20,5 @@ private:
 	int movespeed;
 	RECT rect;
 };
-
+}
 #endif /* HEADERS_ENTITY_H_ */

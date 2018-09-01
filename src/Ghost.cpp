@@ -4,6 +4,7 @@
 
 using namespace std;
 
+namespace PACMAN {
 //Constructor sets required parameters
 Ghost::Ghost(AbstractFactory* factory, Context* context, int x, int y,
 		int movespeed) :
@@ -17,6 +18,13 @@ Ghost::Ghost(AbstractFactory* factory, Context* context, int x, int y,
 	this->context = context;
 }
 Ghost::~Ghost() {
+}
+
+void Ghost::Default(int Ghost) {
+	Box.left = 300 - (Ghost * 40);
+	this->Box.top = 245 + (4 * Ghost);
+	this->Box.right = Box.left + Ghost_WIDTH;
+	this->Box.bottom = Box.top + Ghost_HEIGHT;
 }
 
 void Ghost::Move() {
@@ -49,10 +57,12 @@ void Ghost::Move() {
 		break;
 	}
 
-	if (context->touchesWall(Box)) {
+	if (context->touchesWall(Box) || (Box.top <= 0) || (Box.left < 0)
+			|| (Box.top + Ghost_HEIGHT > 665)
+			|| (Box.left + Ghost_WIDTH > 525)) {
 		Box.left = tempPosX[context->CurrGhost];
 		Box.top = tempPosY[context->CurrGhost];
-		switch (PrevNum[context->CurrGhost]) {
+		switch (Num[context->CurrGhost]) {
 		case 0:
 			Box.left -= Ghost_VEL;
 			break;
@@ -98,11 +108,12 @@ void Ghost::StartMove(int Ghost) {
 		Box.left -= Ghost_VEL;
 	}
 	if (context->touchesWall(Box)) {	//Ghosts left <=> right
-		Num[1] = Num[3] = 0;
-		Num[2] = Num[4] = 1;
+		Box.top += Ghost_VEL;
+		Num[0] = Num[2] = 0;
+		Num[1] = Num[3] = 1;
 		Start = true;
 	}
-	if (Box.left == ((525 / 2) - (Ghost_WIDTH / 2)) - 1) {	//Ghost in center position -> move up
+	if (Start == false && Box.left == ((525 / 2) - (Ghost_WIDTH / 2)) - 1) {//Ghost in center position -> move up
 		Box.top -= Ghost_VEL;
 	}
 	//Ready for next ghost
@@ -113,4 +124,5 @@ void Ghost::StartMove(int Ghost) {
 		context->CurrGhost = 0;
 	}
 
+}
 }
