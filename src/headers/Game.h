@@ -12,7 +12,7 @@ class AbstractFactory;
 class Ghost;
 //Possible states of the game
 enum GameState {
-	Menu, Running, GameOver, QuitGame, NoState
+	Menu, Running, GameOver, QuitGame, LostLife, NoState
 };
 
 class Game {

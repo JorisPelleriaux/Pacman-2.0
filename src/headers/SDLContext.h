@@ -18,6 +18,9 @@ public:
 	//Loads image at specified path
 	SDL_Texture* loadFromFile(std::string path);
 
+	//Creates image from font string
+	bool loadFromRenderedText(std::string textureText, SDL_Color textColor, int size);
+
 	//Deallocates texture
 	void free();
 
@@ -31,7 +34,8 @@ public:
 	void setAlpha(Uint8 alpha);
 
 	//Renders texture at given point
-	void Draw(int x, int y, SDL_Texture* texture, SDL_Rect* clip, double angle);
+	void Draw(int x, int y, SDL_Texture* texture = NULL, SDL_Rect* clip = NULL,
+			double angle = 0.0);
 
 	void CreatePacSprites();
 
@@ -45,10 +49,6 @@ public:
 
 	bool checkCollision(SDL_Rect a, RECT b);
 
-	//Gets image dimensions
-	int getWidth();
-	int getHeight();
-
 	//Tile constants
 	static const int TOTAL_TILES = 285;
 	static const int TOTAL_TILE_SPRITES = 18;
@@ -57,27 +57,31 @@ public:
 	SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
 
 	//Walking animation Pacman
-	const int ANIMATION_FRAMES = 4;
-	SDL_Rect gSpriteClips[5];
+	int ANIMATION_FRAMES = 4;
+	SDL_Rect gSpriteClips[16];
 
 	//Walking animation Ghost
 	const int ANIMATION_FRAMES_Ghost = 2;
 	SDL_Rect gSpriteClips_Ghost[4][2];	//MAX 4 ghosts with 2 sprites
 
 	//Screen dimensions
-	int sWidth;
-	int sHeight;
+	int sWidth, sHeight;
 
-	int CurrGhost;
+	//Text dimensions
+	int tWidth, tHeight;
+
+	//Gets image dimensions
+	int getWidth();
+	int getHeight();
+
+	//The actual hardware texture
+	SDL_Texture* mTexture;
 
 protected:
 
 private:
 	//The window
 	SDLWindow* window;
-
-	//The actual hardware texture
-	SDL_Texture* mTexture;
 
 	//Image dimensions
 	int mWidth;

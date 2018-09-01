@@ -9,6 +9,7 @@ class Background: public Entity {
 public:
 	Background();
 	virtual ~Background();
+	virtual void StartScreen() = 0;
 };
 
 #endif /* BACKGROUND_H_ */

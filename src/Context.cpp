@@ -2,7 +2,8 @@
 #include "Context.h"
 using namespace std;
 Context::Context() {
-
+	//Current Ghost
+	CurrGhost = 0;
 }
 
 Context::~Context() {
@@ -44,6 +45,24 @@ bool Context::checkcollision(RECT a, RECT b) {
 	if (a.left >= b.right) {
 		return false;
 	}
+
+	//check where the hit was
+	/*if (a.bottom >= b.top && a.bottom <= b.bottom) {
+	 if (a.left <= b.right && a.left >= b.left) {
+	 cout << "links geraakt" << endl;
+	 }
+	 if (a.right >= b.left && a.right >= b.right) {
+	 cout << "Rechts geraakt" << endl;
+	 }
+	 }
+	 if (a.left <= b.right && a.left >= b.left) {
+	 if (a.bottom >= b.top && a.bottom <= b.bottom) {
+	 cout << "onder geraakt" << endl;
+	 }
+	 if (a.top >= b.top && a.top <= b.bottom) {
+	 cout << "boven geraakt" << endl;
+	 }
+	 }*/
 
 	//If none of the sides from A are outside B
 	return true;

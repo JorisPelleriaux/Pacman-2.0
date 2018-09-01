@@ -11,19 +11,24 @@ public:
 			int y, int movespeed);
 	~SDLPacman();
 	void Visualise(int State) override;	//state 0: Normal ; state 1: Power ; state 2: Dead
-	void Move(RECT box) override;
+	void Move() override;
+	void SetStartPosition() override;
+	void ShowText() override;
+	void GameOver() override;
 
 private:
 	SDL_Texture* imageN;	//Image of normal pacman
 	SDL_Texture* imageD;	//Image of pacman die
-	SDLContext* context;
+	SDLContext* context;	//GameContext
 
 	//Collision box of the Pacman
 	SDL_Rect mBox;
 
 	//Current animation frame
 	int frame;
-	RECT pbox;
+
+	//Start position
+	int x, y;
 
 };
 

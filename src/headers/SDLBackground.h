@@ -10,7 +10,8 @@ public:
 	SDLBackground(SDLContext* context);
 	~SDLBackground();
 	void Visualise(int State) override;
-	void Move(RECT box) override;
+	void Move() override;
+	void StartScreen() override;
 	bool SetTiles();
 	void Close();
 	SDLContext* GetContext();

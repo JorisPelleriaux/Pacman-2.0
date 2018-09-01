@@ -42,6 +42,13 @@ BaseInput* SDLInput::GetInput() {
 				cout << "quit" << endl;
 				input->inputVector.push_back(InputType::Quit);
 				break;
+			case SDLK_RETURN:
+				input->inputVector.push_back(InputType::Enter);
+				break;
+			case SDLK_KP_ENTER:
+				input->inputVector.push_back(InputType::Enter);
+				break;
+
 			}
 		}
 		//If a key was released

@@ -16,10 +16,10 @@ class SDLGhost: public Ghost {
 public:
 	SDLGhost(SDLContext* context, AbstractFactory* factory, int x, int y, int movespeed, int number);
 	~SDLGhost();
-	void Visualise(int State) override;
-	//void Move(RECT box) override;
-	//Collision box of the Ghost
-	SDL_Rect mBox;
+	void Visualise(int State) override;	//State 0: normal ; State 1: smart ; State 2: can be eaten
+
+
+
 private:
 	SDL_Texture* image;
 	SDLContext* context;	//Game context

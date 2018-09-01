@@ -11,13 +11,12 @@ public:
 
 	virtual int CreateWindow()=0;
 	virtual void Render()=0;
-	void SetScore(int score);
+	virtual void ClearScreen()=0;
 
 	int screen_height = 0;
 	int screen_width = 0;
 
 private:
-	int score;
 
 };
 

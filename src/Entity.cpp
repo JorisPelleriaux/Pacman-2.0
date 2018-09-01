@@ -18,11 +18,3 @@ rect.left = 20;
 Entity::~Entity() {
 
 }
-void Entity::Move(RECT box){
-
-}
-
-bool Entity::CheckCollisions(RECT a, RECT b){
-
-	return false;
-}

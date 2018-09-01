@@ -8,6 +8,7 @@ SDLWindow::SDLWindow(int screen_width, int screen_height) :
 	gWindow = NULL;
 	gRenderer = NULL;
 	gTexture = NULL;
+	gTextTexture = NULL;
 	this->screen_height = screen_height;
 	this->screen_width = screen_width;
 
@@ -20,6 +21,7 @@ SDLWindow::~SDLWindow() {
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
 	gRenderer = NULL;
+	gTextTexture = NULL;
 
 	//Quit SDL subsystems
 	IMG_Quit();
@@ -41,8 +43,8 @@ int SDLWindow::CreateWindow() {
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width,
-				screen_height, SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL) {
 			printf("Window could not be created! SDL Error: %s\n",
 					SDL_GetError());
@@ -67,6 +69,11 @@ int SDLWindow::CreateWindow() {
 							IMG_GetError());
 					return 1;
 				}
+				//Initialize SDL_ttf
+				if (TTF_Init() == -1) {
+					printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n",
+					TTF_GetError());
+				}
 			}
 		}
 	}
@@ -74,11 +81,11 @@ int SDLWindow::CreateWindow() {
 }
 
 void SDLWindow::Render() {
-	//cout << "render" << endl;
-	//Clear screen
-	//SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	//SDL_RenderClear(gRenderer);
-
 	//Update screen
 	SDL_RenderPresent(gRenderer);
+}
+void SDLWindow::ClearScreen() {
+	//Clear screen
+	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(gRenderer);
 }

@@ -23,18 +23,22 @@ SDLBackground::SDLBackground(SDLContext* context) :
 		printf("Failed to load tile set!\n");
 	}
 
-
 }
 
 SDLBackground::~SDLBackground() {
 	context->free();
 }
 void SDLBackground::Visualise(int State) {
-	context->ClearScreen();
-
+	//Render text
+	/*	SDL_Color textColor = { 0, 255, 255 };
+	 if (!context->loadFromRenderedText("hello jshgofsgoshrogishrogisnrkgh", textColor)) {
+	 printf("Failed to render text texture!\n");
+	 }*/
 	//Render Tiles
 	for (int i = 0; i < context->TOTAL_TILES; ++i) {
-		context->Draw(context->tileSet[i]->getBox().left, context->tileSet[i]->getBox().top, image, &context->gTileClips[context->tileSet[i]->getType()],0.0 );
+		context->Draw(context->tileSet[i]->getBox().left,
+				context->tileSet[i]->getBox().top, image,
+				&context->gTileClips[context->tileSet[i]->getType()], 0.0);
 	}
 }
 
@@ -47,7 +51,7 @@ void SDLBackground::Close() {
 		}
 	}
 }
-void SDLBackground::Move(RECT box) {
+void SDLBackground::Move() {
 
 }
 
@@ -205,6 +209,17 @@ bool SDLBackground::SetTiles() {
 	//If the map was loaded fine
 	return tilesLoaded;
 }
-SDLContext* SDLBackground::GetContext(){
+
+void SDLBackground::StartScreen() {
+	//Render text
+	std::string Text = "Press enter to start";
+	SDL_Color textColor = { 255, 255, 255 };
+	if (!context->loadFromRenderedText(Text, textColor, 50)) {
+		printf("Failed to render text texture!\n");
+	}
+	context->Draw(10, (context->sHeight - 50) / 2, context->mTexture);
+}
+
+SDLContext* SDLBackground::GetContext() {
 	return context;
 }

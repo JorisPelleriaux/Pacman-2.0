@@ -4,7 +4,7 @@
 
 //Enum of Input types
 enum InputType {
-	None, DLeft, DRight, DUp, DDown, Quit, ULeft, URight, UUp, UDown
+	None, DLeft, DRight, DUp, DDown, Quit, ULeft, URight, UUp, UDown, Enter
 };
 
 class BaseInput {

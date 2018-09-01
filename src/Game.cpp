@@ -30,7 +30,7 @@ Game::Game(AbstractFactory* factory) {
 	Pac = factory->CreatePacman(3, 251, 595, 10);
 
 	//Default state
-	state = Running;
+	state = Menu;
 
 	//Inputhandler
 	inputhandler = factory->GetInputhandler();
@@ -39,7 +39,7 @@ Game::Game(AbstractFactory* factory) {
 }
 void Game::Start() {
 	//Main loop flag
-	int angle = 0;
+
 	while (state != QuitGame) {
 		//Get input and check for quit
 		input = inputhandler->GetInput();
@@ -50,37 +50,95 @@ void Game::Start() {
 
 		switch (state) {
 		case Menu:
+			//clear screen
+			window->ClearScreen();
+			//Render Background
+			background->Visualise(0);
+			background->StartScreen();
+			//Update screen
+			window->Render();
+
+			if (find(input->inputVector.begin(), input->inputVector.end(),
+					InputType::Enter) != input->inputVector.end()) {
+				state = Running;
+			}
 			break;
 		case Running: {
 			//pass the input (left,right,up,down) to the pac
 			for (InputType dir : input->inputVector) {
 				Pac->handleEvent(dir);
 			}
-			Pac->Move(this->Ghosts[2]->Box);	//Move the pacman
 
-			//Move the ghosts
-			for (int i = 0; i < 4; i++) {
-				Ghosts[i]->Move(this->Pac->Pbox);
-			}
+			//clear screen
+			window->ClearScreen();
+
+			Pac->Move();	//Move the pacman
 			//Render Background
 			background->Visualise(0);
-			//Render Ghosts
+
+			//Move and Render the ghosts
 			for (int i = 0; i < 4; i++) {
+				Ghosts[i]->Move();
 				Ghosts[i]->Visualise(0);
 			}
-			if (Pac->CheckCollision()) {
-				//Pac->TakeLive();
-				//Pac->Visualise(2);
-				cout<<"RAAK"<<endl;
+
+			if (Pac->CheckCollision()) {	//Check collision with ghosts
+				cout << "Ghost geraakt" << endl;
+				if (Pac->GetLives() > 0) {
+					Pac->TakeLive();
+					state = LostLife;
+				} else {
+					state = GameOver;
+				}
 			}
 			//Render pacman
 			Pac->Visualise(0);
+			Pac->ShowText();
 			//Update screen
 			window->Render();
 
 		}
 			break;
+		case LostLife:
+			//clear screen
+			window->ClearScreen();
+
+			//Render Background
+			background->Visualise(0);
+			//Render Ghosts
+			for (int i = 0; i < 4; i++) {
+				Ghosts[i]->Move();
+				Ghosts[i]->Visualise(0);
+			}
+			//Render pacman
+			Pac->Visualise(2);
+			//Update screen
+			window->Render();
+
+			if (Pac->IsDead) {
+				Pac->IsDead = false;
+				state = Running;
+			}
+
+			break;
 		case GameOver:
+			//clear screen
+			window->ClearScreen();
+
+			//Render Background
+			background->Visualise(0);
+			//Render Ghosts
+			for (int i = 0; i < 4; i++) {
+				Ghosts[i]->Move();
+				Ghosts[i]->Visualise(0);
+			}
+			//Render pacman
+			Pac->Visualise(2);
+			Pac->GameOver();
+			//Update screen
+			window->Render();
+			break;
+		case QuitGame:
 			break;
 		case NoState:
 			break;

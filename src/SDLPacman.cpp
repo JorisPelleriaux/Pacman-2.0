@@ -3,12 +3,12 @@
 
 using namespace std;
 
-SDLPacman::SDLPacman(SDLContext* context, AbstractFactory* factory, int lives, int x, int y,
-		int movespeed) :
+SDLPacman::SDLPacman(SDLContext* context, AbstractFactory* factory, int lives,
+		int x, int y, int movespeed) :
 		AbsPacman(factory, context, lives, x, y, movespeed) {
 	this->context = context;
 	imageN = context->loadFromFile("Media/Pacman_sprite.png");
-	imageD = context->loadFromFile("Media/Pacman_sprite.png");
+	imageD = context->loadFromFile("Media/PacmanDie.png");
 
 	if (imageN == NULL) {
 		printf("Failed to load texture image!\n");
@@ -19,8 +19,10 @@ SDLPacman::SDLPacman(SDLContext* context, AbstractFactory* factory, int lives, i
 
 	}
 
-	mBox.x = pbox.left = x;
-	mBox.y = pbox.top = y;
+	this->x = x;
+	this->y = y;
+	mBox.x = x;
+	mBox.y = y;
 	mBox.w = PAC_WIDTH;
 	mBox.h = PAC_HEIGHT;
 	Pbox.left = x;
@@ -38,19 +40,67 @@ void SDLPacman::Visualise(int State) {
 	Pbox.right = Pbox.left + 25;
 	Pbox.bottom = Pbox.top + 25;
 
-	SDL_Rect* currentClip = &context->gSpriteClips[frame / 8];//Render current frame
-	context->Draw(mBox.x, mBox.y, imageN, currentClip, sAngle);
+	if (State == 0) {	//Normal Pacman
+		SDL_Rect* currentClip = &context->gSpriteClips[frame / 8];//Render current frame
+		context->Draw(mBox.x, mBox.y, imageN, currentClip, sAngle);
+		context->ANIMATION_FRAMES = 4;
+	}
+
+	if (State == 2) {	//Dead Pacman
+		SDL_Rect* currentClip = &context->gSpriteClips[frame / 8 + 4];//Render current frame
+		context->Draw(mBox.x, mBox.y, imageD, currentClip, 0);
+		context->ANIMATION_FRAMES = 12;
+	}
 
 	++frame;	//Go to next frame
 
 	//Cycle animation
 	if (frame / 8 >= context->ANIMATION_FRAMES) {
-		frame = 0;
+		if (context->ANIMATION_FRAMES == 4) {
+			frame = 0;
+		} else {
+			this->SetStartPosition();
+			this->IsDead = true;
+		}
+
 	}
 }
 
-void SDLPacman::Move(RECT box) {
+void SDLPacman::SetStartPosition() {
+	mBox.x = x;
+	mBox.y = y;
+	XVEL = 0;
+	YVEL = 0;
+	sAngle = 0;
+}
 
+void SDLPacman::ShowText() {
+	//Render text
+	std::string Text = "Score: " + std::to_string(context->score);
+	SDL_Color textColor = { 255, 255, 255 };
+	if (!context->loadFromRenderedText(Text, textColor, 28)) {
+		printf("Failed to render text texture!\n");
+	}
+	context->Draw(20, 5, context->mTexture);
+
+	Text = "Lives: " + std::to_string(this->GetLives());
+	if (!context->loadFromRenderedText(Text, textColor,28)) {
+		printf("Failed to render text texture!\n");
+	}
+	context->Draw(context->sWidth - 145, 5, context->mTexture);
+}
+
+void SDLPacman::GameOver() {
+	//Render text
+	std::string Text = "Game Over";
+	SDL_Color textColor = { 255, 255, 255 };
+	if (!context->loadFromRenderedText(Text, textColor,50)) {
+		printf("Failed to render text texture!\n");
+	}
+	context->Draw((context->sWidth-150)/2, (context->sHeight -50) /2, context->mTexture);
+}
+
+void SDLPacman::Move() {
 
 	this->Pbox.left = mBox.x;
 	this->Pbox.top = mBox.y;
@@ -69,8 +119,6 @@ void SDLPacman::Move(RECT box) {
 	}
 	//If the Pac touched a wall
 	if (context->touchesWall(mBox, context->tileSet, true)) {
-		//move back
-		cout<<"wall"<<endl;
 		mBox.x -= XVEL;	//Stop
 	}
 
@@ -81,5 +129,4 @@ void SDLPacman::Move(RECT box) {
 			|| context->touchesWall(mBox, context->tileSet, true)) {
 		mBox.y -= YVEL;	//Stop
 	}
-
 }

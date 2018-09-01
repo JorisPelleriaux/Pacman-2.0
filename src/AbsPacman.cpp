@@ -40,8 +40,8 @@ AbsPacman::~AbsPacman() {
  Pbox.top -= YVEL;
  }
 
- }*/
-
+ }
+*/
 //Handle the input
 void AbsPacman::handleEvent(InputType dir) {
 	//Adjust the velocity
@@ -91,6 +91,9 @@ bool AbsPacman::CheckCollision() {
 
 int AbsPacman::GetLives() {
 	return lives;
+}
+int AbsPacman::GetScore() {
+	return score;
 }
 void AbsPacman::TakeLive() {
 	lives -= 1;
