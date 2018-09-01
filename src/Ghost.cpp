@@ -13,7 +13,7 @@ Ghost::Ghost(AbstractFactory* factory, Context* context, int x, int y,
 	this->Box.top = y;
 	this->Box.right = Box.left + Ghost_WIDTH;
 	this->Box.bottom = Box.top + Ghost_HEIGHT;
-	this->Ghost_VEL = 2;
+	this->Ghost_VEL = movespeed;
 	this->context = context;
 	this->XVEL = 2;
 	this->YVEL = 0;
@@ -33,25 +33,17 @@ void Ghost::Move() {
 	context->Ghosts[context->CurrGhost].right = Box.left + Ghost_WIDTH;
 	context->Ghosts[context->CurrGhost].bottom = Box.top + Ghost_HEIGHT;
 
-	//Ready for next ghost
-	context->CurrGhost++;
-
-	//All ghosts done -> first ghost
-	if (context->CurrGhost == 4) {
-		context->CurrGhost = 0;
-	}
-
 //Define how the ghost should move
-	int tempPosX = Box.left;
-	int tempPosY = Box.top;
+	tempPosX[context->CurrGhost] = Box.left;
+	tempPosY[context->CurrGhost] = Box.top;
 
-	if (counter >= 10) {
-		counter = 0;
-		Num = rand() % 4;
+	if (counter[context->CurrGhost] >= 15) {	//change direction every 15 times
+		counter[context->CurrGhost] = 0;
+		Num[context->CurrGhost] = rand() % 4;
 	}
-	counter++;
+	counter[context->CurrGhost]++;
 
-	switch (Num) {
+	switch (Num[context->CurrGhost]) {
 	case 0:
 		Box.left += Ghost_VEL;
 		break;
@@ -67,29 +59,31 @@ void Ghost::Move() {
 	}
 
 	if (context->touchesWall(Box)) {
-		Box.left = tempPosX;
-		Box.top = tempPosY;
-		cout << "Wall" << endl;
-		switch (PrevNum) {
+		Box.left = tempPosX[context->CurrGhost];
+		Box.top = tempPosY[context->CurrGhost];
+		switch (PrevNum[context->CurrGhost]) {
 		case 0:
-			Box.left += Ghost_VEL;
-			break;
-		case 1:
 			Box.left -= Ghost_VEL;
 			break;
-		case 2:
-			Box.top += Ghost_VEL;
+		case 1:
+			Box.left += Ghost_VEL;
 			break;
-		case 3:
+		case 2:
 			Box.top -= Ghost_VEL;
 			break;
-		}
-		if (context->touchesWall(Box)) {
-			Box.left = tempPosX;
-			Box.top = tempPosY;
-			Num = rand() % (4) + 1; //if stuck, change direction
+		case 3:
+			Box.top += Ghost_VEL;
+			break;
 		}
 	} else {
-		PrevNum = Num;
+		PrevNum[context->CurrGhost] = Num[context->CurrGhost];
+	}
+
+	//Ready for next ghost
+	context->CurrGhost++;
+
+	//All ghosts done -> first ghost
+	if (context->CurrGhost == 4) {
+		context->CurrGhost = 0;
 	}
 }

@@ -6,11 +6,13 @@
 #include "Context.h"
 using namespace std;
 
-class AbstractFactory;	//required
+class AbstractFactory;
+//required
 
 class Ghost: public Entity {
 public:
-	Ghost(AbstractFactory* factory, Context* context, int x, int y, int movespeed);
+	Ghost(AbstractFactory* factory, Context* context, int x, int y,
+			int movespeed);
 	virtual ~Ghost();
 	void Move() override;
 	//The dimensions of the Ghost
@@ -19,7 +21,7 @@ public:
 
 	//Collision box of the Ghost
 	RECT Box;
-	int Ghost_VEL = 2;
+	int Ghost_VEL = 0;	//Set later in game
 protected:
 
 private:
@@ -29,8 +31,10 @@ private:
 
 	int XVEL;
 	int YVEL;
-	int counter = 0;
-	int Num = 0;
-	int PrevNum = 0;
+	int counter[4];
+	int Num[4];
+	int PrevNum[4];
+	int tempPosX[4];
+	int tempPosY[4];
 };
 #endif /* HEADERS_GHOST_H_ */

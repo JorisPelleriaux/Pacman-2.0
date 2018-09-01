@@ -55,6 +55,11 @@ void Game::Start() {
 			//Render Background
 			background->Visualise(0);
 			background->StartScreen();
+			//Move and Render the ghosts
+			for (int i = 0; i < 4; i++) {
+				Ghosts[i]->Move();
+				Ghosts[i]->Visualise(0);
+			}
 			//Update screen
 			window->Render();
 
