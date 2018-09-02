@@ -4,19 +4,25 @@ using namespace std;
 
 namespace PACMAN {
 Context::Context() {
-	//Current Ghost
-	CurrGhost = 0;
 }
 
 Context::~Context() {
 
 }
 
-bool Context::touchesWall(RECT box) {
+bool Context::touchesWall(RECT box, bool pacman) {
 	//Go through the tiles
 	for (int i = 0; i < 285; ++i) {
+		//If the tile is food
+		if (tileSet[i]->getType() > 15) { //15: path tile
+			if (checkcollision(box, tileSet[i]->getBox()) && pacman) {
+				tileSet[i]->setType(15);
+				this->score += 5;	//add 5 to the score
+			}
+		}
+
 		//If the tile is a wall type tile
-		if ((tileSet[i]->getType() < 15) && (tileSet[i]->getType() >= 0)) {
+		if ((tileSet[i]->getType() < 15) && (tileSet[i]->getType() >= 0)) {	//15: path tile
 			//If the collision box touches the wall tile
 			if (checkcollision(box, tileSet[i]->getBox())) {
 				return true;

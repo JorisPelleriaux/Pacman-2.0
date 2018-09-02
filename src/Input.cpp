@@ -5,6 +5,5 @@ using namespace std;
 
 namespace PACMAN {
 Input::~Input() {
-	// TODO Auto-generated destructor stub
 }
 }

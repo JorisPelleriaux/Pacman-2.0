@@ -10,118 +10,122 @@ Ghost::Ghost(AbstractFactory* factory, Context* context, int x, int y,
 		int movespeed) :
 		Entity(x, y, 20, 20, movespeed) {
 	this->factory = factory;
-	this->Box.left = x;
-	this->Box.top = y;
-	this->Box.right = Box.left + Ghost_WIDTH;
-	this->Box.bottom = Box.top + Ghost_HEIGHT;
-	this->Ghost_VEL = movespeed;
+	mBox.left = x;
+	mBox.top = y;
+	mBox.right = mBox.left + GHOST_WIDTH;
+	mBox.bottom = mBox.top + GHOST_HEIGHT;
+	ghost_VEL = movespeed;
 	this->context = context;
 }
 Ghost::~Ghost() {
 }
 
-void Ghost::Default(int Ghost) {
-	Box.left = 300 - (Ghost * 40);
-	this->Box.top = 245 + (4 * Ghost);
-	this->Box.right = Box.left + Ghost_WIDTH;
-	this->Box.bottom = Box.top + Ghost_HEIGHT;
+void Ghost::defaultPosition(int Ghost) {
+	mBox.left = 300 - (Ghost * 40);
+	mBox.top = 245 + (4 * Ghost);
+	mBox.right = mBox.left + GHOST_WIDTH;
+	mBox.bottom = mBox.top + GHOST_HEIGHT;
 }
 
-void Ghost::Move() {
+void Ghost::move() {
 	//Update the right and bottom value of the collision box
-	Box.right = Box.left + Ghost_WIDTH;
-	Box.bottom = Box.top + Ghost_HEIGHT;
+	mBox.right = mBox.left + GHOST_WIDTH;
+	mBox.bottom = mBox.top + GHOST_HEIGHT;
 
 	//Pass the current position of the ghost to the pacman
-	context->Ghosts[context->CurrGhost].left = Box.left;
-	context->Ghosts[context->CurrGhost].top = Box.top;
-	context->Ghosts[context->CurrGhost].right = Box.left + Ghost_WIDTH;
-	context->Ghosts[context->CurrGhost].bottom = Box.top + Ghost_HEIGHT;
+	context->ghosts[context->currGhost].left = mBox.left;
+	context->ghosts[context->currGhost].top = mBox.top;
+	context->ghosts[context->currGhost].right = mBox.left + GHOST_WIDTH;
+	context->ghosts[context->currGhost].bottom = mBox.top + GHOST_HEIGHT;
 
 //Define how the ghost should move
-	tempPosX[context->CurrGhost] = Box.left;
-	tempPosY[context->CurrGhost] = Box.top;
+	tempPosX[context->currGhost] = mBox.left;
+	tempPosY[context->currGhost] = mBox.top;
 
-	switch (Num[context->CurrGhost]) {
+	switch (num[context->currGhost]) {
 	case 0:
-		Box.left += Ghost_VEL;
+		mBox.left += ghost_VEL;
 		break;
 	case 1:
-		Box.left -= Ghost_VEL;
+		mBox.left -= ghost_VEL;
 		break;
 	case 2:
-		Box.top += Ghost_VEL;
+		mBox.top += ghost_VEL;
 		break;
 	case 3:
-		Box.top -= Ghost_VEL;
+		mBox.top -= ghost_VEL;
 		break;
 	}
 
-	if (context->touchesWall(Box) || (Box.top <= 0) || (Box.left < 0)
-			|| (Box.top + Ghost_HEIGHT > 665)
-			|| (Box.left + Ghost_WIDTH > 525)) {
-		Box.left = tempPosX[context->CurrGhost];
-		Box.top = tempPosY[context->CurrGhost];
-		switch (Num[context->CurrGhost]) {
+	if (context->touchesWall(mBox, false) || (mBox.top <= 0) || (mBox.left < 0)
+			|| (mBox.top + GHOST_HEIGHT > context->sHeight)
+			|| (mBox.left + GHOST_WIDTH > context->sWidth)) {
+		mBox.left = tempPosX[context->currGhost];
+		mBox.top = tempPosY[context->currGhost];
+		switch (num[context->currGhost]) {
 		case 0:
-			Box.left -= Ghost_VEL;
+			mBox.left -= ghost_VEL;
 			break;
 		case 1:
-			Box.left += Ghost_VEL;
+			mBox.left += ghost_VEL;
 			break;
 		case 2:
-			Box.top -= Ghost_VEL;
+			mBox.top -= ghost_VEL;
 			break;
 		case 3:
-			Box.top += Ghost_VEL;
+			mBox.top += ghost_VEL;
 			break;
 		}
-		Num[context->CurrGhost] = rand() % 4;
+		num[context->currGhost] = rand() % 4;
 	} else {
-		PrevNum[context->CurrGhost] = Num[context->CurrGhost];
+		prevNum[context->currGhost] = num[context->currGhost];
 	}
 
 	//Ready for next ghost
-	context->CurrGhost++;
+	context->currGhost++;
 
 	//All ghosts done -> first ghost
-	if (context->CurrGhost == 4) {
-		context->CurrGhost = 0;
+	if (context->currGhost == 4) {
+		context->currGhost = 0;
 	}
 }
 
-void Ghost::StartMove(int Ghost) {
+RECT Ghost::getBox(){
+	return (mBox);
+}
+
+void Ghost::startMove() {
 	//Update the right and bottom value of the collision box
-	Box.right = Box.left + Ghost_WIDTH;
-	Box.bottom = Box.top + Ghost_HEIGHT;
+	mBox.right = mBox.left + GHOST_WIDTH;
+	mBox.bottom = mBox.top + GHOST_HEIGHT;
 
 	//Pass the current position of the ghost to the pacman
-	context->Ghosts[context->CurrGhost].left = Box.left;
-	context->Ghosts[context->CurrGhost].top = Box.top;
-	context->Ghosts[context->CurrGhost].right = Box.left + Ghost_WIDTH;
-	context->Ghosts[context->CurrGhost].bottom = Box.top + Ghost_HEIGHT;
+	context->ghosts[context->currGhost].left = mBox.left;
+	context->ghosts[context->currGhost].top = mBox.top;
+	context->ghosts[context->currGhost].right = mBox.left + GHOST_WIDTH;
+	context->ghosts[context->currGhost].bottom = mBox.top + GHOST_HEIGHT;
 
-	if (Box.left < (525 / 2) - (Ghost_WIDTH / 2)) {	//Ghost left from center -> move right
-		Box.left += Ghost_VEL;
+	if (mBox.left < (context->sWidth / 2) - (GHOST_WIDTH / 2)) {	//Ghost left from center -> move right
+		mBox.left += ghost_VEL;
 	}
-	if (Box.left > (525 / 2) - (Ghost_WIDTH / 2)) {	//Ghost right from center -> move left
-		Box.left -= Ghost_VEL;
+	if (mBox.left > (context->sWidth / 2) - (GHOST_WIDTH / 2)) {	//Ghost right from center -> move left
+		mBox.left -= ghost_VEL;
 	}
-	if (context->touchesWall(Box)) {	//Ghosts left <=> right
-		Box.top += Ghost_VEL;
-		Num[0] = Num[2] = 0;
-		Num[1] = Num[3] = 1;
-		Start = true;
+	if (context->touchesWall(mBox, false)) {	//Ghosts left <=> right
+		mBox.top += ghost_VEL;
+		num[0] = num[2] = 0;
+		num[1] = num[3] = 1;
+		start = true;
 	}
-	if (Start == false && Box.left == ((525 / 2) - (Ghost_WIDTH / 2)) - 1) {//Ghost in center position -> move up
-		Box.top -= Ghost_VEL;
+	if (start == false && mBox.left == ((context->sWidth / 2) - (GHOST_WIDTH / 2)) - 1) {//Ghost in center position -> move up
+		mBox.top -= ghost_VEL;
 	}
 	//Ready for next ghost
-	context->CurrGhost++;
+	context->currGhost++;
 
 	//All ghosts done -> first ghost
-	if (context->CurrGhost == 4) {
-		context->CurrGhost = 0;
+	if (context->currGhost == 4) {
+		context->currGhost = 0;
 	}
 
 }

@@ -1,13 +1,9 @@
-#include <iostream>
-//#include "AbsPacman.h"
-//#include "Ghost.h"
 #include "SDLFactory.h"
-using namespace std;
 
 namespace PACMAN_SDL {
 SDLFactory::SDLFactory() {
-	Gamecontext = NULL;
-	inputHandler = NULL;
+	Gamecontext = nullptr;
+	inputHandler = nullptr;
 }
 
 SDLFactory::~SDLFactory() {
@@ -30,7 +26,7 @@ Background* SDLFactory::CreateBackground() {
 }
 
 Input* SDLFactory::GetInputhandler() {
-	if (inputHandler == NULL) {
+	if (inputHandler == nullptr) {
 		inputHandler = new SDLInput();
 	}
 	return inputHandler;

@@ -20,7 +20,7 @@ class Game {
 public:
 	Game(AbstractFactory* factory);
 	~Game();
-	void Start();
+	void start();
 
 protected:
 	BaseInput* input;

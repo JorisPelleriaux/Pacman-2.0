@@ -5,15 +5,12 @@ using namespace std;
 
 namespace PACMAN_SDL {
 SDLInput::SDLInput() {
-	// TODO Auto-generated constructor stub
-
 }
 
 SDLInput::~SDLInput() {
-	// TODO Auto-generated destructor stub
 }
 
-BaseInput* SDLInput::GetInput() {
+BaseInput* SDLInput::getInput() {
 	BaseInput* input = new BaseInput();
 	SDL_Event e;
 	SDL_PollEvent(&e);

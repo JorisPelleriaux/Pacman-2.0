@@ -1,13 +1,11 @@
 #ifndef SDLWINDOW_H_
 #define SDLWINDOW_H_
-
 #include <sdl2/SDL.h>
 #include <sdl2/SDL_image.h>
 #include <sdl2/SDL_ttf.h>
 #include "Window.h"
 #include "SDLContext.h"
 #include <stdio.h>
-#include <string>
 
 using namespace PACMAN;
 
@@ -28,16 +26,20 @@ public:
 	SDL_Texture* gTexture;
 
 	//Globally used font
-	TTF_Font *gFont = NULL;
+	TTF_Font *gFont = nullptr;
 
 	//Rendered texture
 	SDLContext* gTextTexture;
 
 	//SDLContext gSpriteSheetTexture;
 
-	int CreateWindow();
-	void Render() override;
-	void ClearScreen() override;
+	int createWindow();
+	void render() override;
+	void clearScreen() override;
+
+private:
+	int screen_width = 0;
+	int screen_height = 0;
 };
 }
 #endif /* SDLWINDOW_H_ */

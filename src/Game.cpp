@@ -7,17 +7,15 @@
 #include <stdio.h>
 #include <algorithm>
 
-using namespace std;
-
 namespace PACMAN {
-//Constructor sets required parameters, state and default name
+
 Game::Game(AbstractFactory* factory) {
 	//make the factory (SDL factory)
 	this->factory = factory;
 
 	//Create a window
 	window = factory->CreateWindow(525, 665);
-	window->CreateWindow();
+	window->createWindow();
 
 	//Render the background
 	background = factory->CreateBackground();
@@ -28,22 +26,21 @@ Game::Game(AbstractFactory* factory) {
 	}
 
 	//Create Pacman
-	Pac = factory->CreatePacman(3, 251, 595, 2);
+	Pac = factory->CreatePacman(3, 246, 595, 2);
 
 	//Default state
 	state = Menu;
 
 	//Inputhandler
 	inputhandler = factory->GetInputhandler();
-	input = NULL;
+	input = nullptr;
 
 }
-void Game::Start() {
+void Game::start() {
 	//Main loop flag
-
 	while (state != QuitGame) {
 		//Get input and check for quit
-		input = inputhandler->GetInput();
+		input = inputhandler->getInput();
 		if (find(input->inputVector.begin(), input->inputVector.end(),
 				InputType::Quit) != input->inputVector.end()) {
 			state = QuitGame;
@@ -52,17 +49,17 @@ void Game::Start() {
 		switch (state) {
 		case Menu:
 			//clear screen
-			window->ClearScreen();
+			window->clearScreen();
 			//Render Background
-			background->Visualise(0);
-			background->StartScreen();
+			background->visualise(0);
+			background->startScreen();
 			//Move and Render the ghosts
 			for (int i = 0; i < 4; i++) {
-				Ghosts[i]->Move();
-				Ghosts[i]->Visualise(0);
+				Ghosts[i]->move();
+				Ghosts[i]->visualise(0);
 			}
 			//Update screen
-			window->Render();
+			window->render();
 
 			if (find(input->inputVector.begin(), input->inputVector.end(),
 					InputType::Enter) != input->inputVector.end()) {
@@ -76,56 +73,55 @@ void Game::Start() {
 			}
 
 			//clear screen
-			window->ClearScreen();
+			window->clearScreen();
 
-			Pac->Move();	//Move the pacman
+			Pac->move();	//Move the pacman
 			//Render Background
-			background->Visualise(0);
+			background->visualise(0);
 
 			//Move and Render the ghosts
 			for (int i = 0; i < 4; i++) {
-				if (!Ghosts[i]->Start) {
-					Ghosts[i]->StartMove(i);
+				if (!Ghosts[i]->start) {
+					Ghosts[i]->startMove();
 				} else {
-					Ghosts[i]->Move();
+					Ghosts[i]->move();
 				}
 
-				Ghosts[i]->Visualise(0);
+				Ghosts[i]->visualise(0);
 			}
-			cout << Ghosts[1]->Box.top << endl;
-			if (Pac->CheckCollision()) {	//Check collision with ghosts
+			if (Pac->checkCollision()) {	//Check collision with ghosts
 				cout << "Ghost geraakt" << endl;
-				if (Pac->GetLives() > 0) {
-					Pac->TakeLive();
+				if (Pac->getLives() > 1) {
+					Pac->takeLive();
 					state = LostLife;
 				} else {
 					state = GameOver;
 				}
 			}
 			//Render pacman
-			Pac->Visualise(0);
-			Pac->ShowText();	//Show Score, Lives
+			Pac->visualise(0);
+			Pac->showText();	//Show Score, Lives
 			//Update screen
-			window->Render();
+			window->render();
 
 		}
 			break;
 		case LostLife:
 			//clear screen
-			window->ClearScreen();
+			window->clearScreen();
 
 			//Render Background
-			background->Visualise(0);
+			background->visualise(0);
 			//Render pacman
-			Pac->Visualise(2);
+			Pac->visualise(2);
 			//Update screen
-			window->Render();
+			window->render();
 
 			if (Pac->IsDead) {
 				Pac->IsDead = false;
 				for (int i = 0; i < 4; i++) {
-					Ghosts[i]->Start = false;
-					Ghosts[i]->Default(i);
+					Ghosts[i]->start = false;
+					Ghosts[i]->defaultPosition(i);
 				}
 				state = Running;
 			}
@@ -133,20 +129,24 @@ void Game::Start() {
 			break;
 		case GameOver:
 			//clear screen
-			window->ClearScreen();
+			window->clearScreen();
 
 			//Render Background
-			background->Visualise(0);
+			background->visualise(0);
 			//Render Ghosts
 			for (int i = 0; i < 4; i++) {
-				Ghosts[i]->Move();
-				Ghosts[i]->Visualise(0);
+				Ghosts[i]->move();
+				Ghosts[i]->visualise(0);
 			}
-			//Render pacman
-			Pac->Visualise(2);
-			Pac->GameOver();
+			if (!Pac->IsDead) {
+				//Render pacman
+				Pac->visualise(2);
+			}
+
+			Pac->gameOver();
+
 			//Update screen
-			window->Render();
+			window->render();
 			break;
 		case QuitGame:
 			break;
@@ -155,14 +155,16 @@ void Game::Start() {
 		}
 
 	}
-
 }
 
 Game::~Game() {
 	delete Pac;
 	delete background;
-	delete Ghosts[1];
-	delete Ghosts[2];
+	delete inputhandler;
+	delete input;
+	for (int i = 0; i < 4; i++) {
+		delete Ghosts[i];
+	}
 	delete window;
 
 }

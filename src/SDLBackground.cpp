@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
-//#include "Background.h"
-//#include "SDLWindow.h"
 #include "Tile.h"
 using namespace std;
 
@@ -15,48 +13,37 @@ SDLBackground::SDLBackground(SDLContext* context) :
 	this->context = context;
 
 	//Load tile texture
-	image = context->loadFromFile("Media/Tile2.png");
-	if (image == NULL) {
+	image = context->loadFromFile("Media/Tile.png");
+	if (image == nullptr) {
 		printf("Failed to load texture image!\n");
 	}
 	//Set Tiles
-	if (!SetTiles()) {
-		printf("Failed to load tile set!\n");
+	if (!setTiles()) {
+		printf("Failed to set the tiles!\n");
 	}
 
 }
 
 SDLBackground::~SDLBackground() {
 	context->free();
-}
-void SDLBackground::Visualise(int State) {
-	//Render text
-	/*	SDL_Color textColor = { 0, 255, 255 };
-	 if (!context->loadFromRenderedText("hello jshgofsgoshrogishrogisnrkgh", textColor)) {
-	 printf("Failed to render text texture!\n");
-	 }*/
-	//Render Tiles
-	for (int i = 0; i < context->TOTAL_TILES; ++i) {
-		context->Draw(context->tileSet[i]->getBox().left,
-				context->tileSet[i]->getBox().top, image,
-				&context->gTileClips[context->tileSet[i]->getType()], 0.0);
-	}
-}
 
-void SDLBackground::Close() {
 	//Deallocate tiles
-	for (int i = 0; i < context->TOTAL_TILES; ++i) {
-		if (this->context->tileSet[i] == NULL) {
-			delete this->context->tileSet[i];
-			this->context->tileSet[i] = NULL;
+	for (int i = 0; i < TOTAL_TILES; ++i) {
+		if (context->tileSet[i] == nullptr) {
+			context->tileSet[i] = nullptr;
 		}
 	}
 }
-void SDLBackground::Move() {
-
+void SDLBackground::visualise(int State) {
+	//Render Tiles
+	for (int i = 0; i < TOTAL_TILES; ++i) {
+		context->draw(context->tileSet[i]->getBox().left,
+				context->tileSet[i]->getBox().top, image,
+				&gTileClips[context->tileSet[i]->getType()], 0.0);
+	}
 }
 
-bool SDLBackground::SetTiles() {
+bool SDLBackground::setTiles() {
 	//Success flag
 	bool tilesLoaded = true;
 	//The tile offsets
@@ -70,7 +57,7 @@ bool SDLBackground::SetTiles() {
 		tilesLoaded = false;
 	} else {
 		//Initialize the tiles
-		for (int i = 0; i < context->TOTAL_TILES; ++i) {
+		for (int i = 0; i < TOTAL_TILES; ++i) {
 			//Determines what kind of tile will be made
 			int tileType = -1;
 
@@ -112,95 +99,95 @@ bool SDLBackground::SetTiles() {
 
 		//Clip the sprite sheet
 		if (tilesLoaded) {
-			context->gTileClips[TILE_HORIZONTAL].x = 1;
-			context->gTileClips[TILE_HORIZONTAL].y = 1;
-			context->gTileClips[TILE_HORIZONTAL].w = TILE_WIDTH;
-			context->gTileClips[TILE_HORIZONTAL].h = TILE_HEIGHT;
+			gTileClips[TILE_HORIZONTAL].x = 1;
+			gTileClips[TILE_HORIZONTAL].y = 1;
+			gTileClips[TILE_HORIZONTAL].w = TILE_WIDTH;
+			gTileClips[TILE_HORIZONTAL].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_LEFT].x = 38;
-			context->gTileClips[TILE_LEFT].y = 1;
-			context->gTileClips[TILE_LEFT].w = TILE_WIDTH;
-			context->gTileClips[TILE_LEFT].h = TILE_HEIGHT;
+			gTileClips[TILE_LEFT].x = 38;
+			gTileClips[TILE_LEFT].y = 1;
+			gTileClips[TILE_LEFT].w = TILE_WIDTH;
+			gTileClips[TILE_LEFT].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_RIGHT].x = 75;
-			context->gTileClips[TILE_RIGHT].y = 1;
-			context->gTileClips[TILE_RIGHT].w = TILE_WIDTH;
-			context->gTileClips[TILE_RIGHT].h = TILE_HEIGHT;
+			gTileClips[TILE_RIGHT].x = 75;
+			gTileClips[TILE_RIGHT].y = 1;
+			gTileClips[TILE_RIGHT].w = TILE_WIDTH;
+			gTileClips[TILE_RIGHT].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_TOPRIGHT].x = 112;
-			context->gTileClips[TILE_TOPRIGHT].y = 1;
-			context->gTileClips[TILE_TOPRIGHT].w = TILE_WIDTH;
-			context->gTileClips[TILE_TOPRIGHT].h = TILE_HEIGHT;
+			gTileClips[TILE_TOPRIGHT].x = 112;
+			gTileClips[TILE_TOPRIGHT].y = 1;
+			gTileClips[TILE_TOPRIGHT].w = TILE_WIDTH;
+			gTileClips[TILE_TOPRIGHT].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_CENTERDOWN].x = 149;
-			context->gTileClips[TILE_CENTERDOWN].y = 1;
-			context->gTileClips[TILE_CENTERDOWN].w = TILE_WIDTH;
-			context->gTileClips[TILE_CENTERDOWN].h = TILE_HEIGHT;
+			gTileClips[TILE_CENTERDOWN].x = 149;
+			gTileClips[TILE_CENTERDOWN].y = 1;
+			gTileClips[TILE_CENTERDOWN].w = TILE_WIDTH;
+			gTileClips[TILE_CENTERDOWN].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_TOPLEFT].x = 186;
-			context->gTileClips[TILE_TOPLEFT].y = 1;
-			context->gTileClips[TILE_TOPLEFT].w = TILE_WIDTH;
-			context->gTileClips[TILE_TOPLEFT].h = TILE_HEIGHT;
+			gTileClips[TILE_TOPLEFT].x = 186;
+			gTileClips[TILE_TOPLEFT].y = 1;
+			gTileClips[TILE_TOPLEFT].w = TILE_WIDTH;
+			gTileClips[TILE_TOPLEFT].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_TOP].x = 1;
-			context->gTileClips[TILE_TOP].y = 37;
-			context->gTileClips[TILE_TOP].w = TILE_WIDTH;
-			context->gTileClips[TILE_TOP].h = TILE_HEIGHT;
+			gTileClips[TILE_TOP].x = 1;
+			gTileClips[TILE_TOP].y = 37;
+			gTileClips[TILE_TOP].w = TILE_WIDTH;
+			gTileClips[TILE_TOP].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_BOTTOMRIGHT].x = 38;
-			context->gTileClips[TILE_BOTTOMRIGHT].y = 37;
-			context->gTileClips[TILE_BOTTOMRIGHT].w = TILE_WIDTH;
-			context->gTileClips[TILE_BOTTOMRIGHT].h = TILE_HEIGHT;
+			gTileClips[TILE_BOTTOMRIGHT].x = 38;
+			gTileClips[TILE_BOTTOMRIGHT].y = 37;
+			gTileClips[TILE_BOTTOMRIGHT].w = TILE_WIDTH;
+			gTileClips[TILE_BOTTOMRIGHT].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_CENTERUP].x = 75;
-			context->gTileClips[TILE_CENTERUP].y = 37;
-			context->gTileClips[TILE_CENTERUP].w = TILE_WIDTH;
-			context->gTileClips[TILE_CENTERUP].h = TILE_HEIGHT;
+			gTileClips[TILE_CENTERUP].x = 75;
+			gTileClips[TILE_CENTERUP].y = 37;
+			gTileClips[TILE_CENTERUP].w = TILE_WIDTH;
+			gTileClips[TILE_CENTERUP].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_BOTTOMLEFT].x = 112;
-			context->gTileClips[TILE_BOTTOMLEFT].y = 37;
-			context->gTileClips[TILE_BOTTOMLEFT].w = TILE_WIDTH;
-			context->gTileClips[TILE_BOTTOMLEFT].h = TILE_HEIGHT;
+			gTileClips[TILE_BOTTOMLEFT].x = 112;
+			gTileClips[TILE_BOTTOMLEFT].y = 37;
+			gTileClips[TILE_BOTTOMLEFT].w = TILE_WIDTH;
+			gTileClips[TILE_BOTTOMLEFT].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_VERTICAL].x = 149;
-			context->gTileClips[TILE_VERTICAL].y = 37;
-			context->gTileClips[TILE_VERTICAL].w = TILE_WIDTH;
-			context->gTileClips[TILE_VERTICAL].h = TILE_HEIGHT;
+			gTileClips[TILE_VERTICAL].x = 149;
+			gTileClips[TILE_VERTICAL].y = 37;
+			gTileClips[TILE_VERTICAL].w = TILE_WIDTH;
+			gTileClips[TILE_VERTICAL].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_BOTTOM].x = 186;
-			context->gTileClips[TILE_BOTTOM].y = 37;
-			context->gTileClips[TILE_BOTTOM].w = TILE_WIDTH;
-			context->gTileClips[TILE_BOTTOM].h = TILE_HEIGHT;
+			gTileClips[TILE_BOTTOM].x = 186;
+			gTileClips[TILE_BOTTOM].y = 37;
+			gTileClips[TILE_BOTTOM].w = TILE_WIDTH;
+			gTileClips[TILE_BOTTOM].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_CENTERLEFT].x = 1;
-			context->gTileClips[TILE_CENTERLEFT].y = 73;
-			context->gTileClips[TILE_CENTERLEFT].w = TILE_WIDTH;
-			context->gTileClips[TILE_CENTERLEFT].h = TILE_HEIGHT;
+			gTileClips[TILE_CENTERLEFT].x = 1;
+			gTileClips[TILE_CENTERLEFT].y = 73;
+			gTileClips[TILE_CENTERLEFT].w = TILE_WIDTH;
+			gTileClips[TILE_CENTERLEFT].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_CENTER].x = 38;
-			context->gTileClips[TILE_CENTER].y = 73;
-			context->gTileClips[TILE_CENTER].w = TILE_WIDTH;
-			context->gTileClips[TILE_CENTER].h = TILE_HEIGHT;
+			gTileClips[TILE_CENTER].x = 38;
+			gTileClips[TILE_CENTER].y = 73;
+			gTileClips[TILE_CENTER].w = TILE_WIDTH;
+			gTileClips[TILE_CENTER].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_CENTERRIGHT].x = 75;
-			context->gTileClips[TILE_CENTERRIGHT].y = 73;
-			context->gTileClips[TILE_CENTERRIGHT].w = TILE_WIDTH;
-			context->gTileClips[TILE_CENTERRIGHT].h = TILE_HEIGHT;
+			gTileClips[TILE_CENTERRIGHT].x = 75;
+			gTileClips[TILE_CENTERRIGHT].y = 73;
+			gTileClips[TILE_CENTERRIGHT].w = TILE_WIDTH;
+			gTileClips[TILE_CENTERRIGHT].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_PATH].x = 186;
-			context->gTileClips[TILE_PATH].y = 73;
-			context->gTileClips[TILE_PATH].w = TILE_WIDTH;
-			context->gTileClips[TILE_PATH].h = TILE_HEIGHT;
+			gTileClips[TILE_PATH].x = 186;
+			gTileClips[TILE_PATH].y = 73;
+			gTileClips[TILE_PATH].w = TILE_WIDTH;
+			gTileClips[TILE_PATH].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_FOOD1].x = 112;
-			context->gTileClips[TILE_FOOD1].y = 73;
-			context->gTileClips[TILE_FOOD1].w = TILE_WIDTH;
-			context->gTileClips[TILE_FOOD1].h = TILE_HEIGHT;
+			gTileClips[TILE_FOOD1].x = 112;
+			gTileClips[TILE_FOOD1].y = 73;
+			gTileClips[TILE_FOOD1].w = TILE_WIDTH;
+			gTileClips[TILE_FOOD1].h = TILE_HEIGHT;
 
-			context->gTileClips[TILE_FOOD2].x = 149;
-			context->gTileClips[TILE_FOOD2].y = 73;
-			context->gTileClips[TILE_FOOD2].w = TILE_WIDTH;
-			context->gTileClips[TILE_FOOD2].h = TILE_HEIGHT;
+			gTileClips[TILE_FOOD2].x = 149;
+			gTileClips[TILE_FOOD2].y = 73;
+			gTileClips[TILE_FOOD2].w = TILE_WIDTH;
+			gTileClips[TILE_FOOD2].h = TILE_HEIGHT;
 		}
 	}
 
@@ -211,17 +198,13 @@ bool SDLBackground::SetTiles() {
 	return tilesLoaded;
 }
 
-void SDLBackground::StartScreen() {
+void SDLBackground::startScreen() {
 	//Render text
 	std::string Text = "Press enter to start";
 	SDL_Color textColor = { 255, 255, 255 };
 	if (!context->loadFromRenderedText(Text, textColor, 50)) {
 		printf("Failed to render text texture!\n");
 	}
-	context->Draw(10, (context->sHeight - 50) / 2, context->mTexture);
-}
-
-SDLContext* SDLBackground::GetContext() {
-	return context;
+	context->draw((context->sWidth - context->getWidth()) / 2, (context->sHeight - context->getHeight()) / 2, context->mTexture);
 }
 }

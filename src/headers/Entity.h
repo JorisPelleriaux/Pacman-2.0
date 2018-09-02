@@ -11,10 +11,8 @@ public:
 	//Defenition of entity
 	Entity(int x, int y, int width, int height, int movespeed);
 	virtual ~Entity();
-	virtual void Visualise(int State)=0;	//Visualise entity
-	virtual void Move()=0;	//Move entity
-
-	bool CheckCollisions(RECT a, RECT b);	//Check for collision
+	virtual void visualise(int State)=0;	//Visualise entity
+	virtual void move()=0;	//Move entity
 
 private:
 	int movespeed;

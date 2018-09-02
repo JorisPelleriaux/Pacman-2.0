@@ -11,26 +11,19 @@ public:
 	SDLPacman(SDLContext* context, AbstractFactory* factory, int lives, int x,
 			int y, int movespeed);
 	~SDLPacman();
-	void Visualise(int State) override;	//state 0: Normal ; state 1: Power ; state 2: Dead
-	void Move() override;
-	void SetStartPosition() override;
-	void ShowText() override;
-	void GameOver() override;
+	void visualise(int State) override;	//state 0: Normal ; state 1: Power ; state 2: Dead
+	void showText() override;
+	void gameOver() override;
 
 private:
-	SDL_Texture* imageN;	//Image of normal pacman
-	SDL_Texture* imageD;	//Image of pacman die
+	SDL_Texture* image;		//Pacman image
 	SDLContext* context;	//GameContext
-
-	//Collision box of the Pacman
-	SDL_Rect mBox;
 
 	//Current animation frame
 	int frame;
 
-	//Start position
-	int x, y;
-
+	//Walking animation Pacman
+	int ANIMATION_FRAMES = 4;
 };
 }
 #endif /* HEADERS_SDLPACMAN_H_ */

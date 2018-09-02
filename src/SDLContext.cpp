@@ -14,20 +14,12 @@ SDLContext::SDLContext(SDLWindow* window) :
 	this->window = window;
 
 	//Initialize value's
-	mTexture = NULL;
+	mTexture = nullptr;
 	mWidth = 0;
 	mHeight = 0;
 
-	sWidth = window->screen_width;
-	sHeight = window->screen_height;
-
-	//TODO mag weg
-	tWidth = 0; //window->gTextTexture->getWidth();
-	tHeight = 0; //window->gTextTexture->getHeight();
-
-	//Current animation frame
-	frame = 0;
-
+	sWidth = window->getScreen_width();
+	sHeight = window->getScreen_height();
 }
 
 SDLContext::~SDLContext() {
@@ -40,11 +32,11 @@ SDL_Texture* SDLContext::loadFromFile(std::string path) {
 	free();
 
 	//The final texture
-	SDL_Texture* newTexture = NULL;
+	SDL_Texture* newTexture = nullptr;
 
 	//Load image at specified path
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-	if (loadedSurface == NULL) {
+	if (loadedSurface == nullptr) {
 		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(),
 		IMG_GetError());
 	} else {
@@ -55,7 +47,7 @@ SDL_Texture* SDLContext::loadFromFile(std::string path) {
 		//Create texture from surface pixels
 		newTexture = SDL_CreateTextureFromSurface(window->gRenderer,
 				loadedSurface);
-		if (newTexture == NULL) {
+		if (newTexture == nullptr) {
 			printf("Unable to create texture from %s! SDL Error: %s\n",
 					path.c_str(), SDL_GetError());
 		} else {
@@ -79,20 +71,20 @@ bool SDLContext::loadFromRenderedText(std::string textureText,
 
 	//Open the font with correct size
 	window->gFont = TTF_OpenFont("Media/lazy.ttf", size);
-	if (window->gFont == NULL) {
+	if (window->gFont == nullptr) {
 		printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
 	}
 
 	//Render text surface
 	SDL_Surface* textSurface = TTF_RenderText_Solid(window->gFont,
 			textureText.c_str(), textColor);
-	if (textSurface == NULL) {
+	if (textSurface == nullptr) {
 		printf("Unable to render text surface! SDL_ttf Error: %s\n",
 		TTF_GetError());
 	} else {
 		//Create texture from surface pixels
 		mTexture = SDL_CreateTextureFromSurface(window->gRenderer, textSurface);
-		if (mTexture == NULL) {
+		if (mTexture == nullptr) {
 			printf(
 					"Unable to create texture from rendered text! SDL Error: %s\n",
 					SDL_GetError());
@@ -106,15 +98,17 @@ bool SDLContext::loadFromRenderedText(std::string textureText,
 	}
 
 	//Return success
-	return mTexture != NULL;
+	return mTexture != nullptr;
 }
 
 void SDLContext::free() {
 
 	//Free texture if it exists
-	if (mTexture != NULL) {
+	if (mTexture != nullptr) {
 		SDL_DestroyTexture(mTexture);
-		mTexture = NULL;
+		mTexture = nullptr;
+		mWidth = 0;
+		mHeight = 0;
 	}
 }
 
@@ -133,85 +127,28 @@ void SDLContext::setAlpha(Uint8 alpha) {
 	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
 
-bool SDLContext::touchesWall(SDL_Rect box, AbsTile* tiles[], bool pacman) {
-	//Go through the tiles
+void SDLContext::createPacSprites() {
+	gSpriteClips[0].x = 70;
+	gSpriteClips[0].y = 35;
+	gSpriteClips[0].w = 36;
+	gSpriteClips[0].h = 36;
 
-	for (int i = 0; i < TOTAL_TILES; ++i) {
-		if (tiles[i]->getType() > 15) { //TODO tile path dynamic
-			if (checkCollision(box, tiles[i]->getBox()) && pacman) {
-				tiles[i]->setType(15);
-				this->score += 5;	//add 5 to the score
-			}
-		}
-		//If the tile is a wall type tile
-		if ((tiles[i]->getType() < 15) //TODO tile path dynamic
-		&& (tiles[i]->getType() >= 0)) {
-			//If the collision box touches the wall tile
-			if (checkCollision(box, tiles[i]->getBox())) {
-				return true;
-			}
-		}
-	}
+	gSpriteClips[1].x = 35;
+	gSpriteClips[1].y = 35;
+	gSpriteClips[1].w = 33;
+	gSpriteClips[1].h = 36;
 
-	//If no wall tiles were touched
-	return false;
-}
+	gSpriteClips[2].x = 0;
+	gSpriteClips[2].y = 35;
+	gSpriteClips[2].w = 33;
+	gSpriteClips[2].h = 36;
 
-bool SDLContext::checkCollision(SDL_Rect a, RECT b) {
-	//The sides of the rectangles
-	int leftA;
-	int rightA;
-	int topA;
-	int bottomA;
+	gSpriteClips[3].x = 35;
+	gSpriteClips[3].y = 35;
+	gSpriteClips[3].w = 33;
+	gSpriteClips[3].h = 36;
 
-	//Calculate the sides of rect A
-	leftA = a.x;
-	rightA = a.x + a.w;
-	topA = a.y;
-	bottomA = a.y + a.h;
-
-	//If any of the sides from A are outside of B
-	if (bottomA <= b.top) {
-		return false;
-	}
-
-	if (topA >= b.bottom) {
-		return false;
-	}
-
-	if (rightA <= b.left) {
-		return false;
-	}
-
-	if (leftA >= b.right) {
-		return false;
-	}
-
-	//If none of the sides from A are outside B
-	return true;
-}
-
-void SDLContext::CreatePacSprites() {
-	gSpriteClips[0].x = 0;
-	gSpriteClips[0].y = 0;
-	gSpriteClips[0].w = 35;
-	gSpriteClips[0].h = 35;
-
-	gSpriteClips[1].x = 41;
-	gSpriteClips[1].y = 0;
-	gSpriteClips[1].w = 35;
-	gSpriteClips[1].h = 35;
-
-	gSpriteClips[2].x = 81;
-	gSpriteClips[2].y = 0;
-	gSpriteClips[2].w = 35;
-	gSpriteClips[2].h = 35;
-
-	gSpriteClips[3].x = 117;
-	gSpriteClips[3].y = 0;
-	gSpriteClips[3].w = 35;
-	gSpriteClips[3].h = 35;
-
+	//Sprites pacman die
 	gSpriteClips[4].x = 0;
 	gSpriteClips[4].y = 0;
 	gSpriteClips[4].w = 35;
@@ -273,7 +210,7 @@ void SDLContext::CreatePacSprites() {
 	gSpriteClips[15].h = 35;
 }
 
-void SDLContext::CreateGhostSprites(int number) {
+void SDLContext::createGhostSprites(int number) {
 	int x1, x2, y1, y2;
 	switch (number) {
 	case 0:
@@ -310,30 +247,30 @@ void SDLContext::CreateGhostSprites(int number) {
 	gSpriteClips_Ghost[number][1].w = 23;
 	gSpriteClips_Ghost[number][1].h = 25;
 }
-void SDLContext::ClearScreen() {
+void SDLContext::clearScreen() {
 	//Clear screen
 	SDL_SetRenderDrawColor(window->gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(window->gRenderer);
 }
 
-void SDLContext::Draw(int x, int y, SDL_Texture* texture, SDL_Rect* clip,
+void SDLContext::draw(int x, int y, SDL_Texture* texture, SDL_Rect* clip,
 		double angle) {
 
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
 
 	//Set clip rendering dimensions
-	if (clip != NULL) {
+	if (clip != nullptr) {
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}
 
 	//Render to screen
-	SDL_RenderCopyEx(window->gRenderer, texture, clip, &renderQuad, angle, NULL,
+	SDL_RenderCopyEx(window->gRenderer, texture, clip, &renderQuad, angle, nullptr,
 			SDL_FLIP_NONE);
 }
 
-void SDLContext::UpdateScreen() {
+void SDLContext::updateScreen() {
 	SDL_RenderPresent(window->gRenderer);
 }
 

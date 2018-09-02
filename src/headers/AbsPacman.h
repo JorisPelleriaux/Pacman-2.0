@@ -1,52 +1,52 @@
 #ifndef HEADERS_ABSPACMAN_H_
 #define HEADERS_ABSPACMAN_H_
-
-#include <string>
 #include "Entity.h"
-#include "Input.h"
-
-using namespace std;
-
 
 namespace PACMAN {
 class AbstractFactory;
+
 class AbsPacman: public Entity {
 public:
 	AbsPacman(AbstractFactory* factory, Context* context, int lives, int x,
 			int y, int movespeed);
 	virtual ~AbsPacman();
-
-	void handleEvent(InputType dir);	//handle the input
-	int GetLives();						//Return lives
-	int GetScore();						//Return score
-	void TakeLive();					//Take a live from the pac
-	bool CheckCollision();				//Check collision with ghosts
-	virtual void SetStartPosition() = 0;	//Set pacman back to start position
-	virtual void ShowText() = 0;		//Show the score and lives on the screen
-	virtual void GameOver() = 0;		//Show the score and lives on the screen
-	//void Move(RECT box) override;
-
-	//The dimensions of the Pacman
-	static const int PAC_WIDTH = 33;
-	static const int PAC_HEIGHT = 34;
+	void handleEvent(InputType dir);		//handle the input
+	int getLives();							//Return lives
+	int getScore();							//Return score
+	int getAngle();							//Return angle of the pacman
+	RECT getBox();							//Get the collision box
+	void takeLive();						//Take a live from the pac
+	bool checkCollision();					//Check collision with ghosts
+	void setStartPosition();				//Set pacman back to start position
+	virtual void showText() = 0;		//Show the score and lives on the screen
+	virtual void gameOver() = 0;			//Show gameover on the screen
+	void move() override;					//How the pacman moves
 
 	bool IsDead = false;				//Check if dead-animation is complete
 
-	RECT Pbox;	//Position
 protected:
 	int movespeed;	//May be removed
-	int XVEL = 0;	//X velocity of the Pacman
-	int YVEL = 0;	//Y velocity of the Pacman
-	int sAngle = 0;	//Angle of the pacman
 
 private:
 	AbstractFactory* factory;
 	Input* inputHandler;
 	Context* context;
-	int lives;
-	int score = 0;
 
-	const int PAC_VEL = 5;	//Maximum axis velocity of the Pacman
+	//Collision box of the Pacman
+	RECT mBox;
+
+	//The dimensions of the pacman
+	const int PAC_WIDTH = 33;
+	const int PAC_HEIGHT = 34;
+
+	const int PAC_VEL = 3;	//Maximum axis velocity of the Pacman
+
+	int lives;				//Set later
+	int score = 0;			//Score
+	int x, y;				//Start position
+
+	int xVel = 0, yVel = 0;	//X,Y velocity of the Pacman
+	int sAngle = 0;			//Angle of the pacman (direction)
 
 };
 }

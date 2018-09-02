@@ -6,13 +6,12 @@ using namespace std;
 namespace PACMAN_SDL {
 SDLWindow::SDLWindow(int screen_width, int screen_height) :
 		Window(screen_width, screen_height) {
-	gWindow = NULL;
-	gRenderer = NULL;
-	gTexture = NULL;
-	gTextTexture = NULL;
-	this->screen_height = screen_height;
+	gWindow = nullptr;
+	gRenderer = nullptr;
+	gTexture = nullptr;
+	gTextTexture = nullptr;
 	this->screen_width = screen_width;
-
+	this->screen_height = screen_height;
 }
 
 SDLWindow::~SDLWindow() {
@@ -20,9 +19,9 @@ SDLWindow::~SDLWindow() {
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
-	gWindow = NULL;
-	gRenderer = NULL;
-	gTextTexture = NULL;
+	gWindow = nullptr;
+	gRenderer = nullptr;
+	gTextTexture = nullptr;
 
 	//Quit SDL subsystems
 	IMG_Quit();
@@ -31,8 +30,8 @@ SDLWindow::~SDLWindow() {
 	cout << "Closing Window" << endl;
 }
 
-int SDLWindow::CreateWindow() {
-	cout << "init" << endl;
+int SDLWindow::createWindow() {
+	cout << "Create window" << endl;
 	//Initialize SDL
 	if (SDL_Init( SDL_INIT_VIDEO) < 0) {
 		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
@@ -44,9 +43,8 @@ int SDLWindow::CreateWindow() {
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
-		if (gWindow == NULL) {
+		gWindow = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
+		if (gWindow == nullptr) {
 			printf("Window could not be created! SDL Error: %s\n",
 					SDL_GetError());
 			return 1;
@@ -54,7 +52,7 @@ int SDLWindow::CreateWindow() {
 			//Create vsynced renderer for window
 			gRenderer = SDL_CreateRenderer(gWindow, -1,
 					SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-			if (gRenderer == NULL) {
+			if (gRenderer == nullptr) {
 				printf("Renderer could not be created! SDL Error: %s\n",
 						SDL_GetError());
 				return 1;
@@ -81,11 +79,11 @@ int SDLWindow::CreateWindow() {
 	return 0;
 }
 
-void SDLWindow::Render() {
+void SDLWindow::render() {
 	//Update screen
 	SDL_RenderPresent(gRenderer);
 }
-void SDLWindow::ClearScreen() {
+void SDLWindow::clearScreen() {
 	//Clear screen
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(gRenderer);

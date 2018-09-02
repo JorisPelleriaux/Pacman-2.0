@@ -2,7 +2,7 @@
 #define SDLBACKGROUND_H_
 #include "Background.h"
 #include "SDLContext.h"
-class Tile;
+
 using namespace PACMAN;
 
 namespace PACMAN_SDL {
@@ -10,17 +10,21 @@ class SDLBackground: public Background {
 public:
 	SDLBackground(SDLContext* context);
 	~SDLBackground();
-	void Visualise(int State) override;
-	void Move() override;
-	void StartScreen() override;
-	bool SetTiles();
-	void Close();
-	SDLContext* GetContext();
+	void visualise(int State) override;
+	void startScreen() override;
+	bool setTiles();
 
-protected:
+private:
 	//Tile constants
 	const int TILE_WIDTH = 35;
 	const int TILE_HEIGHT = 35;
+	const int TOTAL_TILES = 285;
+	static const int TOTAL_TILE_SPRITES = 18;	//Need to be static
+
+	//Scene texture
+	SDL_Texture* image;
+	SDLContext* context;
+	SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
 
 	//The different tile sprites
 	const int TILE_HORIZONTAL = 0;
@@ -41,14 +45,6 @@ protected:
 	const int TILE_PATH = 15;
 	const int TILE_FOOD1 = 16;
 	const int TILE_FOOD2 = 17;
-
-protected:
-
-private:
-
-	SDL_Texture* image;
-	SDLContext* context;
-
 };
 }
 #endif /* SDLBACKGROUND_H_ */

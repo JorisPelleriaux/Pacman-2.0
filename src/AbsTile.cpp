@@ -1,7 +1,6 @@
 #include <iostream>
 #include "AbsTile.h"
 
-using namespace std;
 namespace PACMAN {
 AbsTile::AbsTile(int x, int y, int tileType) {
 	mType = tileType;

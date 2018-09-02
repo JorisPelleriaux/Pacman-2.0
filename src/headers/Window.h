@@ -1,7 +1,5 @@
-#pragma once
-#ifndef WINDOW_H_
-#define WINDOW_H_
-using namespace std;
+#ifndef HEADERS_WINDOW_H_
+#define HEADERS_WINDOW_H_
 
 namespace PACMAN {
 class Window {
@@ -9,16 +7,16 @@ public:
 	Window();
 	Window(int Screen_width, int Screen_height);
 	virtual ~Window();
+	virtual int createWindow()=0;
+	virtual void render()=0;
+	virtual void clearScreen()=0;
 
-	virtual int CreateWindow()=0;
-	virtual void Render()=0;
-	virtual void ClearScreen()=0;
-
-	int screen_height = 0;
-	int screen_width = 0;
+	int getScreen_width();
+	int getScreen_height();
 
 private:
-
+	int screen_width = 0;
+	int screen_height = 0;
 };
 }
-#endif /* WINDOW_H_ */
+#endif /* HEADERS_WINDOW_H_ */
