@@ -6,17 +6,17 @@
 using namespace std;
 
 namespace PACMAN {
+
+//Base class for entities to use as a template.
 class Entity {
 public:
-	//Defenition of entity
 	Entity(int x, int y, int width, int height, int movespeed);
 	virtual ~Entity();
-	virtual void visualise(int State)=0;	//Visualise entity
-	virtual void move()=0;	//Move entity
+	virtual void visualise(int State)=0;
+	virtual void move()=0;
 
 private:
 	int movespeed;
-	RECT rect;
 };
 }
 #endif /* HEADERS_ENTITY_H_ */

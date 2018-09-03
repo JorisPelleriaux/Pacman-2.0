@@ -10,44 +10,41 @@ public:
 	AbsPacman(AbstractFactory* factory, Context* context, int lives, int x,
 			int y, int movespeed);
 	virtual ~AbsPacman();
-	void handleEvent(InputType dir);		//handle the input
-	int getLives();							//Return lives
-	int getScore();							//Return score
-	int getAngle();							//Return angle of the pacman
-	RECT getBox();							//Get the collision box
-	void takeLive();						//Take a live from the pac
-	bool checkCollision();					//Check collision with ghosts
-	void setStartPosition();				//Set pacman back to start position
-	virtual void showText() = 0;		//Show the score and lives on the screen
-	virtual void gameOver() = 0;			//Show gameover on the screen
-	void move() override;					//How the pacman moves
+	virtual void showText() = 0;
+	virtual void gameOver() = 0;
+	void handleEvent(InputType dir);
+	void setStartPosition();
+	void takeLive();
+	void move() override;
+	int getLives();
+	int getScore();
+	int getAngle();
+	RECT getBox();
 
-	bool IsDead = false;				//Check if dead-animation is complete
+	bool checkCollision();
 
-protected:
-	int movespeed;	//May be removed
+	//Check if dead-animation is complete.
+	bool IsDead = false;
 
 private:
 	AbstractFactory* factory;
 	Input* inputHandler;
 	Context* context;
 
-	//Collision box of the Pacman
-	RECT mBox;
-
-	//The dimensions of the pacman
 	const int PAC_WIDTH = 33;
 	const int PAC_HEIGHT = 34;
+	const int PAC_VEL = 3;
 
-	const int PAC_VEL = 3;	//Maximum axis velocity of the Pacman
+	int lives;
+	int score = 0;
+	int xVel = 0, yVel = 0;
+	int sAngle = 0;
 
-	int lives;				//Set later
-	int score = 0;			//Score
-	int x, y;				//Start position
+	//Start position
+	int x, y;
 
-	int xVel = 0, yVel = 0;	//X,Y velocity of the Pacman
-	int sAngle = 0;			//Angle of the pacman (direction)
-
+	//Collision box of the Pacman
+	RECT mBox;
 };
 }
 #endif /* HEADERS_ABSPACMAN_H_ */

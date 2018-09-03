@@ -5,7 +5,6 @@ SDLFactory::SDLFactory() {
 	Gamecontext = nullptr;
 	inputHandler = nullptr;
 }
-
 SDLFactory::~SDLFactory() {
 	delete Gamecontext;
 	delete inputHandler;
@@ -31,6 +30,7 @@ Input* SDLFactory::GetInputhandler() {
 	}
 	return inputHandler;
 }
+
 Ghost* SDLFactory::CreateGhost(int x, int y, int movespeed, int number) {
 	return new SDLGhost(Gamecontext, this, x, y, movespeed, number);
 }

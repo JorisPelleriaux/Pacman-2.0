@@ -9,6 +9,7 @@ AbsTile::AbsTile(int x, int y, int tileType) {
 	mBox.right = x + TILE_WIDTH;
 	mBox.bottom = y + TILE_HEIGHT;
 }
+
 int AbsTile::getType() {
 	return mType;
 }

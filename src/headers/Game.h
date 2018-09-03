@@ -10,12 +10,11 @@ using namespace std;
 
 namespace PACMAN {
 class AbstractFactory;
-class Ghost;
 //Possible states of the game
 enum GameState {
 	Menu, Running, GameOver, QuitGame, LostLife, NoState
 };
-
+//Game class to start a new game and control the current state
 class Game {
 public:
 	Game(AbstractFactory* factory);

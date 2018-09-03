@@ -8,7 +8,9 @@ public:
 	Background();
 	virtual ~Background();
 	void move() override;
-	virtual void startScreen() = 0;	//Text on the beginning
+
+	//Text on the beginning
+	virtual void startScreen() = 0;
 };
 }
 #endif /* BACKGROUND_H_ */

@@ -14,15 +14,14 @@ public:
 	void visualise(int State) override;	//state 0: Normal ; state 1: Power ; state 2: Dead
 	void showText() override;
 	void gameOver() override;
+	void createSprites();
 
 private:
-	SDL_Texture* image;		//Pacman image
-	SDLContext* context;	//GameContext
+	SDL_Texture* image;
+	SDLContext* context;
+	SDL_Rect gSpriteClips[16];
 
-	//Current animation frame
 	int frame;
-
-	//Walking animation Pacman
 	int ANIMATION_FRAMES = 4;
 };
 }

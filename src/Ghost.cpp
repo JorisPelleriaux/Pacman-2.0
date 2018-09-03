@@ -2,10 +2,8 @@
 #include "AbstractFactory.h"
 #include <iostream>
 
-using namespace std;
-
 namespace PACMAN {
-//Constructor sets required parameters
+
 Ghost::Ghost(AbstractFactory* factory, Context* context, int x, int y,
 		int movespeed) :
 		Entity(x, y, 20, 20, movespeed) {
@@ -38,7 +36,6 @@ void Ghost::move() {
 	context->ghosts[context->currGhost].right = mBox.left + GHOST_WIDTH;
 	context->ghosts[context->currGhost].bottom = mBox.top + GHOST_HEIGHT;
 
-//Define how the ghost should move
 	tempPosX[context->currGhost] = mBox.left;
 	tempPosY[context->currGhost] = mBox.top;
 
@@ -81,16 +78,14 @@ void Ghost::move() {
 		prevNum[context->currGhost] = num[context->currGhost];
 	}
 
-	//Ready for next ghost
 	context->currGhost++;
 
-	//All ghosts done -> first ghost
 	if (context->currGhost == 4) {
 		context->currGhost = 0;
 	}
 }
 
-RECT Ghost::getBox(){
+RECT Ghost::getBox() {
 	return (mBox);
 }
 
@@ -105,10 +100,10 @@ void Ghost::startMove() {
 	context->ghosts[context->currGhost].right = mBox.left + GHOST_WIDTH;
 	context->ghosts[context->currGhost].bottom = mBox.top + GHOST_HEIGHT;
 
-	if (mBox.left < (context->sWidth / 2) - (GHOST_WIDTH / 2)) {	//Ghost left from center -> move right
+	if (mBox.left < (context->sWidth / 2) - (GHOST_WIDTH / 2)) {//Ghost left from center -> move right
 		mBox.left += ghost_VEL;
 	}
-	if (mBox.left > (context->sWidth / 2) - (GHOST_WIDTH / 2)) {	//Ghost right from center -> move left
+	if (mBox.left > (context->sWidth / 2) - (GHOST_WIDTH / 2)) {//Ghost right from center -> move left
 		mBox.left -= ghost_VEL;
 	}
 	if (context->touchesWall(mBox, false)) {	//Ghosts left <=> right
@@ -117,16 +112,15 @@ void Ghost::startMove() {
 		num[1] = num[3] = 1;
 		start = true;
 	}
-	if (start == false && mBox.left == ((context->sWidth / 2) - (GHOST_WIDTH / 2)) - 1) {//Ghost in center position -> move up
+	if (start == false
+			&& mBox.left == ((context->sWidth / 2) - (GHOST_WIDTH / 2)) - 1) {//Ghost in center position -> move up
 		mBox.top -= ghost_VEL;
 	}
-	//Ready for next ghost
+
 	context->currGhost++;
 
-	//All ghosts done -> first ghost
 	if (context->currGhost == 4) {
 		context->currGhost = 0;
 	}
-
 }
 }

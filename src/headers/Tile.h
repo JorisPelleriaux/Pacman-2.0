@@ -10,17 +10,12 @@ using namespace PACMAN;
 namespace PACMAN_SDL {
 class Tile: public AbsTile {
 public:
-	//Initializes position and type
 	Tile(int x, int y, int tileType);
 
-	//Get the tile type
 	int getType();
-
-	//Set the tile type
 	void setType(int type);
 
 private:
-	//The tile type
 	int mType = 0;
 };
 }

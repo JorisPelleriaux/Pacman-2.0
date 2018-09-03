@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace PACMAN {
-//Constructor sets required parameters
+
 AbsPacman::AbsPacman(AbstractFactory* factory, Context* context, int lives,
 		int x, int y, int movespeed) :
 		Entity(x, y, 20, 20, movespeed) {
@@ -12,14 +12,12 @@ AbsPacman::AbsPacman(AbstractFactory* factory, Context* context, int lives,
 	this->lives = lives;
 
 	this->mBox.left = this->x = x;
-	this->mBox.top = this->y =  y;
+	this->mBox.top = this->y = y;
 	this->mBox.right = x + PAC_WIDTH;
 	this->mBox.bottom = y + PAC_HEIGHT;
-	this->movespeed = movespeed;
 	this->context = context;
 
 }
-
 AbsPacman::~AbsPacman() {
 }
 
@@ -35,21 +33,20 @@ void AbsPacman::move() {
 	if (mBox.left < 0) {
 		mBox.left = context->sWidth - PAC_WIDTH;
 	}
-	//If the Pac touched a wall
+
 	if (context->touchesWall(mBox, true)) {
 		mBox.left -= xVel;	//Stop
 	}
 
 	mBox.top += yVel;	//Move the Pacman up or down
 	mBox.bottom = mBox.top + PAC_HEIGHT;
-	//If the Pac went too far up or down or touched a wall
+
 	if ((mBox.top < 0) || (mBox.top + PAC_HEIGHT > context->sHeight)
 			|| context->touchesWall(mBox, true)) {
 		mBox.top -= yVel;	//Stop
 	}
 }
 
-//Handle the input
 void AbsPacman::handleEvent(InputType dir) {
 	//Adjust the velocity
 	switch (dir) {
@@ -85,6 +82,7 @@ void AbsPacman::handleEvent(InputType dir) {
 		return;
 	}
 }
+
 void AbsPacman::setStartPosition() {
 	mBox.left = x;
 	mBox.top = y;
@@ -104,16 +102,20 @@ bool AbsPacman::checkCollision() {
 int AbsPacman::getLives() {
 	return lives;
 }
+
 int AbsPacman::getScore() {
 	return score;
 }
-int AbsPacman::getAngle(){
+
+int AbsPacman::getAngle() {
 	return sAngle;
 }
+
 void AbsPacman::takeLive() {
 	lives -= 1;
 }
-RECT AbsPacman::getBox(){
+
+RECT AbsPacman::getBox() {
 	return mBox;
 }
 }

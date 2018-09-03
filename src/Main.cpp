@@ -14,7 +14,6 @@
 using namespace PACMAN;
 using namespace PACMAN_SDL;
 
-
 int main( int argc, char* argv[] )
 {
     AbstractFactory* factory =new SDLFactory();

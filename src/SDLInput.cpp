@@ -1,12 +1,12 @@
-#include "SDLInput.h"
-#include "sdl2/SDL.h"
+#include <sdl2/SDL.h>
 #include <iostream>
+#include "SDLInput.h"
+
 using namespace std;
 
 namespace PACMAN_SDL {
 SDLInput::SDLInput() {
 }
-
 SDLInput::~SDLInput() {
 }
 
@@ -69,6 +69,5 @@ BaseInput* SDLInput::getInput() {
 		}
 	}
 	return input;
-
 }
 }

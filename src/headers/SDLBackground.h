@@ -15,11 +15,10 @@ public:
 	bool setTiles();
 
 private:
-	//Tile constants
 	const int TILE_WIDTH = 35;
 	const int TILE_HEIGHT = 35;
 	const int TOTAL_TILES = 285;
-	static const int TOTAL_TILE_SPRITES = 18;	//Need to be static
+	static const int TOTAL_TILE_SPRITES = 18;
 
 	//Scene texture
 	SDL_Texture* image;
@@ -40,11 +39,11 @@ private:
 	const int TILE_VERTICAL = 10;
 	const int TILE_BOTTOM = 11;
 	const int TILE_CENTERLEFT = 12;
-	const int TILE_CENTER = 13;
-	const int TILE_CENTERRIGHT = 14;
-	const int TILE_PATH = 15;
-	const int TILE_FOOD1 = 16;
-	const int TILE_FOOD2 = 17;
+	const int TILE_CENTERRIGHT = 13;//14
+	const int TILE_PATH = 14;//15
+	const int TILE_FOOD1 = 15;//16
+	const int TILE_FOOD2 = 16;//17
+	const int TILE_FOOD3 = 17;//13
 };
 }
 #endif /* SDLBACKGROUND_H_ */

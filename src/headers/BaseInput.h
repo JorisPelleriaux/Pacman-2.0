@@ -3,6 +3,7 @@
 #include <vector>
 
 namespace PACMAN {
+
 //Enum of Input types
 enum InputType {
 	None, DLeft, DRight, DUp, DDown, Quit, ULeft, URight, UUp, UDown, Enter

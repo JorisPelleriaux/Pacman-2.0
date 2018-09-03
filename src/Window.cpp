@@ -9,11 +9,11 @@ Window::Window(int screen_width, int screen_height) {
 Window::~Window() {
 }
 
-int Window::getScreen_width(){
+int Window::getScreen_width() {
 	return screen_width;
 }
 
-int Window::getScreen_height(){
+int Window::getScreen_height() {
 	return screen_height;
 }
 }

@@ -5,7 +5,8 @@
 #include "AbsTile.h"
 
 namespace PACMAN {
-class Background;
+
+//Helper class to check collisions and pass variables
 class Context {
 public:
 	Context();
@@ -13,15 +14,15 @@ public:
 	bool checkcollision(RECT a, RECT b);
 	bool touchesWall(RECT box, bool pacman);
 
-	//The level tiles
 	AbsTile* tileSet[285];
 
 	//Possition of all the ghosts
 	RECT ghosts[4];
 
-	int currGhost = 0;	//current ghost busy
+	int currGhost = 0;
 
-	int score = 0;	//score of Pacman
+	//score of Pacman
+	int score = 0;
 
 	//Screen dimensions
 	int sWidth = 0, sHeight = 0;

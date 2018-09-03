@@ -8,6 +8,8 @@
 #include "Ghost.h"
 
 namespace PACMAN {
+
+//Abstract class for initializing base classes
 class AbstractFactory {
 public:
 	virtual ~AbstractFactory() {

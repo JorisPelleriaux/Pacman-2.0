@@ -12,29 +12,28 @@ public:
 	Ghost(AbstractFactory* factory, Context* context, int x, int y,
 			int movespeed);
 	virtual ~Ghost();
-	void move() override;		//How to move the ghosts
-	RECT getBox();				//Get the collision box
-	int getCurrentGhost();		//get current ghost
-	void startMove();			//Startmove to get out of the box
-	void defaultPosition(int Ghost);	//Set Ghosts to default position
+	void move() override;
+	void startMove();
+	void defaultPosition(int Ghost);
+	RECT getBox();
 
-	bool start = false;	//Ghosts start move
+	//Check ghosts start move complete
+	bool start = false;
 
 private:
 	AbstractFactory* factory;
 	Context* context;
 
-	//The dimensions of the Ghost
 	const int GHOST_WIDTH = 23;
 	const int GHOST_HEIGHT = 23;
 
-	//Maximum axis velocity of the Ghost
-	int ghost_VEL = 0;	//Set later in game
+	int ghost_VEL = 0;
 
 	//Collision box of the Ghost
 	RECT mBox;
 
-	int num[4] = { 0, 1, 2, 3 };//Start movement 0:right ; 1:left ; 2:down ; 3:up
+	// movement of each ghost 0:right ; 1:left ; 2:down ; 3:up
+	int num[4] = { 0, 1, 2, 3 };
 	int prevNum[4];
 	int tempPosX[4];
 	int tempPosY[4];

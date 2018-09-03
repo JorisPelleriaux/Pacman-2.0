@@ -4,6 +4,8 @@
 #include "BaseInput.h"
 
 namespace PACMAN {
+
+//Abstract class for the input
 class Input {
 public:
 	virtual ~Input();

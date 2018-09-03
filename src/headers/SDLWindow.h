@@ -16,28 +16,20 @@ public:
 	SDLWindow(int screen_height, int screen_width);
 	~SDLWindow();
 
-	//The window we'll be rendering to
-	SDL_Window* gWindow;
-
-	//The window renderer
-	SDL_Renderer* gRenderer;
-
-	//Current displayed texture
-	SDL_Texture* gTexture;
-
-	//Globally used font
-	TTF_Font *gFont = nullptr;
-
-	//Rendered texture
-	SDLContext* gTextTexture;
-
-	//SDLContext gSpriteSheetTexture;
-
 	int createWindow();
 	void render() override;
 	void clearScreen() override;
 
+	//The window renderer
+	SDL_Renderer* gRenderer;
+
+	//Globally used font
+	TTF_Font *gFont = nullptr;
+
 private:
+	//The window we'll be rendering to
+	SDL_Window* gWindow;
+
 	int screen_width = 0;
 	int screen_height = 0;
 };

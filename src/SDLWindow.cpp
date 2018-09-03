@@ -1,6 +1,6 @@
-#include "SDLWindow.h"
 #include <sdl2/SDL_image.h>
 #include <iostream>
+#include "SDLWindow.h"
 using namespace std;
 
 namespace PACMAN_SDL {
@@ -8,20 +8,15 @@ SDLWindow::SDLWindow(int screen_width, int screen_height) :
 		Window(screen_width, screen_height) {
 	gWindow = nullptr;
 	gRenderer = nullptr;
-	gTexture = nullptr;
-	gTextTexture = nullptr;
 	this->screen_width = screen_width;
 	this->screen_height = screen_height;
 }
-
 SDLWindow::~SDLWindow() {
-
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
 	gWindow = nullptr;
 	gRenderer = nullptr;
-	gTextTexture = nullptr;
 
 	//Quit SDL subsystems
 	IMG_Quit();
@@ -43,7 +38,9 @@ int SDLWindow::createWindow() {
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED,
+				SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height,
+				SDL_WINDOW_SHOWN);
 		if (gWindow == nullptr) {
 			printf("Window could not be created! SDL Error: %s\n",
 					SDL_GetError());
@@ -80,11 +77,10 @@ int SDLWindow::createWindow() {
 }
 
 void SDLWindow::render() {
-	//Update screen
 	SDL_RenderPresent(gRenderer);
 }
+
 void SDLWindow::clearScreen() {
-	//Clear screen
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(gRenderer);
 }
